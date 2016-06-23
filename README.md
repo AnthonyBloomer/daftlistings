@@ -1,9 +1,20 @@
-# daft-scraper
+# daftlistings
 A web scraper for daft.ie
+
+
+## Install
+
+```
+pip install daftlistings
+```
 
 ## Example
 
+
 ```python
+
+from daftlistings import Daft
+
 d = Daft()
 offset = 0
 pages = True
