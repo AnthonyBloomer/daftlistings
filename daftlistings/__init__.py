@@ -11,7 +11,7 @@ class Daft:
     def get_listings(self, county, area, offset=0, listing_type='properties'):
 
         if listing_type == 'houses':
-            listing_type = '/houses-for-auction/'
+            listing_type = '/houses-for-sale/'
 
         elif listing_type == 'properties':
             listing_type = '/property-for-sale/'
