@@ -43,37 +43,49 @@ class Listing(Daft):
 
     def get_address_line_1(self):
         formalised_address = self.get_formalised_address()
-        try:
-            address = formalised_address.split(',')
-            return address[0].strip()
-        except:
+        if formalised_address is not None:
+            try:
+                address = formalised_address.split(',')
+                return address[0].strip()
+            except:
+                return None
+        else:
             return None
 
     def get_address_line_2(self):
         formalised_address = self.get_formalised_address()
-        try:
-            address = formalised_address.split(',')
-            if len(address) == 4:
-                return address[1].strip()
-            else:
+        if formalised_address is not None:
+            try:
+                address = formalised_address.split(',')
+                if len(address) == 4:
+                    return address[1].strip()
+                else:
+                    return None
+            except:
                 return None
-        except:
+        else:
             return None
 
     def get_town(self):
         formalised_address = self.get_formalised_address()
-        try:
-            address = formalised_address.split(',')
-            return address[-2].strip()
-        except:
+        if formalised_address is not None:
+            try:
+                address = formalised_address.split(',')
+                return address[-2].strip()
+            except:
+                return None
+        else:
             return None
 
     def get_county(self):
         formalised_address = self.get_formalised_address()
-        try:
-            address = formalised_address.split(',')
-            return address[-1].strip()
-        except:
+        if formalised_address is not None:
+            try:
+                address = formalised_address.split(',')
+                return address[-1].strip()
+            except:
+                return None
+        else:
             return None
 
     def get_formalised_address(self):
