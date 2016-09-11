@@ -46,7 +46,7 @@ class Listing(Daft):
         try:
             address = formalised_address.split(',')
             return address[0].strip()
-        except AttributeError:
+        except:
             return None
 
     def get_address_line_2(self):
@@ -57,7 +57,7 @@ class Listing(Daft):
                 return address[1].strip()
             else:
                 return None
-        except AttributeError:
+        except:
             return None
 
     def get_town(self):
@@ -65,7 +65,7 @@ class Listing(Daft):
         try:
             address = formalised_address.split(',')
             return address[-2].strip()
-        except AttributeError:
+        except:
             return None
 
     def get_county(self):
@@ -73,13 +73,13 @@ class Listing(Daft):
         try:
             address = formalised_address.split(',')
             return address[-1].strip()
-        except AttributeError:
+        except:
             return None
 
     def get_formalised_address(self):
         try:
             t = self.data.find('h2').text
-        except AttributeError:
+        except:
             return None
 
         title = t.split('-')[0]
@@ -88,10 +88,10 @@ class Listing(Daft):
         try:
             title = r[1] + '.' + r[2]
             return title.strip()
-        except IndexError:
+        except:
             try:
                 return r[1].strip()
-            except IndexError:
+            except:
                 return r[0].strip()
 
     def get_listing_image(self):
@@ -100,14 +100,14 @@ class Listing(Daft):
             soup = BeautifulSoup(urllib.urlopen(link).read(), 'html.parser')
             span = soup.find("span", {"class": "p1"})
             return span.find('img')['src']
-        except AttributeError:
+        except:
             return None
 
     def get_agent(self):
         try:
             agent = self.data.find('ul', {'class': 'links'}).text
             return agent.split(':')[1].strip()
-        except (TypeError, AttributeError, IndexError):
+        except:
             return None
 
     def get_agent_url(self):
@@ -115,14 +115,14 @@ class Listing(Daft):
             agent = self.data.find('ul', {'class': 'links'})
             links = agent.find_all('a')
             return links[1]['href']
-        except (TypeError, AttributeError, IndexError):
+        except:
             return None
 
     def get_link(self):
         link = self.data.find('a', href=True)
         try:
             return self.base + link['href']
-        except TypeError:
+        except:
             return None
 
     def get_dwelling_type(self):
@@ -130,7 +130,7 @@ class Listing(Daft):
             info = self.data.find('ul', {"class": "info"}).text
             s = info.split('|')
             return s[0].strip()
-        except AttributeError:
+        except:
             return None
 
     def get_num_bedrooms(self):
@@ -138,7 +138,7 @@ class Listing(Daft):
             info = self.data.find('ul', {"class": "info"}).text
             s = info.split('|')
             return s[1].strip()
-        except (IndexError, AttributeError):
+        except:
             return None
 
     def get_num_bathrooms(self):
@@ -146,7 +146,7 @@ class Listing(Daft):
             info = self.data.find('ul', {"class": "info"}).text
             s = info.split('|')
             return s[2].strip()
-        except (IndexError, AttributeError):
+        except:
             return None
 
     def get_price(self):
@@ -154,5 +154,5 @@ class Listing(Daft):
         try:
             price = self.data.find('strong', {'class': 'price'}).text
             return price.strip()
-        except AttributeError:
+        except:
             return None
