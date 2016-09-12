@@ -162,7 +162,6 @@ class Listing(Daft):
             return None
 
     def get_price(self):
-
         try:
             price = self.data.find('strong', {'class': 'price'}).text
             return price.strip()
