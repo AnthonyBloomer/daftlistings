@@ -24,6 +24,16 @@ class Daft:
 
     def get_listings(self, county, area=None, offset=0, listing_type='properties', sale_agreed=False, type='sale'):
 
+        """
+        :param county: The county you wish to get listings for.
+        :param area: The area in the county you wish to get listings for. Optional.
+        :param offset: The page number.
+        :param listing_type: The listings you'd like to scrape i.e houses, properties, auction or apartments.
+        :param sale_agreed: If set to True, we'll scrape listings that are sale agreed.
+        :param type: Retrieve listings of a certain sale type. Can be set to 'sale' or 'rent'.
+        :return: object
+        """
+
         if area is None:
             area = ''
 
