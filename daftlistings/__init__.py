@@ -6,14 +6,14 @@ class Daft:
     def __init__(self):
         self.base = 'http://www.daft.ie'
 
-        self.sale_listing_types = {
+        self.sale_types = {
             'houses': '/houses-for-sale/',
             'properties': '/property-for-sale/',
             'auction': '/houses-for-auction/',
             'apartments': '/apartments-for-sale/'
         }
 
-        self.rent_listing_types = {
+        self.rent_types = {
             'houses': '/houses-for-rent/',
             'apartments': '/apartments-for-rent/'
         }
@@ -29,17 +29,18 @@ class Daft:
 
         if type == 'sale':
 
-            if listing_type in self.sale_listing_types:
+            if listing_type in self.sale_types:
                 if sale_agreed and listing_type == 'properties':
-                    listing_type = self.sale_listing_types[listing_type] + self.query_params['sale_agreed']
+                    listing_type = self.sale_types[listing_type] + self.query_params['sale_agreed']
                 else:
-                    listing_type = self.sale_listing_types[listing_type]
+                    listing_type = self.sale_types[listing_type]
             else:
                 raise Exception('Wrong listing type.')
 
         elif type == 'rent':
-            if listing_type in self.rent_listing_types:
-                listing_type = self.rent_listing_types[listing_type]
+
+            if listing_type in self.rent_types:
+                listing_type = self.rent_types[listing_type]
             else:
                 raise Exception('Wrong listing type.')
 
