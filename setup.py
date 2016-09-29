@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='daftlistings',
-      version='0.4',
+      version='0.4.1',
       description='A web scraper for Daft.ie',
       url='https://github.com/AnthonyBloomer/daftlistings',
       author='Anthony Bloomer',
