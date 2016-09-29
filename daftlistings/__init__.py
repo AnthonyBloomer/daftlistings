@@ -28,9 +28,8 @@ class Daft:
             area = ''
 
         if type == 'sale':
-
             if listing_type in self.sale_types:
-                if sale_agreed and listing_type == 'properties':
+                if sale_agreed:
                     listing_type = self.sale_types[listing_type] + self.query_params['sale_agreed']
                 else:
                     listing_type = self.sale_types[listing_type]
@@ -38,7 +37,6 @@ class Daft:
                 raise Exception('Wrong listing type.')
 
         elif type == 'rent':
-
             if listing_type in self.rent_types:
                 listing_type = self.rent_types[listing_type]
             else:
