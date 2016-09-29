@@ -3,24 +3,32 @@ import urllib
 
 
 class Daft:
-    base = 'http://www.daft.ie'
-
     def __init__(self):
-        pass
+        self.base = 'http://www.daft.ie'
 
-    def get_listings(self, county, area, offset=0, listing_type='properties'):
+        self.listing_types = {
+            'houses': '/houses-for-sale/',
+            'properties': '/property-for-sale/',
+            'auction': '/houses-for-auction/',
+            'apartments': '/apartments-for-sale/'
+        }
 
-        if listing_type == 'houses':
-            listing_type = '/houses-for-sale/'
+        self.query_params = {
+            'sale_agreed': '?s[area_type]=on&s[agreed]=1&s[advanced]=1'
+        }
 
-        elif listing_type == 'properties':
-            listing_type = '/property-for-sale/'
+    def get_listings(self, county, area=None, offset=0, listing_type='properties', sale_agreed=False):
 
-        elif listing_type == 'auction':
-            listing_type = '/houses-for-auction/'
+        if area is None:
+            area = ''
 
+        if listing_type in self.listing_types:
+            if sale_agreed and listing_type == 'properties':
+                listing_type = self.listing_types[listing_type] + self.query_params['sale_agreed']
+            else:
+                listing_type = self.listing_types[listing_type]
         else:
-            raise Exception('Wrong listing type')
+            raise Exception('Wrong listing type.')
 
         county = county.replace(" ", "-").lower()
         area = area.replace(" ", "-").lower()
@@ -108,7 +116,7 @@ class Listing(Daft):
 
     def get_listing_image(self):
         try:
-            link = self.get_link()
+            link = self.get_daft_link()
             soup = BeautifulSoup(urllib.urlopen(link).read(), 'html.parser')
             span = soup.find("span", {"class": "p1"})
             return span.find('img')['src']
@@ -130,7 +138,7 @@ class Listing(Daft):
         except:
             return None
 
-    def get_link(self):
+    def get_daft_link(self):
         link = self.data.find('a', href=True)
         try:
             return self.base + link['href']
@@ -162,6 +170,7 @@ class Listing(Daft):
             return None
 
     def get_price(self):
+
         try:
             price = self.data.find('strong', {'class': 'price'}).text
             return price.strip()
