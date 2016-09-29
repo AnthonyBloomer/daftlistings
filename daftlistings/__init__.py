@@ -6,29 +6,42 @@ class Daft:
     def __init__(self):
         self.base = 'http://www.daft.ie'
 
-        self.listing_types = {
+        self.sale_listing_types = {
             'houses': '/houses-for-sale/',
             'properties': '/property-for-sale/',
             'auction': '/houses-for-auction/',
             'apartments': '/apartments-for-sale/'
         }
 
+        self.rent_listing_types = {
+            'houses': '/houses-for-rent/',
+            'apartments': '/apartments-for-rent/'
+        }
+
         self.query_params = {
             'sale_agreed': '?s[area_type]=on&s[agreed]=1&s[advanced]=1'
         }
 
-    def get_listings(self, county, area=None, offset=0, listing_type='properties', sale_agreed=False):
+    def get_listings(self, county, area=None, offset=0, listing_type='properties', sale_agreed=False, type='sale'):
 
         if area is None:
             area = ''
 
-        if listing_type in self.listing_types:
-            if sale_agreed and listing_type == 'properties':
-                listing_type = self.listing_types[listing_type] + self.query_params['sale_agreed']
+        if type == 'sale':
+
+            if listing_type in self.sale_listing_types:
+                if sale_agreed and listing_type == 'properties':
+                    listing_type = self.sale_listing_types[listing_type] + self.query_params['sale_agreed']
+                else:
+                    listing_type = self.sale_listing_types[listing_type]
             else:
-                listing_type = self.listing_types[listing_type]
-        else:
-            raise Exception('Wrong listing type.')
+                raise Exception('Wrong listing type.')
+
+        elif type == 'rent':
+            if listing_type in self.rent_listing_types:
+                listing_type = self.rent_listing_types[listing_type]
+            else:
+                raise Exception('Wrong listing type.')
 
         county = county.replace(" ", "-").lower()
         area = area.replace(" ", "-").lower()
