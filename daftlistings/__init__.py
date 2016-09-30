@@ -5,19 +5,19 @@ import urllib
 class Daft:
     base = 'http://www.daft.ie'
 
-    sale_types = {
+    _sale_types = {
         'houses': '/houses-for-sale/',
         'properties': '/property-for-sale/',
         'auction': '/houses-for-auction/',
         'apartments': '/apartments-for-sale/'
     }
 
-    rent_types = {
+    _rent_types = {
         'houses': '/houses-for-rent/',
         'apartments': '/apartments-for-rent/'
     }
 
-    query_params = {
+    _query_params = {
         'sale_agreed': '&s[area_type]=on&s[agreed]=1&s[advanced]=1',
         'sale_agreed_price': '&s%5Bagreed%5D=1&s%5Badvanced%5D=1',
         'min_price': '&s%5Bmnp%5D=',
@@ -53,34 +53,34 @@ class Daft:
         area = area.replace(" ", "-").lower()
 
         if sale_type == 'sale':
-            if listing_type in self.sale_types:
-                listing_type = self.sale_types[listing_type]
+            if listing_type in self._sale_types:
+                listing_type = self._sale_types[listing_type]
             else:
                 raise Exception('Wrong listing type.')
 
         elif sale_type == 'rent':
-            if listing_type in self.rent_types:
-                listing_type = self.rent_types[listing_type]
+            if listing_type in self._rent_types:
+                listing_type = self._rent_types[listing_type]
             else:
                 raise Exception('Wrong listing type.')
 
         if min_price:
-            price += self.query_params['min_price'] + str(min_price)
+            price += self._query_params['min_price'] + str(min_price)
 
         if max_price:
-            price += self.query_params['max_price'] + str(max_price)
+            price += self._query_params['max_price'] + str(max_price)
 
         if sale_agreed:
             if min_price or max_price:
-                query_params += price + self.query_params['sale_agreed_price']
+                query_params += price + self._query_params['sale_agreed_price']
             else:
-                query_params += self.query_params['sale_agreed']
+                query_params += self._query_params['sale_agreed']
         else:
             if min_price or max_price:
                 query_params += price
 
         if min_price or max_price and sale_type == 'rent':
-            query_params += self.query_params['ignore_agents']
+            query_params += self._query_params['ignore_agents']
 
         soup = self._call(self.base + '/' + county + listing_type + area + '?offset=' + str(offset) + query_params)
         divs = soup.find_all("div", {"class": "box"})
