@@ -52,9 +52,7 @@ class Daft:
 
         if type == 'sale':
             if listing_type in self.sale_types:
-
                 listing_type = self.sale_types[listing_type]
-
             else:
                 raise Exception('Wrong listing type.')
 
@@ -78,7 +76,6 @@ class Daft:
                 query_params += price + self.query_params['sale_agreed_price']
             else:
                 query_params += self.query_params['sale_agreed']
-
         else:
             if min or max:
                 query_params += price
@@ -86,8 +83,7 @@ class Daft:
         if min or max and type == 'rent':
             query_params += self.query_params['ignore_agents']
 
-        divs = self._call(
-            self.base + '/' + county + listing_type + area + '?offset=' + str(offset) + query_params)
+        divs = self._call(self.base + '/' + county + listing_type + area + '?offset=' + str(offset) + query_params)
 
         listings = []
         [listings.append(Listing(div)) for div in divs]
