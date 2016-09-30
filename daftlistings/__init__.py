@@ -83,16 +83,15 @@ class Daft:
         if min or max and type == 'rent':
             query_params += self.query_params['ignore_agents']
 
-        divs = self._call(self.base + '/' + county + listing_type + area + '?offset=' + str(offset) + query_params)
+        soup = self._call(self.base + '/' + county + listing_type + area + '?offset=' + str(offset) + query_params)
+        divs = soup.find_all("div", {"class": "box"})
 
         listings = []
         [listings.append(Listing(div)) for div in divs]
         return listings
 
     def _call(self, url):
-        print url
-        soup = BeautifulSoup(urllib.urlopen(url).read(), 'html.parser')
-        return soup.find_all("div", {"class": "box"})
+        return BeautifulSoup(urllib.urlopen(url).read(), 'html.parser')
 
 
 class Listing(Daft):
@@ -168,7 +167,7 @@ class Listing(Daft):
     def get_listing_image(self):
         try:
             link = self.get_daft_link()
-            soup = BeautifulSoup(urllib.urlopen(link).read(), 'html.parser')
+            soup = self._call(link)
             span = soup.find("span", {"class": "p1"})
             return span.find('img')['src']
         except:
