@@ -19,12 +19,19 @@ class Daft:
         }
 
         self.query_params = {
-            'sale_agreed': '?s[area_type]=on&s[agreed]=1&s[advanced]=1'
+            'sale_agreed': '&s[area_type]=on&s[agreed]=1&s[advanced]=1',
+            'sale_agreed_price': '&s%5Bagreed%5D=1&s%5Badvanced%5D=1',
+            'min_price': '&s%5Bmnp%5D=',
+            'max_price': '&s%5Bmxp%5D=',
+            'ignore_agents': '&s%5Bignored_agents%5D%5B1%5D'
         }
 
-    def get_listings(self, county, area=None, offset=0, listing_type='properties', sale_agreed=False, type='sale'):
+    def get_listings(self, county, area=None, offset=0, min=None, max=None, listing_type='properties',
+                     sale_agreed=False, type='sale'):
 
         """
+        :param max: The maximum value of the listing
+        :param min: The minimum value of the listing
         :param county: The county you wish to get listings for.
         :param area: The area in the county you wish to get listings for. Optional.
         :param offset: The page number.
@@ -37,12 +44,17 @@ class Daft:
         if area is None:
             area = ''
 
+        query_params = ''
+        price = ''
+
+        county = county.replace(" ", "-").lower()
+        area = area.replace(" ", "-").lower()
+
         if type == 'sale':
             if listing_type in self.sale_types:
-                if sale_agreed:
-                    listing_type = self.sale_types[listing_type] + self.query_params['sale_agreed']
-                else:
-                    listing_type = self.sale_types[listing_type]
+
+                listing_type = self.sale_types[listing_type]
+
             else:
                 raise Exception('Wrong listing type.')
 
@@ -52,16 +64,37 @@ class Daft:
             else:
                 raise Exception('Wrong listing type.')
 
-        county = county.replace(" ", "-").lower()
-        area = area.replace(" ", "-").lower()
+        if min and not max:
+            price += self.query_params['min_price'] + str(min)
 
-        divs = self._call(self.base + '/' + county + listing_type + area + '/?offset=' + str(offset))
+        if max and not min:
+            price += self.query_params['max_price'] + str(max)
+
+        if min and max:
+            price += self.query_params['min_price'] + str(min) + self.query_params['max_price'] + str(max)
+
+        if sale_agreed:
+            if min or max:
+                query_params += price + self.query_params['sale_agreed_price']
+            else:
+                query_params += self.query_params['sale_agreed']
+
+        else:
+            if min or max:
+                query_params += price
+
+        if min or max and type == 'rent':
+            query_params += self.query_params['ignore_agents']
+
+        divs = self._call(
+            self.base + '/' + county + listing_type + area + '?offset=' + str(offset) + query_params)
 
         listings = []
         [listings.append(Listing(div)) for div in divs]
         return listings
 
     def _call(self, url):
+        print url
         soup = BeautifulSoup(urllib.urlopen(url).read(), 'html.parser')
         return soup.find_all("div", {"class": "box"})
 
