@@ -26,18 +26,18 @@ class Daft:
             'ignore_agents': '&s%5Bignored_agents%5D%5B1%5D'
         }
 
-    def get_listings(self, county, area=None, offset=0, min=None, max=None, listing_type='properties',
-                     sale_agreed=False, type='sale'):
+    def get_listings(self, county, area=None, offset=0, min_price=None, max_price=None, listing_type='properties',
+                     sale_agreed=False, sale_type='sale'):
 
         """
-        :param max: The maximum value of the listing
-        :param min: The minimum value of the listing
-        :param county: The county you wish to get listings for.
-        :param area: The area in the county you wish to get listings for. Optional.
+        :param max_price: The maximum value of the listing
+        :param min_price: The minimum value of the listing
+        :param county: The county to get listings for.
+        :param area: The area in the county to get listings for. Optional.
         :param offset: The page number.
         :param listing_type: The listings you'd like to scrape i.e houses, properties, auction or apartments.
         :param sale_agreed: If set to True, we'll scrape listings that are sale agreed.
-        :param type: Retrieve listings of a certain sale type. Can be set to 'sale' or 'rent'.
+        :param sale_type: Retrieve listings of a certain sale type. Can be set to 'sale' or 'rent'.
         :return: object
         """
 
@@ -50,34 +50,34 @@ class Daft:
         county = county.replace(" ", "-").lower()
         area = area.replace(" ", "-").lower()
 
-        if type == 'sale':
+        if sale_type == 'sale':
             if listing_type in self.sale_types:
                 listing_type = self.sale_types[listing_type]
             else:
                 raise Exception('Wrong listing type.')
 
-        elif type == 'rent':
+        elif sale_type == 'rent':
             if listing_type in self.rent_types:
                 listing_type = self.rent_types[listing_type]
             else:
                 raise Exception('Wrong listing type.')
 
-        if min:
-            price += self.query_params['min_price'] + str(min)
+        if min_price:
+            price += self.query_params['min_price'] + str(min_price)
 
-        if max:
-            price += self.query_params['max_price'] + str(max)
+        if max_price:
+            price += self.query_params['max_price'] + str(max_price)
 
         if sale_agreed:
-            if min or max:
+            if min_price or max_price:
                 query_params += price + self.query_params['sale_agreed_price']
             else:
                 query_params += self.query_params['sale_agreed']
         else:
-            if min or max:
+            if min_price or max_price:
                 query_params += price
 
-        if min or max and type == 'rent':
+        if min_price or max_price and sale_type == 'rent':
             query_params += self.query_params['ignore_agents']
 
         soup = self._call(self.base + '/' + county + listing_type + area + '?offset=' + str(offset) + query_params)
