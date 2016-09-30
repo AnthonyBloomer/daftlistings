@@ -62,14 +62,11 @@ class Daft:
             else:
                 raise Exception('Wrong listing type.')
 
-        if min and not max:
+        if min:
             price += self.query_params['min_price'] + str(min)
 
-        if max and not min:
+        if max:
             price += self.query_params['max_price'] + str(max)
-
-        if min and max:
-            price += self.query_params['min_price'] + str(min) + self.query_params['max_price'] + str(max)
 
         if sale_agreed:
             if min or max:
