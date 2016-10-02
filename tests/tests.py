@@ -69,3 +69,16 @@ class DaftTests(unittest.TestCase):
         )
 
         self.assertFalse(not listings)
+
+    def test_properties_num_of_beds(self):
+        listings = self.daft.get_listings(
+            county='Dublin',
+            listing_type='properties',
+            min_price=200000,
+            max_price=250000,
+            min_beds=5,
+            max_beds=5
+        )
+
+        first = listings[0]
+        self.assertEqual(first.get_num_bedrooms(), '5 Beds')
