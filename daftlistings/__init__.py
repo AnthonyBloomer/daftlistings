@@ -3,35 +3,37 @@ import urllib
 
 
 class Daft:
-    base = 'http://www.daft.ie'
-
-    _sale_types = {
-        'houses': '/houses-for-sale/',
-        'properties': '/property-for-sale/',
-        'auction': '/houses-for-auction/',
-        'apartments': '/apartments-for-sale/'
-    }
-
-    _rent_types = {
-        'houses': '/houses-for-rent/',
-        'apartments': '/apartments-for-rent/'
-    }
-
-    _query_params = {
-        'sale_agreed': '&s[area_type]=on&s[agreed]=1&s[advanced]=1',
-        'sale_agreed_price': '&s%5Bagreed%5D=1&s%5Badvanced%5D=1',
-        'min_price': '&s%5Bmnp%5D=',
-        'max_price': '&s%5Bmxp%5D=',
-        'ignore_agents': '&s%5Bignored_agents%5D%5B1%5D'
-    }
-
     def __init__(self):
-        pass
+        self.base = 'http://www.daft.ie'
+
+        self.sale_types = {
+            'houses': '/houses-for-sale/',
+            'properties': '/property-for-sale/',
+            'auction': '/houses-for-auction/',
+            'apartments': '/apartments-for-sale/'
+        }
+
+        self.rent_types = {
+            'houses': '/houses-for-rent/',
+            'apartments': '/apartments-for-rent/'
+        }
+
+        self.query_params = {
+            'sale_agreed': '&s[area_type]=on&s[agreed]=1&s[advanced]=1',
+            'sale_agreed_price': '&s%5Bagreed%5D=1&s%5Badvanced%5D=1',
+            'min_price': '&s%5Bmnp%5D=',
+            'max_price': '&s%5Bmxp%5D=',
+            'ignore_agents': '&s%5Bignored_agents%5D%5B1%5D',
+            'min_beds': '&s%5Bmnb%5D=',
+            'max_beds': '&s%5Bmxb%5D='
+        }
 
     def get_listings(self, county, area=None, offset=0, min_price=None, max_price=None, listing_type='properties',
-                     sale_agreed=False, sale_type='sale'):
+                     sale_agreed=False, sale_type='sale', min_beds=None, max_beds=None):
 
         """
+        :param max_beds: The maximum number of beds.
+        :param min_beds: The minimum number of beds.
         :param max_price: The maximum value of the listing
         :param min_price: The minimum value of the listing
         :param county: The county to get listings for.
@@ -53,34 +55,40 @@ class Daft:
         area = area.replace(" ", "-").lower()
 
         if sale_type == 'sale':
-            if listing_type in self._sale_types:
-                listing_type = self._sale_types[listing_type]
+            if listing_type in self.sale_types:
+                listing_type = self.sale_types[listing_type]
             else:
                 raise Exception('Wrong listing type.')
 
         elif sale_type == 'rent':
-            if listing_type in self._rent_types:
-                listing_type = self._rent_types[listing_type]
+            if listing_type in self.rent_types:
+                listing_type = self.rent_types[listing_type]
             else:
                 raise Exception('Wrong listing type.')
 
         if min_price:
-            price += self._query_params['min_price'] + str(min_price)
+            price += self.query_params['min_price'] + str(min_price)
 
         if max_price:
-            price += self._query_params['max_price'] + str(max_price)
+            price += self.query_params['max_price'] + str(max_price)
 
         if sale_agreed:
             if min_price or max_price:
-                query_params += price + self._query_params['sale_agreed_price']
+                query_params += price + self.query_params['sale_agreed_price']
             else:
-                query_params += self._query_params['sale_agreed']
+                query_params += self.query_params['sale_agreed']
         else:
             if min_price or max_price:
                 query_params += price
 
         if min_price or max_price and sale_type == 'rent':
-            query_params += self._query_params['ignore_agents']
+            query_params += self.query_params['ignore_agents']
+
+        if min_beds:
+            query_params += self.query_params['min_beds'] + str(min_beds)
+
+        if max_beds:
+            query_params += self.query_params['max_beds'] + str(max_beds)
 
         soup = self._call(self.base + '/' + county + listing_type + area + '?offset=' + str(offset) + query_params)
         divs = soup.find_all("div", {"class": "box"})
