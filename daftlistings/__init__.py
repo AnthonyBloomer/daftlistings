@@ -15,7 +15,10 @@ class Daft:
 
         self.rent_types = {
             'houses': '/houses-for-rent/',
-            'apartments': '/apartments-for-rent/'
+            'apartments': '/apartments-for-rent/',
+            'any': '/residential-property-for-rent/',
+            'studio': '/studio-apartments-for-rent/',
+            'flat': '/flats-for-rent/'
         }
 
         self.query_params = {
@@ -25,11 +28,13 @@ class Daft:
             'max_price': '&s%5Bmxp%5D=',
             'ignore_agents': '&s%5Bignored_agents%5D%5B1%5D',
             'min_beds': '&s%5Bmnb%5D=',
-            'max_beds': '&s%5Bmxb%5D='
+            'max_beds': '&s%5Bmxb%5D=',
+            'sort_by': '&s%5Bsort_by%5D=',
+            'sort_order': '&s%5Bsort_type%5D='
         }
 
     def get_listings(self, county, area=None, offset=0, min_price=None, max_price=None, listing_type='properties',
-                     sale_agreed=False, sale_type='sale', min_beds=None, max_beds=None):
+                     sale_agreed=False, sale_type='sale', min_beds=None, max_beds=None, sort_by=None, sort_order=None):
 
         """
         :param max_beds: The maximum number of beds.
@@ -42,6 +47,8 @@ class Daft:
         :param listing_type: The listings you'd like to scrape i.e houses, properties, auction or apartments.
         :param sale_agreed: If set to True, we'll scrape listings that are sale agreed.
         :param sale_type: Retrieve listings of a certain sale type. Can be set to 'sale' or 'rent'.
+        :param sort_by: Sorts the listing. Can be set to 'date', 'distance', 'prince' or 'upcoming_viewing'.
+        :param sort_order: 'd' for descending, 'a' for ascencing.
         :return: object
         """
 
@@ -89,6 +96,14 @@ class Daft:
 
         if max_beds:
             query_params += self.query_params['max_beds'] + str(max_beds)
+
+        if sort_by:
+            if sort_order:
+                query_params += self.query_params['sort_order'] + sort_order
+                query_params += self.query_params['sort_by'] + sort_by
+            else:
+                query_params += self.query_params['sort_order'] + 'd'
+                query_params += self.query_params['sort_by'] + sort_by
 
         soup = self._call(self.base + '/' + county + listing_type + area + '?offset=' + str(offset) + query_params)
         divs = soup.find_all("div", {"class": "box"})
@@ -207,6 +222,14 @@ class Listing(Daft):
             info = self.data.find('ul', {"class": "info"}).text
             s = info.split('|')
             return s[0].strip()
+        except:
+            return None
+
+    def get_posted_since(self):
+        try:
+            info = self.data.find('div', {"class": "date_entered"}).text
+            s = info.split(':')
+            return s[-1].strip()
         except:
             return None
 
