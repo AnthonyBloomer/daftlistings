@@ -1,5 +1,11 @@
 from bs4 import BeautifulSoup
-import urllib
+
+import sys
+
+if sys.version_info[0] == 3:
+    from urllib.request import urlopen
+else:
+    from urllib import urlopen
 
 
 class Daft:
@@ -113,7 +119,7 @@ class Daft:
         return listings
 
     def _call(self, url):
-        return BeautifulSoup(urllib.urlopen(url).read(), 'html.parser')
+        return BeautifulSoup(urlopen(url).read(), 'html.parser')
 
 
 class Listing(Daft):
