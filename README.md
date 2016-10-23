@@ -1,6 +1,7 @@
 # daftlistings
 A web scraper for daft.ie
 
+Tested on Python 2.7 and Python 3.5.2
 
 ## Install
 
