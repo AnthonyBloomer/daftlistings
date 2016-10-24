@@ -174,23 +174,15 @@ class Listing(Daft):
         else:
             return None
 
+    
     def get_formalised_address(self):
         try:
-            t = self.data.find('h2').text
+            t = self.data.find('a').contents[0]
+            s = t.split('-')
+            return s[0].strip()
+
         except:
             return None
-
-        title = t.split('-')[0]
-        r = title.split('.')
-
-        try:
-            title = r[1] + '.' + r[2]
-            return title.strip()
-        except:
-            try:
-                return r[1].strip()
-            except:
-                return r[0].strip()
 
     def get_listing_image(self):
         try:
