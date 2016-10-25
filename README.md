@@ -33,11 +33,11 @@ while pages:
         pages = False
 
     for listing in listings:
-        print listing.get_agent_url()
-        print listing.get_price()
-        print listing.get_formalised_address()
-        print listing.get_daft_link()
-        print ' '
+        print(listing.get_agent_url())
+        print(listing.get_price())
+        print(listing.get_formalised_address())
+        print(listing.get_daft_link())
+        print(' ')
 
 
     offset += 10
