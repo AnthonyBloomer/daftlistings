@@ -54,7 +54,7 @@ class Daft:
         :param sale_agreed: If set to True, we'll scrape listings that are sale agreed.
         :param sale_type: Retrieve listings of a certain sale type. Can be set to 'sale' or 'rent'.
         :param sort_by: Sorts the listing. Can be set to 'date', 'distance', 'prince' or 'upcoming_viewing'.
-        :param sort_order: 'd' for descending, 'a' for ascencing.
+        :param sort_order: 'd' for descending, 'a' for ascending.
         :return: object
         """
 

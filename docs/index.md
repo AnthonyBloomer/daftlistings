@@ -34,14 +34,14 @@ A web scraper for Daft.ie
     	)
 
 	    if not listings:
-		pages = False
+		    pages = False
 
 	    for listing in listings:
-		print listing.get_agent_url()
-		print listing.get_price()
-		print listing.get_formalised_address()
-		print listing.get_daft_link()
-		print ' '
+		    print(listing.get_agent_url())
+		    print(listing.get_price()))
+		    print(listing.get_formalised_address())
+		    print(listing.get_daft_link())
+		    print(' ')
 
 
 	    offset += 10
@@ -63,7 +63,7 @@ The **get_listings** method accepts the following parameters.
 **sale_agreed**: If set to True, we'll scrape listings that are sale agreed.  
 **sale_type**: Retrieve listings of a certain sale type. Can be set to 'sale' or 'rent'.  
 **sort_by**: Sorts the listing. Can be set to 'date', 'distance', 'prince' or 'upcoming_viewing'.  
-**sort_order**: 'd' for descending, 'a' for ascencing.
+**sort_order**: 'd' for descending, 'a' for ascending.
 
 
 ### get_address_line_1()

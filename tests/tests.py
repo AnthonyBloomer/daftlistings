@@ -1,5 +1,5 @@
 import unittest
-from daftlistings import Daft
+from daftlistings import Daft, Listing
 
 
 class DaftTests(unittest.TestCase):
@@ -79,6 +79,7 @@ class DaftTests(unittest.TestCase):
             min_beds=5,
             max_beds=5
         )
+
 
         first = listings[0]
         self.assertEqual(first.get_num_bedrooms(), '5 Beds')
