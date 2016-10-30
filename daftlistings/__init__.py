@@ -1,46 +1,59 @@
 from bs4 import BeautifulSoup
-
-import sys
-
-if sys.version_info[0] == 3:
-    from urllib.request import urlopen
-else:
-    from urllib import urlopen
+import config
+import urllib2
 
 
 class Daft:
+    base = 'http://www.daft.ie'
+
+    sale_types = {
+        'houses': '/houses-for-sale/',
+        'properties': '/property-for-sale/',
+        'auction': '/houses-for-auction/',
+        'apartments': '/apartments-for-sale/'
+    }
+
+    rent_types = {
+        'houses': '/houses-for-rent/',
+        'apartments': '/apartments-for-rent/',
+        'any': '/residential-property-for-rent/',
+        'studio': '/studio-apartments-for-rent/',
+        'flat': '/flats-for-rent/'
+    }
+
+    query_params = {
+        'sale_agreed': '&s[area_type]=on&s[agreed]=1&s[advanced]=1',
+        'sale_agreed_price': '&s%5Bagreed%5D=1&s%5Badvanced%5D=1',
+        'min_price': '&s%5Bmnp%5D=',
+        'max_price': '&s%5Bmxp%5D=',
+        'ignore_agents': '&s%5Bignored_agents%5D%5B1%5D',
+        'min_beds': '&s%5Bmnb%5D=',
+        'max_beds': '&s%5Bmxb%5D=',
+        'sort_by': '&s%5Bsort_by%5D=',
+        'sort_order': '&s%5Bsort_type%5D='
+    }
+
+    opener = urllib2.build_opener()
+    opener.addheaders = [('User-Agent', 'Mozilla/5.0')]
+
     def __init__(self):
-        self.base = 'http://www.daft.ie'
+        pass
 
-        self.sale_types = {
-            'houses': '/houses-for-sale/',
-            'properties': '/property-for-sale/',
-            'auction': '/houses-for-auction/',
-            'apartments': '/apartments-for-sale/'
-        }
-
-        self.rent_types = {
-            'houses': '/houses-for-rent/',
-            'apartments': '/apartments-for-rent/',
-            'any': '/residential-property-for-rent/',
-            'studio': '/studio-apartments-for-rent/',
-            'flat': '/flats-for-rent/'
-        }
-
-        self.query_params = {
-            'sale_agreed': '&s[area_type]=on&s[agreed]=1&s[advanced]=1',
-            'sale_agreed_price': '&s%5Bagreed%5D=1&s%5Badvanced%5D=1',
-            'min_price': '&s%5Bmnp%5D=',
-            'max_price': '&s%5Bmxp%5D=',
-            'ignore_agents': '&s%5Bignored_agents%5D%5B1%5D',
-            'min_beds': '&s%5Bmnb%5D=',
-            'max_beds': '&s%5Bmxb%5D=',
-            'sort_by': '&s%5Bsort_by%5D=',
-            'sort_order': '&s%5Bsort_type%5D='
-        }
-
-    def get_listings(self, county, area=None, offset=0, min_price=None, max_price=None, listing_type='properties',
-                     sale_agreed=False, sale_type='sale', min_beds=None, max_beds=None, sort_by=None, sort_order=None):
+    def get_listings(
+            self,
+            county,
+            area=None,
+            offset=0,
+            min_price=None,
+            max_price=None,
+            listing_type='properties',
+            sale_agreed=False,
+            sale_type='sale',
+            min_beds=None,
+            max_beds=None,
+            sort_by=None,
+            sort_order=None
+    ):
 
         """
         :param max_beds: The maximum number of beds.
@@ -119,7 +132,7 @@ class Daft:
         return listings
 
     def _call(self, url):
-        return BeautifulSoup(urlopen(url).read(), 'html.parser')
+        return BeautifulSoup(self.opener.open(url), 'html.parser')
 
 
 class Listing(Daft):
@@ -174,7 +187,6 @@ class Listing(Daft):
         else:
             return None
 
-    
     def get_formalised_address(self):
         try:
             t = self.data.find('a').contents[0]
@@ -248,7 +260,6 @@ class Listing(Daft):
             return None
 
     def get_price(self):
-
         try:
             price = self.data.find('strong', {'class': 'price'}).text
             return price.strip()
