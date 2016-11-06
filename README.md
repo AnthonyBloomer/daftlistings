@@ -42,3 +42,6 @@ while pages:
 
     offset += 10
 ```
+
+Check out the full documentation:  
+https://anthonybloomer.github.io/daftlistings/
