@@ -2,38 +2,37 @@ from bs4 import BeautifulSoup
 import urllib2
 
 
+class SaleType(object):
+    HOUSES = '/houses-for-sale/'
+    PROPERTIES = '/property-for-sale/'
+    AUCTION = '/houses-for-auction/'
+    APARTMENTS = '/apartments-for-sale/'
+
+
+class RentType(object):
+    HOUSES = '/houses-for-rent/'
+    APARTMENTS = '/apartments-for-rent/'
+    ANY = '/residential-property-for-rent/'
+    STUDIO = '/studio-apartments-for-rent/'
+    FLAT = '/flats-for-rent/'
+
+
+class QueryParam(object):
+    SALE_AGREED = '&s[area_type]=on&s[agreed]=1&s[advanced]=1'
+    SALE_AGREED_WITH_PRICE = '&s%5Bagreed%5D=1&s%5Badvanced%5D=1'
+    MIN_PRICE = '&s%5Bmnp%5D='
+    MAX_PRICE = '&s%5Bmxp%5D='
+    IGNORED_AGENTS = '&s%5Bignored_agents%5D%5B1%5D'
+    MIN_BEDS = '&s%5Bmnb%5D='
+    MAX_BEDS = '&s%5Bmxb%5D='
+    SORT_BY = '&s%5Bsort_by%5D='
+    SORT_ORDER = '&s%5Bsort_type%5D='
+
+
 class Daft:
-    base = 'http://www.daft.ie'
-
-    sale_types = {
-        'houses': '/houses-for-sale/',
-        'properties': '/property-for-sale/',
-        'auction': '/houses-for-auction/',
-        'apartments': '/apartments-for-sale/'
-    }
-
-    rent_types = {
-        'houses': '/houses-for-rent/',
-        'apartments': '/apartments-for-rent/',
-        'any': '/residential-property-for-rent/',
-        'studio': '/studio-apartments-for-rent/',
-        'flat': '/flats-for-rent/'
-    }
-
-    query_params = {
-        'sale_agreed': '&s[area_type]=on&s[agreed]=1&s[advanced]=1',
-        'sale_agreed_price': '&s%5Bagreed%5D=1&s%5Badvanced%5D=1',
-        'min_price': '&s%5Bmnp%5D=',
-        'max_price': '&s%5Bmxp%5D=',
-        'ignore_agents': '&s%5Bignored_agents%5D%5B1%5D',
-        'min_beds': '&s%5Bmnb%5D=',
-        'max_beds': '&s%5Bmxb%5D=',
-        'sort_by': '&s%5Bsort_by%5D=',
-        'sort_order': '&s%5Bsort_type%5D='
-    }
-
-    opener = urllib2.build_opener()
-    opener.addheaders = [('User-Agent', 'Mozilla/5.0')]
+    _base = 'http://www.daft.ie'
+    _opener = urllib2.build_opener()
+    _opener.addheaders = [('User-Agent', 'Mozilla/5.0')]
 
     def __init__(self):
         pass
@@ -80,50 +79,64 @@ class Daft:
         area = area.replace(" ", "-").lower()
 
         if sale_type == 'sale':
-            if listing_type in self.sale_types:
-                listing_type = self.sale_types[listing_type]
+            if listing_type == 'houses':
+                listing_type = SaleType.HOUSES
+            elif listing_type == 'properties':
+                listing_type = SaleType.PROPERTIES
+            elif listing_type == 'auction':
+                listing_type = SaleType.AUCTION
+            elif listing_type == 'apartments':
+                listing_type = SaleType.APARTMENTS
             else:
                 raise Exception('Wrong listing type.')
 
         elif sale_type == 'rent':
-            if listing_type in self.rent_types:
-                listing_type = self.rent_types[listing_type]
+            if listing_type == 'houses':
+                listing_type = RentType.HOUSES
+            elif listing_type == 'apartments':
+                listing_type = RentType.APARTMENTS
+            elif listing_type == 'any':
+                listing_type = RentType.ANY
+            elif listing_type == 'studio':
+                listing_type = RentType.STUDIO
+            elif listing_type == 'flat':
+                listing_type = RentType.FLAT
             else:
                 raise Exception('Wrong listing type.')
 
         if min_price:
-            price += self.query_params['min_price'] + str(min_price)
+            price += QueryParam.MIN_PRICE + str(min_price)
 
         if max_price:
-            price += self.query_params['max_price'] + str(max_price)
+            price += QueryParam.MAX_PRICE + str(max_price)
 
         if sale_agreed:
             if min_price or max_price:
-                query_params += price + self.query_params['sale_agreed_price']
+                query_params += price + QueryParam.SALE_AGREED_WITH_PRICE
             else:
-                query_params += self.query_params['sale_agreed']
+                query_params += QueryParam.SALE_AGREED
         else:
             if min_price or max_price:
                 query_params += price
 
         if min_price or max_price and sale_type == 'rent':
-            query_params += self.query_params['ignore_agents']
+            query_params += QueryParam.IGNORED_AGENTS
 
         if min_beds:
-            query_params += self.query_params['min_beds'] + str(min_beds)
+            query_params += QueryParam.MIN_BEDS + str(min_beds)
 
         if max_beds:
-            query_params += self.query_params['max_beds'] + str(max_beds)
+            query_params += QueryParam.MAX_BEDS + str(max_beds)
 
         if sort_by:
             if sort_order:
-                query_params += self.query_params['sort_order'] + sort_order
-                query_params += self.query_params['sort_by'] + sort_by
+                query_params += QueryParam.SORT_ORDER + sort_order
+                query_params += QueryParam.SORT_BY + sort_by
             else:
-                query_params += self.query_params['sort_order'] + 'd'
-                query_params += self.query_params['sort_by'] + sort_by
+                query_params += QueryParam.SORT_ORDER + 'd'
+                query_params += QueryParam.SORT_BY + sort_by
 
-        soup = self._call(self.base + '/' + county + listing_type + area + '?offset=' + str(offset) + query_params)
+        soup = self._call(self._base + '/' + county + listing_type + area + '?offset=' + str(offset) + query_params)
         divs = soup.find_all("div", {"class": "box"})
 
         listings = []
@@ -131,7 +144,7 @@ class Daft:
         return listings
 
     def _call(self, url):
-        return BeautifulSoup(self.opener.open(url), 'html.parser')
+        return BeautifulSoup(self._opener.open(url), 'html.parser')
 
 
 class Listing(Daft):
@@ -222,7 +235,7 @@ class Listing(Daft):
     def get_daft_link(self):
         link = self.data.find('a', href=True)
         try:
-            return self.base + link['href']
+            return self._base + link['href']
         except:
             return None
 
