@@ -27,7 +27,7 @@ from daftlistings import Daft
 
 d = Daft()
 
-listings = self.daft.get_listings(
+listings = d.get_listings(
     county='Dublin City',
     area='Dublin 15',
     listing_type='apartments',
@@ -45,7 +45,7 @@ for listing in listings:
 Get the current sale agreed prices for properties in Dublin.
 
 ```python 
-listings = self.daft.get_listings(
+listings = d.get_listings(
     county='Dublin City',
     area='Dublin 15',
     listing_type='properties',
