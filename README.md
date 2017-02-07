@@ -9,8 +9,57 @@ Tested on Python 2.7 and Python 3.5.2
 pip install daftlistings
 ```
 
-## Example
+## Developing Locally
 
+```
+git clone https://github.com/AnthonyBloomer/daftlistings.git
+cd daftlistings
+virtualenv env
+source env/bin/activate
+pip install -r requirements.txt
+```
+
+## Examples
+
+Get the current properties for rent in Dublin that are between €1000 and €1500 per month.
+```python
+from daftlistings import Daft
+
+d = Daft()
+
+listings = self.daft.get_listings(
+    county='Dublin City',
+    area='Dublin 15',
+    listing_type='apartments',
+    min_price=1000,
+    max_price=1500,
+    sale_type='rent'
+)
+
+for listing in listings:
+    print(listing.get_formalised_address())
+    print(listing.get_daft_link())
+
+```
+
+Get the current sale agreed prices for properties in Dublin.
+
+```python 
+listings = self.daft.get_listings(
+    county='Dublin City',
+    area='Dublin 15',
+    listing_type='properties',
+    sale_agreed=True,
+    min_price=200000,
+    max_price=250000
+)
+
+for listing in listings:
+    print(listing.get_formalised_address())
+    print(listing.get_daft_link())
+```
+
+Full example:
 
 ```python
 
@@ -43,5 +92,6 @@ while pages:
     offset += 10
 ```
 
-Check out the full documentation:  
+## Full Documentation
+
 https://anthonybloomer.github.io/daftlistings/
