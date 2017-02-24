@@ -16,15 +16,57 @@ A web scraper for Daft.ie
     source env/bin/activate
     pip install -r requirements.txt
 
-## Example
+## Examples
 
-    from daftlistings import Daft
+Get the current properties for rent in Dublin that are between €1000 and €1500 per month.
 
-    d = Daft()
-    offset = 0
-    pages = True
 
-    while pages:
+	from daftlistings import Daft
+
+	d = Daft()
+
+	listings = d.get_listings(
+    	county='Dublin City',
+    	area='Dublin 15',
+    	listing_type='apartments',
+    	min_price=1000,
+    	max_price=1500,
+    	sale_type='rent'
+		)
+
+	for listing in listings:
+    	print(listing.get_formalised_address())
+    	print(listing.get_daft_link())
+
+
+
+Get the current sale agreed prices for properties in Dublin.
+
+
+	listings = d.get_listings(
+    	county='Dublin City',
+    	area='Dublin 15',
+    	listing_type='properties',
+    	sale_agreed=True,
+    	min_price=200000,
+    	max_price=250000
+	)
+
+	for listing in listings:
+    	print(listing.get_formalised_address())
+    	print(listing.get_daft_link())
+
+Full example:
+
+
+
+	from daftlistings import Daft
+
+	d = Daft()
+	offset = 0
+	pages = True
+
+	while pages:
 
     	listings = d.get_listings(
         	county='Dublin City',
@@ -33,18 +75,18 @@ A web scraper for Daft.ie
         	listing_type='properties'
     	)
 
-	    if not listings:
-		    pages = False
+    	if not listings:
+        	pages = False
 
-	    for listing in listings:
-		    print(listing.get_agent_url())
-		    print(listing.get_price()))
-		    print(listing.get_formalised_address())
-		    print(listing.get_daft_link())
-		    print(' ')
+    	for listing in listings:
+        	print(listing.get_agent_url())
+        	print(listing.get_price())
+        	print(listing.get_formalised_address())
+        	print(listing.get_daft_link())
+        	print(' ')
 
 
-	    offset += 10
+    	offset += 10
 
 ##  Methods
 
