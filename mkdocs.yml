@@ -2,7 +2,7 @@ site_name: daftlistings
 theme: cinder
 site_author: Anthony Bloomer
 site_description: A web scraper for Daft.ie
-google_analytics: ['UA-83559405-4', 'auto']
+google_analytics: ['UA-83559405-3', 'auto']
 extra:
     theme_inverse: true
 repo_url: https://github.com/anthonybloomer/daftlistings
