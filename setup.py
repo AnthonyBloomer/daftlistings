@@ -1,8 +1,12 @@
 from setuptools import setup
 
+with open("README.rst", "rb") as f:
+    long_descr = f.read().decode("utf-8")
+    
 setup(name='daftlistings',
-      version='0.7',
+      version='0.8.1',
       description='A web scraper for Daft.ie',
+      long_description=long_descr,
       url='https://github.com/AnthonyBloomer/daftlistings',
       author='Anthony Bloomer',
       keywords=['daft', 'web scraping'],
