@@ -1,6 +1,6 @@
 # daftlistings
 
-A web scraper for Daft.ie  
+A web scraper that enables programmatic interaction with daft.ie. Tested on Python 2.7 and Python 3.5.2
 [View on Github](https://github.com/AnthonyBloomer/daftlistings)
 
 ## Installation
@@ -56,7 +56,7 @@ Get the current sale agreed prices for properties in Dublin.
     	print(listing.get_formalised_address())
     	print(listing.get_daft_link())
 
-Full example:
+Retreive all properties for sale in Dublin.
 
 
 
@@ -104,7 +104,7 @@ The **get_listings** method accepts the following parameters.
 **listing_type**: The listings you'd like to scrape i.e houses, properties, auction or apartments.  
 **sale_agreed**: If set to True, we'll scrape listings that are sale agreed.  
 **sale_type**: Retrieve listings of a certain sale type. Can be set to 'sale' or 'rent'.  
-**sort_by**: Sorts the listing. Can be set to 'date', 'distance', 'prince' or 'upcoming_viewing'.  
+**sort_by**: Sorts the listing. Can be set to 'date', 'distance', 'price' or 'upcoming_viewing'.  
 **sort_order**: 'd' for descending, 'a' for ascending.
 
 
