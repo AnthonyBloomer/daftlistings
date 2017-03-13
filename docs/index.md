@@ -1,6 +1,6 @@
 # daftlistings
 
-A web scraper that enables programmatic interaction with daft.ie. Tested on Python 2.7 and Python 3.5.2
+A web scraper that enables programmatic interaction with daft.ie. Tested on Python 2.7 and Python 3.5.2  
 [View on Github](https://github.com/AnthonyBloomer/daftlistings)
 
 ## Installation
