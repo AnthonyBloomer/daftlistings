@@ -1,7 +1,7 @@
 daftlistings
 ============
 
-A web scraper for daft.ie. Tested on Python 2.7 and Python 3.5.2
+A web scraper that enables programmatic interaction with daft.ie. Tested on Python 2.7 and Python 3.5.2
 
 Install
 -------
@@ -63,7 +63,7 @@ Get the current sale agreed prices for properties in Dublin.
         print(listing.get_formalised_address())
         print(listing.get_daft_link())
 
-Full example:
+Retreive all properties for sale in Dublin.
 
 .. code:: python
 
