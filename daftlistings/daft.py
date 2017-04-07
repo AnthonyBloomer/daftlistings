@@ -64,7 +64,7 @@ class Daft:
         :param listing_type: The listings you'd like to scrape i.e houses, properties, auction or apartments.
         :param sale_agreed: If set to True, we'll scrape listings that are sale agreed.
         :param sale_type: Retrieve listings of a certain sale type. Can be set to 'sale' or 'rent'.
-        :param sort_by: Sorts the listing. Can be set to 'date', 'distance', 'price' or 'upcoming_viewing'.
+        :param sort_by: Sorts the listing. Can be set to 'date', 'distance', 'prince' or 'upcoming_viewing'.
         :param sort_order: 'd' for descending, 'a' for ascending.
         :return: object
         """
@@ -173,7 +173,7 @@ class Listing(Daft):
 
     def get_address_line_1(self):
         formalised_address = self.get_formalised_address()
-        if formalised_address is not None:
+        if formalised_address is None:
             return
         try:
             address = formalised_address.split(',')
@@ -183,7 +183,7 @@ class Listing(Daft):
 
     def get_address_line_2(self):
         formalised_address = self.get_formalised_address()
-        if formalised_address is not None:
+        if formalised_address is None:
             return
 
         try:
@@ -197,7 +197,7 @@ class Listing(Daft):
 
     def get_town(self):
         formalised_address = self.get_formalised_address()
-        if formalised_address is not None:
+        if formalised_address is None:
             return
         try:
             address = formalised_address.split(',')
@@ -207,7 +207,7 @@ class Listing(Daft):
 
     def get_county(self):
         formalised_address = self.get_formalised_address()
-        if formalised_address is not None:
+        if formalised_address is None:
             return
         try:
             address = formalised_address.split(',')
