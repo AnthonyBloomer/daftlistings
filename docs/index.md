@@ -24,20 +24,20 @@ Get the current properties for rent in Dublin that are between €1000 and €15
 
 	from daftlistings import Daft, CommercialType, SaleType, RentType
 
-	d = Daft()
+	daft = Daft()
 
-	listings = d.get_listings(
-    	county='Dublin City',
-    	area='Dublin 15',
-    	listing_type=RentType.APARTMENTS,
-    	min_price=1000,
-    	max_price=1500,
-    	sale_type='rent'
+	listings = daft.get_listings(
+	   county='Dublin City',
+	   area='Dublin 15',
+	   listing_type=RentType.APARTMENTS,
+	   min_price=1000,
+	   max_price=1500,
+	   sale_type='rent'
 	)
 
 	for listing in listings:
-    	print(listing.get_formalised_address())
-    	print(listing.get_daft_link())
+	   print(listing.get_formalised_address())
+	   print(listing.get_daft_link())
 
 Retrieve commercial office listings in Dublin.
 
@@ -53,25 +53,21 @@ Retrieve commercial office listings in Dublin.
         
 Get the current sale agreed prices for properties in Dublin.
 
-	listings = d.get_listings(
-    	county='Dublin City',
-    	area='Dublin 15',
-    	listing_type=SaleType.PROPERTIES,
-    	sale_agreed=True,
-    	min_price=200000,
-    	max_price=250000
+	listings = daft.get_listings(
+	   county='Dublin City',
+	   area='Dublin 15',
+	   listing_type=SaleType.PROPERTIES,
+	   sale_agreed=True,
+	   min_price=200000,
+	   max_price=250000
 	)
 
 	for listing in listings:
-    	print(listing.get_formalised_address())
-    	print(listing.get_daft_link())
+	   print(listing.get_formalised_address())
+	   print(listing.get_daft_link())
 
 Retrieve all properties for sale in Dublin.
 
-
-	from daftlistings import Daft
-
-	d = Daft()
 	offset = 0
 	pages = True
 
