@@ -12,6 +12,7 @@ A web scraper that enables programmatic interaction with daft.ie. Tested on Pyth
     
     git clone https://github.com/AnthonyBloomer/daftlistings.git
     cd daftlistings
+    git checkout develop
     virtualenv env
     source env/bin/activate
     pip install -r requirements.txt
@@ -21,32 +22,41 @@ A web scraper that enables programmatic interaction with daft.ie. Tested on Pyth
 Get the current properties for rent in Dublin that are between €1000 and €1500 per month.
 
 
-	from daftlistings import Daft
+	from daftlistings import Daft, CommercialType, SaleType, RentType
 
 	d = Daft()
 
 	listings = d.get_listings(
     	county='Dublin City',
     	area='Dublin 15',
-    	listing_type='apartments',
+    	listing_type=RentType.APARTMENTS,
     	min_price=1000,
     	max_price=1500,
     	sale_type='rent'
-		)
+	)
 
 	for listing in listings:
     	print(listing.get_formalised_address())
     	print(listing.get_daft_link())
 
+Retrieve commercial office listings in Dublin.
 
+    listings = daft.get_listings(
+        county='Dublin',
+        listing_type=SaleType.COMMERCIAL,
+        commercial_property_type=CommercialType.OFFICE
+    )
 
+    for listing in listings:
+        print(listing.get_formalised_address())
+        print(listing.get_daft_link())
+        
 Get the current sale agreed prices for properties in Dublin.
-
 
 	listings = d.get_listings(
     	county='Dublin City',
     	area='Dublin 15',
-    	listing_type='properties',
+    	listing_type=SaleType.PROPERTIES,
     	sale_agreed=True,
     	min_price=200000,
     	max_price=250000
@@ -56,8 +66,7 @@ Get the current sale agreed prices for properties in Dublin.
     	print(listing.get_formalised_address())
     	print(listing.get_daft_link())
 
-Retreive all properties for sale in Dublin.
-
+Retrieve all properties for sale in Dublin.
 
 
 	from daftlistings import Daft
@@ -72,7 +81,7 @@ Retreive all properties for sale in Dublin.
         	county='Dublin City',
         	area='Dublin 15',
         	offset=offset,
-        	listing_type='properties'
+        	listing_type=SaleType.PROPERTIES
     	)
 
     	if not listings:
@@ -88,6 +97,7 @@ Retreive all properties for sale in Dublin.
 
     	offset += 10
 
+
 ##  Methods
 
 ###  get_listings()
@@ -101,12 +111,12 @@ The **get_listings** method accepts the following parameters.
 **county**: The county to get listings for.  
 **area**: The area in the county to get listings for. Optional.  
 **offset**: The page number.  
-**listing_type**: The listings you'd like to scrape i.e houses, properties, auction or apartments.  
-**sale_agreed**: If set to True, we'll scrape listings that are sale agreed.  
 **sale_type**: Retrieve listings of a certain sale type. Can be set to 'sale' or 'rent'.  
-**sort_by**: Sorts the listing. Can be set to 'date', 'distance', 'price' or 'upcoming_viewing'.  
-**sort_order**: 'd' for descending, 'a' for ascending.
-
+**listing_type**: The listings you'd like to scrape. Set using the SaleType object or RentType.   
+**sale_agreed**: If set to True, we'll scrape listings that are sale agreed.    
+**sort_by**: Sorts the listing. Can be set to 'date', 'distance', 'price' or 'upcoming_viewing'.    
+**sort_order**: 'd' for descending, 'a' for ascending.  
+**commercial_property_type**: The commercial property type can be set using the CommercialType object.
 
 ### get_address_line_1()
 
@@ -163,6 +173,7 @@ This method returns the number of bathrooms.
 ### get_price()
 
 This method returns the price.
+
 
 
 
