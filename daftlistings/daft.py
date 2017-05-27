@@ -7,6 +7,7 @@ class SaleType(object):
     PROPERTIES = '/property-for-sale/'
     AUCTION = '/houses-for-auction/'
     APARTMENTS = '/apartments-for-sale/'
+    COMMERCIAL = '/commercial-property/'
 
 
 class RentType(object):
@@ -87,6 +88,8 @@ class Daft:
                 listing_type = SaleType.AUCTION
             elif listing_type == 'apartments':
                 listing_type = SaleType.APARTMENTS
+            elif listing_type == 'commercial':
+                listing_type = SaleType.COMMERCIAL
             else:
                 raise Exception('Wrong listing type.')
 
