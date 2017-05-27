@@ -18,7 +18,7 @@ class CommercialType(object):
     COMMERCIAL_SITE = '/commercial-site/'
     AGRICULTURAL_LAND = '/agricultural-farm-land/'
     RESTAURANT_BAR_HOTEL = '/restaurant-hotel-bar/'
-    INDUSTRIAL_SITE = '/industrial_site'
+    INDUSTRIAL_SITE = '/industrial_site/'
     DEV_LAND = '/development-land/'
     INVESTMENT_PROPERTY = '/investment-property/'
     SERVICED_OFFICE = '/serviced-office/'
