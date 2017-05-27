@@ -80,7 +80,7 @@ Retrieve all properties for sale in Dublin 15.
             county='Dublin City',
             area='Dublin 15',
             offset=offset,
-            listing_type='properties'
+            listing_type=SaleType.PROPERTIES
         )
 
         if not listings:
