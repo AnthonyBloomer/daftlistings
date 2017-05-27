@@ -29,14 +29,14 @@ Get the current properties for rent in Dublin that are between €1000 and
 
 .. code:: python
 
-    from daftlistings import Daft
+    from daftlistings import Daft, CommercialType, SaleType, RentType
 
     d = Daft()
 
     listings = d.get_listings(
         county='Dublin City',
         area='Dublin 15',
-        listing_type='apartments',
+        listing_type=RentType.APARTMENTS,
         min_price=1000,
         max_price=1500,
         sale_type='rent'
@@ -46,6 +46,21 @@ Get the current properties for rent in Dublin that are between €1000 and
         print(listing.get_formalised_address())
         print(listing.get_daft_link())
 
+Retrieve commercial office listings in Dublin.
+
+.. code:: python
+
+    listings = daft.get_listings(
+        county='Dublin',
+        listing_type=SaleType.COMMERCIAL,
+        commercial_property_type=CommercialType.OFFICE
+    )
+
+    for listing in listings:
+        print(listing.get_formalised_address())
+        print(listing.get_daft_link())
+
+
 Get the current sale agreed prices for properties in Dublin.
 
 .. code:: python
@@ -53,7 +68,7 @@ Get the current sale agreed prices for properties in Dublin.
     listings = d.get_listings(
         county='Dublin City',
         area='Dublin 15',
-        listing_type='properties',
+        listing_type=SaleType.PROPERTIES,
         sale_agreed=True,
         min_price=200000,
         max_price=250000
@@ -63,7 +78,7 @@ Get the current sale agreed prices for properties in Dublin.
         print(listing.get_formalised_address())
         print(listing.get_daft_link())
 
-Retreive all properties for sale in Dublin.
+Retrieve all properties for sale in Dublin 15.
 
 .. code:: python
 
@@ -80,7 +95,7 @@ Retreive all properties for sale in Dublin.
             county='Dublin City',
             area='Dublin 15',
             offset=offset,
-            listing_type='properties'
+            listing_type=SaleType.PROPERTIES
         )
 
         if not listings:
@@ -95,6 +110,7 @@ Retreive all properties for sale in Dublin.
 
 
         offset += 10
+
 
 Full Documentation
 ------------------
