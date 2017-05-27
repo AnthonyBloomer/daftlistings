@@ -10,6 +10,12 @@ class SaleType(object):
     COMMERCIAL = '/commercial-property/'
 
 
+class CommercialType(object):
+    OFFICE = '/offices/'
+    RETAIL = '/retail-units/'
+    OFFICE_SHARE = '/office-share/'
+    INDUSTRIAL_UNIT = '/industrial-unit/'
+
 class RentType(object):
     HOUSES = '/houses-for-rent/'
     APARTMENTS = '/apartments-for-rent/'
@@ -51,7 +57,8 @@ class Daft:
             min_beds=None,
             max_beds=None,
             sort_by=None,
-            sort_order=None
+            sort_order=None,
+            commercial_property_type=None
     ):
 
         """
@@ -60,13 +67,14 @@ class Daft:
         :param max_price: The maximum value of the listing
         :param min_price: The minimum value of the listing
         :param county: The county to get listings for.
-        :param area: The area in the county to get listings for. Optional.
+        :param area: The area in the county to get listings for. If not set then we'll search all areas within the county.
         :param offset: The page number.
-        :param listing_type: The listings you'd like to scrape i.e houses, properties, auction or apartments.
+        :param listing_type: The listings you'd like to scrape i.e houses, properties, auction, commercial or apartments.
         :param sale_agreed: If set to True, we'll scrape listings that are sale agreed.
         :param sale_type: Retrieve listings of a certain sale type. Can be set to 'sale' or 'rent'.
         :param sort_by: Sorts the listing. Can be set to 'date', 'distance', 'prince' or 'upcoming_viewing'.
         :param sort_order: 'd' for descending, 'a' for ascending.
+        :param commercial_property_type
         :return: object
         """
 
@@ -138,8 +146,23 @@ class Daft:
             else:
                 query_params += QueryParam.SORT_ORDER + 'd'
                 query_params += QueryParam.SORT_BY + sort_by
+            
+        
+        commercial = ''
+        
+        if commercial_property_type:
+            if commercial_property_type == 'office':
+                commercial = CommercialType.OFFICE
+            elif commercial_property_type == 'retail':
+                commercial = CommercialType.RETAIL
+            elif commercial_property_type == 'office_share':
+                commercial = CommercialType.OFFICE_SHARE
+            elif commercial_property_type == 'industrial_unit':
+                commercial = CommercialType.INDUSTRIAL_UNIT
+            else:
+                raise Exception('Wrong commercial property type.')
 
-        soup = self._call(self._base + '/' + county + listing_type + area + '?offset=' + str(offset) + query_params)
+        soup = self._call(self._base + '/' + county + listing_type + area + commercial +'?offset=' + str(offset) + query_params)
         divs = soup.find_all("div", {"class": "box"})
 
         listings = []
