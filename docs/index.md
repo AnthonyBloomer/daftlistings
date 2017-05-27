@@ -12,6 +12,7 @@ A web scraper that enables programmatic interaction with daft.ie. Tested on Pyth
     
     git clone https://github.com/AnthonyBloomer/daftlistings.git
     cd daftlistings
+    git checkout develop
     virtualenv env
     source env/bin/activate
     pip install -r requirements.txt
@@ -32,7 +33,7 @@ Get the current properties for rent in Dublin that are between €1000 and €15
     	min_price=1000,
     	max_price=1500,
     	sale_type='rent'
-		)
+	)
 
 	for listing in listings:
     	print(listing.get_formalised_address())
@@ -110,10 +111,10 @@ The **get_listings** method accepts the following parameters.
 **county**: The county to get listings for.  
 **area**: The area in the county to get listings for. Optional.  
 **offset**: The page number.  
-**sale_type**: Retrieve listings of a certain sale type. Can be set to 'sale' or 'rent'.
-**listing_type**: The listings you'd like to scrape. Set using the SaleType object or RentType.  
+**sale_type**: Retrieve listings of a certain sale type. Can be set to 'sale' or 'rent'.  
+**listing_type**: The listings you'd like to scrape. Set using the SaleType object or RentType.   
 **sale_agreed**: If set to True, we'll scrape listings that are sale agreed.    
-**sort_by**: Sorts the listing. Can be set to 'date', 'distance', 'price' or 'upcoming_viewing'.  
+**sort_by**: Sorts the listing. Can be set to 'date', 'distance', 'price' or 'upcoming_viewing'.    
 **sort_order**: 'd' for descending, 'a' for ascending.  
 **commercial_property_type**: The commercial property type can be set using the CommercialType object.
 
@@ -172,6 +173,7 @@ This method returns the number of bathrooms.
 ### get_price()
 
 This method returns the price.
+
 
 
 
