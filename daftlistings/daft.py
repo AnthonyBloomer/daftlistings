@@ -96,10 +96,16 @@ class Daft:
         area = area.replace(" ", "-").lower()
 
         if min_price:
-            price += QueryParam.MIN_PRICE + str(min_price)
+            if isinstance(min_price, int):
+                price += QueryParam.MIN_PRICE + str(min_price)
+            else:
+                raise Exception('Min price should be integer.')
 
         if max_price:
-            price += QueryParam.MAX_PRICE + str(max_price)
+            if isinstance(min_price, int):
+                price += QueryParam.MAX_PRICE + str(max_price)
+            else:
+                raise Exception('Max price should be integer.')
 
         if sale_agreed:
             if min_price or max_price:

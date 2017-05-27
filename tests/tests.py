@@ -42,6 +42,22 @@ class DaftTests(unittest.TestCase):
         price = price.replace(',', '')
         self.assertTrue(200000 <= int(price) <= 250000)
 
+    def test_properties_sale_agreed_with_invalid_prices(self):
+        raised_exception = False
+        try:
+            listings = self.daft.get_listings(
+                county='Dublin City',
+                area='Dublin 15',
+                listing_type=SaleType.PROPERTIES,
+                sale_agreed=True,
+                min_price="twooo",
+                max_price=""
+            )
+        except:
+            raised_exception = True
+
+        self.assertTrue(raised_exception)
+
     def test_properties_with_price(self):
         listings = self.daft.get_listings(
             county='Dublin City',
