@@ -46,6 +46,21 @@ Get the current properties for rent in Dublin that are between €1000 and
         print(listing.get_formalised_address())
         print(listing.get_daft_link())
 
+Retrieve commercial office listings in Dublin.
+
+.. code:: python
+
+    listings = daft.get_listings(
+        county='Dublin',
+        listing_type=SaleType.COMMERCIAL,
+        commercial_property_type=CommercialType.OFFICE
+    )
+
+    for listing in listings:
+        print(listing.get_formalised_address())
+        print(listing.get_daft_link())
+
+
 Get the current sale agreed prices for properties in Dublin.
 
 .. code:: python
@@ -96,20 +111,6 @@ Retrieve all properties for sale in Dublin 15.
 
         offset += 10
 
-
-Retrieve commercial office listings in Dublin.
-
-.. code:: python
-
-    listings = daft.get_listings(
-        county='Dublin',
-        listing_type=SaleType.COMMERCIAL,
-        commercial_property_type=CommercialType.OFFICE
-    )
-
-    for listing in listings:
-        print(listing.get_formalised_address())
-        print(listing.get_daft_link())
 
 Full Documentation
 ------------------

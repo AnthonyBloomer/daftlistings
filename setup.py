@@ -4,7 +4,7 @@ with open("README.rst", "rb") as f:
     long_descr = f.read().decode("utf-8")
     
 setup(name='daftlistings',
-      version='0.8.1',
+      version='0.9',
       description='A web scraper for Daft.ie',
       long_description=long_descr,
       url='https://github.com/AnthonyBloomer/daftlistings',
