@@ -15,6 +15,14 @@ class CommercialType(object):
     RETAIL = '/retail-units/'
     OFFICE_SHARE = '/office-share/'
     INDUSTRIAL_UNIT = '/industrial-unit/'
+    COMMERCIAL_SITE = '/commercial-site/'
+    AGRICULTURAL_LAND = '/agricultural-farm-land/'
+    RESTAURANT_BAR_HOTEL = '/restaurant-hotel-bar/'
+    INDUSTRIAL_SITE = '/industrial_site'
+    DEV_LAND = '/development-land/'
+    INVESTMENT_PROPERTY = '/investment-property/'
+    SERVICED_OFFICE = '/serviced-office/'
+
 
 class RentType(object):
     HOUSES = '/houses-for-rent/'
@@ -87,34 +95,6 @@ class Daft:
         county = county.replace(" ", "-").lower()
         area = area.replace(" ", "-").lower()
 
-        if sale_type == 'sale':
-            if listing_type == 'houses':
-                listing_type = SaleType.HOUSES
-            elif listing_type == 'properties':
-                listing_type = SaleType.PROPERTIES
-            elif listing_type == 'auction':
-                listing_type = SaleType.AUCTION
-            elif listing_type == 'apartments':
-                listing_type = SaleType.APARTMENTS
-            elif listing_type == 'commercial':
-                listing_type = SaleType.COMMERCIAL
-            else:
-                raise Exception('Wrong listing type.')
-
-        elif sale_type == 'rent':
-            if listing_type == 'houses':
-                listing_type = RentType.HOUSES
-            elif listing_type == 'apartments':
-                listing_type = RentType.APARTMENTS
-            elif listing_type == 'any':
-                listing_type = RentType.ANY
-            elif listing_type == 'studio':
-                listing_type = RentType.STUDIO
-            elif listing_type == 'flat':
-                listing_type = RentType.FLAT
-            else:
-                raise Exception('Wrong listing type.')
-
         if min_price:
             price += QueryParam.MIN_PRICE + str(min_price)
 
@@ -146,23 +126,11 @@ class Daft:
             else:
                 query_params += QueryParam.SORT_ORDER + 'd'
                 query_params += QueryParam.SORT_BY + sort_by
-            
-        
-        commercial = ''
-        
-        if commercial_property_type:
-            if commercial_property_type == 'office':
-                commercial = CommercialType.OFFICE
-            elif commercial_property_type == 'retail':
-                commercial = CommercialType.RETAIL
-            elif commercial_property_type == 'office_share':
-                commercial = CommercialType.OFFICE_SHARE
-            elif commercial_property_type == 'industrial_unit':
-                commercial = CommercialType.INDUSTRIAL_UNIT
-            else:
-                raise Exception('Wrong commercial property type.')
 
-        soup = self._call(self._base + '/' + county + listing_type + area + commercial +'?offset=' + str(offset) + query_params)
+        commercial = commercial_property_type if commercial_property_type is not None else ''
+
+        soup = self._call(
+            self._base + '/' + county + listing_type + area + commercial + '?offset=' + str(offset) + query_params)
         divs = soup.find_all("div", {"class": "box"})
 
         listings = []
