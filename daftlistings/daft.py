@@ -171,6 +171,12 @@ class Listing(Daft):
             return self.data.find('strong', {'class': 'price'}).text
         except:
             return
+       
+    def get_price_change(self):
+        try:
+            return self.data.find('div', {'class': 'price-changes-sr'}).text
+        except:
+            return
 
     def get_formalised_address(self):
         try:
@@ -293,3 +299,12 @@ class Listing(Daft):
             return int(nb.split()[0])
         except:
             return
+    
+    def get_area_size(self):
+        try:
+            info = self.data.find('ul', {"class": "info"}).text
+            s = info.split('|')
+            return s[1].strip()
+        except:
+            return
+        
