@@ -83,7 +83,9 @@ The SortOrder object allows you to sort the listings descending or ascending. Fo
 
 .. code:: python
 
-    listings = self.daft.get_listings(
+    from daftlistings import SortOrder, SortType
+
+    listings = daft.get_listings(
         county='Dublin City',
         area='Dublin 15',
         listing_type=SaleType.PROPERTIES,
@@ -100,7 +102,7 @@ The SortOrder object allows you to sort the listings descending or ascending. Fo
         print(listing.get_price())
 
 
-Retrieve all properties for sale in Dublin 15.
+Retrieve all properties for sale in Dublin 15. This example loops through each page of listings and prints the result.
 
 .. code:: python
 
