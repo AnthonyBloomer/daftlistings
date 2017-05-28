@@ -67,7 +67,7 @@ class Daft:
             offset=0,
             min_price=None,
             max_price=None,
-            listing_type='properties',
+            listing_type=SaleType.PROPERTIES,
             sale_agreed=False,
             sale_type='sale',
             min_beds=None,
