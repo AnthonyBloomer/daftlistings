@@ -174,7 +174,7 @@ class DaftTests(unittest.TestCase):
         self.assertTrue(len(listings) > 0)
         self.assertTrue(int(price) <= 175000)
 
-    def test_sort_by_date(self):
+    def test_sort_by_date_descending(self):
 
         listings = self.daft.get_listings(
             county='Dublin City',
@@ -194,6 +194,7 @@ class DaftTests(unittest.TestCase):
         last_date = time.strptime(last[0], "%d/%m/%Y")
         self.assertTrue(first_date > last_date)
 
+    def test_sort_by_date_ascending(self):
         listings = self.daft.get_listings(
             county='Dublin City',
             area='Dublin 15',
