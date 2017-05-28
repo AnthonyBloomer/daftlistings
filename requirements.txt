@@ -1,3 +1,4 @@
+appdirs==1.4.3
 backports-abc==0.4
 beautifulsoup4==4.5.1
 bs4==0.0.1
@@ -11,6 +12,8 @@ mkdocs==0.15.3
 mkdocs-bootstrap==0.1.1
 mkdocs-bootswatch==0.4.0
 mkdocs-cinder==0.9.4
+packaging==16.8
+pyparsing==2.2.0
 PyYAML==3.12
 requests==2.11.1
 singledispatch==3.4.0.3

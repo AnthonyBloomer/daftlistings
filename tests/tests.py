@@ -1,5 +1,5 @@
 import unittest
-from daftlistings import Daft, CommercialType, SaleType, RentType
+from daftlistings import Daft, CommercialType, SaleType, RentType, SortOrder, SortType
 
 
 class DaftTests(unittest.TestCase):
@@ -41,6 +41,7 @@ class DaftTests(unittest.TestCase):
         price = price[1:]
         price = price.replace(',', '')
         self.assertTrue(200000 <= int(price) <= 250000)
+        self.assertTrue('Dublin 15' in listing.get_formalised_address())
 
     def test_properties_sale_agreed_with_invalid_prices(self):
         raised_exception = False
@@ -73,6 +74,7 @@ class DaftTests(unittest.TestCase):
         price = price[1:]
         price = price.replace(',', '')
         self.assertTrue(200000 <= int(price) <= 250000)
+        self.assertTrue('Dublin 15' in listing.get_formalised_address())
 
     def test_apartments_to_let(self):
         listings = self.daft.get_listings(
@@ -103,6 +105,7 @@ class DaftTests(unittest.TestCase):
             price = price.split()
             price = price[0]
         self.assertTrue(1000 <= int(price) <= 2000)
+        self.assertTrue('Dublin 15' in listing.get_formalised_address())
 
     def test_commercial_properties(self):
         listings = self.daft.get_listings(
@@ -111,6 +114,17 @@ class DaftTests(unittest.TestCase):
         )
         self.assertTrue(len(listings) > 0)
 
+    def test_area_commercial_properties(self):
+        listings = self.daft.get_listings(
+            county='Dublin',
+            listing_type=SaleType.COMMERCIAL,
+            area='Dublin 15'
+        )
+
+        self.assertTrue(len(listings) > 0)
+        listing = listings[0]
+        self.assertTrue('Dublin 15' in listing.get_formalised_address())
+
     def test_commercial_property_types(self):
         listings = self.daft.get_listings(
             county='Dublin',
@@ -118,3 +132,43 @@ class DaftTests(unittest.TestCase):
             commercial_property_type=CommercialType.OFFICE
         )
         self.assertTrue(len(listings) > 0)
+
+        listings = self.daft.get_listings(
+            county='Dublin',
+            listing_type=SaleType.COMMERCIAL,
+            commercial_property_type=CommercialType.DEV_LAND
+        )
+        self.assertTrue(len(listings) > 0)
+
+    def test_commercial_properties_with_price(self):
+        listings = self.daft.get_listings(
+            county='Dublin',
+            listing_type=SaleType.COMMERCIAL,
+            commercial_property_type=CommercialType.OFFICE,
+            min_price=150000
+        )
+        listing = listings[0]
+        price = listing.get_price()
+        price = price[1:]
+        price = price.replace(',', '')
+
+        self.assertTrue(int(price) >= 150000)
+
+    def test_sort(self):
+        listings = self.daft.get_listings(
+            county='Dublin City',
+            area='Dublin 15',
+            listing_type=SaleType.PROPERTIES,
+            sort_order=SortOrder.ASCENDING,
+            sort_by=SortType.PRICE,
+            min_price=150000,
+            max_price=175000
+
+        )
+
+        listing = listings[0]
+        price = listing.get_price()
+        price = price[1:]
+        price = price.replace(',', '')
+        self.assertTrue(len(listings) > 0)
+        self.assertTrue(int(price) <= 175000)

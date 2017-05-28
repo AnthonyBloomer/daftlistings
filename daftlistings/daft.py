@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-import urllib2
+import requests
 
 
 class SaleType(object):
@@ -44,13 +44,21 @@ class QueryParam(object):
     SORT_ORDER = '&s%5Bsort_type%5D='
 
 
-class Daft:
-    _base = 'http://www.daft.ie'
-    _opener = urllib2.build_opener()
-    _opener.addheaders = [('User-Agent', 'Mozilla/5.0')]
+class SortOrder(object):
+    ASCENDING = 'a'
+    DESCENDING = 'd'
 
+
+class SortType(object):
+    DATE = 'date'
+    DISTANCE = 'distance'
+    PRICE = 'price'
+    UPCOMING_VIEWING = 'upcoming_viewing'
+
+
+class Daft:
     def __init__(self):
-        pass
+        self._base = 'http://www.daft.ie'
 
     def get_listings(
             self,
@@ -80,7 +88,7 @@ class Daft:
         :param listing_type: The listings you'd like to scrape i.e houses, properties, auction, commercial or apartments.
         :param sale_agreed: If set to True, we'll scrape listings that are sale agreed.
         :param sale_type: Retrieve listings of a certain sale type. Can be set to 'sale' or 'rent'.
-        :param sort_by: Sorts the listing. Can be set to 'date', 'distance', 'prince' or 'upcoming_viewing'.
+        :param sort_by: Sorts the listing. Can be set to 'date', 'distance', 'price' or 'upcoming_viewing'.
         :param sort_order: 'd' for descending, 'a' for ascending.
         :param commercial_property_type
         :return: object
@@ -102,7 +110,7 @@ class Daft:
                 raise Exception('Min price should be integer.')
 
         if max_price:
-            if isinstance(min_price, int):
+            if isinstance(max_price, int):
                 price += QueryParam.MAX_PRICE + str(max_price)
             else:
                 raise Exception('Max price should be integer.')
@@ -143,8 +151,12 @@ class Daft:
         [listings.append(Listing(div)) for div in divs]
         return listings
 
-    def _call(self, url):
-        return BeautifulSoup(self._opener.open(url), 'html.parser')
+    @staticmethod
+    def _call(url):
+        req = requests.get(url)
+        if req.status_code != 200:
+            raise Exception(req.status_code)
+        return BeautifulSoup(req.content, 'html.parser')
 
 
 class Listing(Daft):
