@@ -80,18 +80,18 @@ class Daft:
         """
         :param max_beds: The maximum number of beds.
         :param min_beds: The minimum number of beds.
-        :param max_price: The maximum value of the listing
-        :param min_price: The minimum value of the listing
+        :param max_price: The maximum value of the listing.
+        :param min_price: The minimum value of the listing.
         :param county: The county to get listings for.
         :param area: The area in the county to get listings for. If not set then we'll search all areas within the county.
-        :param offset: The page number.
+        :param offset: The page number. Default is 0.
         :param listing_type: The listings you'd like to scrape i.e houses, properties, auction, commercial or apartments.
         :param sale_agreed: If set to True, we'll scrape listings that are sale agreed.
         :param sale_type: Retrieve listings of a certain sale type. Can be set to 'sale' or 'rent'.
-        :param sort_by: Sorts the listing. Can be set to 'date', 'distance', 'price' or 'upcoming_viewing'.
-        :param sort_order: 'd' for descending, 'a' for ascending.
-        :param commercial_property_type
-        :return: object
+        :param sort_by: You can sort by price, distance, upcoming viewing or date using the SortType object.
+        :param sort_order: Use the SortOrder object to sort the listings descending or ascending.
+        :param commercial_property_type. Use the CommercialType object to set the commercial property type.
+        :return: Listing object
         """
 
         if area is None:
