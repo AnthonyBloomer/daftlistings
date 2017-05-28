@@ -8,6 +8,7 @@ class SaleType(object):
     AUCTION = '/houses-for-auction/'
     APARTMENTS = '/apartments-for-sale/'
     COMMERCIAL = '/commercial-property/'
+    NEW = '/new-homes-for-sale/'
 
 
 class CommercialType(object):
