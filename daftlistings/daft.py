@@ -31,6 +31,7 @@ class RentType(object):
     ANY = '/residential-property-for-rent/'
     STUDIO = '/studio-apartments-for-rent/'
     FLAT = '/flats-for-rent/'
+    SHORT_TERM = '/short-term-rentals/'
 
 
 class QueryParam(object):
