@@ -1,4 +1,5 @@
 import unittest
+import time
 from daftlistings import Daft, CommercialType, SaleType, RentType, SortOrder, SortType
 
 
@@ -154,7 +155,7 @@ class DaftTests(unittest.TestCase):
 
         self.assertTrue(int(price) >= 150000)
 
-    def test_sort(self):
+    def test_sort_by_price(self):
         listings = self.daft.get_listings(
             county='Dublin City',
             area='Dublin 15',
@@ -172,3 +173,41 @@ class DaftTests(unittest.TestCase):
         price = price.replace(',', '')
         self.assertTrue(len(listings) > 0)
         self.assertTrue(int(price) <= 175000)
+
+    def test_sort_by_date(self):
+
+        listings = self.daft.get_listings(
+            county='Dublin City',
+            area='Dublin 15',
+            listing_type=SaleType.PROPERTIES,
+            sort_order=SortOrder.DESCENDING,
+            sort_by=SortType.DATE,
+            min_price=150000,
+            max_price=175000
+
+        )
+
+        first = listings[0].get_posted_since().split()
+        last = listings[-1].get_posted_since().split()
+
+        first_date = time.strptime(first[0], "%d/%m/%Y")
+        last_date = time.strptime(last[0], "%d/%m/%Y")
+        self.assertTrue(first_date > last_date)
+
+        listings = self.daft.get_listings(
+            county='Dublin City',
+            area='Dublin 15',
+            listing_type=SaleType.PROPERTIES,
+            sort_order=SortOrder.ASCENDING,
+            sort_by=SortType.DATE,
+            min_price=150000,
+            max_price=175000
+
+        )
+
+        first = listings[0].get_posted_since().split()
+        last = listings[-1].get_posted_since().split()
+
+        first_date = time.strptime(first[0], "%d/%m/%Y")
+        last_date = time.strptime(last[0], "%d/%m/%Y")
+        self.assertTrue(first_date < last_date)
