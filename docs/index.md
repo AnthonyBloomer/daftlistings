@@ -32,7 +32,6 @@ Get the current properties for rent in Dublin that are between €1000 and €15
 	   listing_type=RentType.APARTMENTS,
 	   min_price=1000,
 	   max_price=1500,
-	   sale_type='rent'
 	)
 
 	for listing in listings:
@@ -66,7 +65,7 @@ Get the current sale agreed prices for properties in Dublin.
 	   print(listing.get_formalised_address())
 	   print(listing.get_daft_link())
 
-Retrieve all properties for sale in Dublin.
+Retrieve all properties for sale in Dublin 15. This example loops through each page of listings and prints the result.
 
 	offset = 0
 	pages = True
@@ -110,8 +109,8 @@ The **get_listings** method accepts the following parameters.
 **sale_type**: Retrieve listings of a certain sale type. Can be set to 'sale' or 'rent'.  
 **listing_type**: The listings you'd like to scrape. Set using the SaleType object or RentType.   
 **sale_agreed**: If set to True, we'll scrape listings that are sale agreed.    
-**sort_by**: Sorts the listing. Can be set to 'date', 'distance', 'price' or 'upcoming_viewing'.    
-**sort_order**: 'd' for descending, 'a' for ascending.  
+**sort_by**: Sort the listings by price, distance, upcoming viewing or date using the SortType object.
+**sort_order**: The SortOrder object allows you to sort the listings descending or ascending
 **commercial_property_type**: The commercial property type can be set using the CommercialType object.
 
 ### get_address_line_1()
@@ -170,6 +169,9 @@ This method returns the number of bathrooms.
 
 This method returns the price.
 
+### get_area_size()
+
+The method returns the area size of the listing. This method should be called when retrieving commercial type listings.
 
 
 
