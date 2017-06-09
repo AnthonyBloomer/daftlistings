@@ -39,7 +39,6 @@ Get the current properties for rent in Dublin that are between €1000 and
         listing_type=RentType.APARTMENTS,
         min_price=1000,
         max_price=1500,
-        sale_type='rent'
     )
 
     for listing in listings:
