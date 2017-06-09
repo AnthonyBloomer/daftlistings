@@ -1,6 +1,6 @@
 import unittest
 import time
-from daftlistings import Daft, CommercialType, SaleType, RentType, SortOrder, SortType
+from daftlistings import Daft, SaleType, RentType, SortOrder, SortType, CommercialType
 
 
 class DaftTests(unittest.TestCase):
@@ -75,14 +75,12 @@ class DaftTests(unittest.TestCase):
         price = price[1:]
         price = price.replace(',', '')
         self.assertTrue(200000 <= int(price) <= 250000)
-        self.assertTrue('Dublin 15' in listing.get_formalised_address())
 
     def test_apartments_to_let(self):
         listings = self.daft.get_listings(
             county='Dublin City',
             area='Dublin 15',
             listing_type=RentType.APARTMENTS,
-            sale_type='rent'
         )
 
         self.assertTrue(len(listings) > 0)
@@ -94,7 +92,6 @@ class DaftTests(unittest.TestCase):
             listing_type=RentType.APARTMENTS,
             min_price=1000,
             max_price=2000,
-            sale_type='rent'
         )
 
         self.assertTrue(len(listings) > 0)
@@ -106,7 +103,6 @@ class DaftTests(unittest.TestCase):
             price = price.split()
             price = price[0]
         self.assertTrue(1000 <= int(price) <= 2000)
-        self.assertTrue('Dublin 15' in listing.get_formalised_address())
 
     def test_commercial_properties(self):
         listings = self.daft.get_listings(
@@ -124,7 +120,6 @@ class DaftTests(unittest.TestCase):
 
         self.assertTrue(len(listings) > 0)
         listing = listings[0]
-        self.assertTrue('Dublin 15' in listing.get_formalised_address())
 
     def test_commercial_property_types(self):
         listings = self.daft.get_listings(
@@ -212,4 +207,3 @@ class DaftTests(unittest.TestCase):
         first_date = time.strptime(first[0], "%d/%m/%Y")
         last_date = time.strptime(last[0], "%d/%m/%Y")
         self.assertTrue(first_date < last_date)
-
