@@ -1,4 +1,6 @@
-import utils
+import requests
+from bs4 import BeautifulSoup
+from exception import DaftException
 
 
 class Listing(object):
@@ -77,7 +79,10 @@ class Listing(object):
     def get_listing_image(self):
         try:
             link = self.get_daft_link()
-            soup = utils.request(link)
+            req = requests.get(link)
+            if req.status_code != 200:
+                raise DaftException(status_code=req.status_code, reason=req.reason)
+            soup = BeautifulSoup(req.content, 'html.parser')
             span = soup.find("span", {"class": "p1"})
             return span.find('img')['src']
         except:
