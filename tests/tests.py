@@ -6,6 +6,7 @@ from daftlistings import Daft, SaleType, RentType, SortOrder, SortType, Commerci
 class DaftTests(unittest.TestCase):
     def setUp(self):
         self.daft = Daft()
+        self.daft.set_verbose(True)
 
     def test_properties(self):
         listings = self.daft.get_listings(

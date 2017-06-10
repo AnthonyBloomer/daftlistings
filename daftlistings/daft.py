@@ -4,7 +4,14 @@ from enums import *
 from bs4 import BeautifulSoup
 from exception import DaftException
 
+
 class Daft(object):
+    verbose = False
+
+    def set_verbose(self, verbose):
+        self.verbose = verbose
+
+
     def get_listings(
             self,
             county,
@@ -74,10 +81,10 @@ class Daft(object):
             query_params += str(QueryParam.IGNORED_AGENTS)
 
         if min_beds:
-            query_params += str(QueryParam.MIN_BEDS + str(min_beds))
+            query_params += str(QueryParam.MIN_BEDS) + str(min_beds)
 
         if max_beds:
-            query_params += str(QueryParam.MAX_BEDS + str(max_beds))
+            query_params += str(QueryParam.MAX_BEDS) + str(max_beds)
 
         if sort_by:
             if sort_order:
@@ -88,9 +95,13 @@ class Daft(object):
                 query_params += str(QueryParam.SORT_BY) + sort_by
 
         commercial = str(commercial_property_type) if commercial_property_type is not None else ''
-        query = 'http://www.daft.ie' + '/' + county + str(listing_type) + area + str(commercial) + '?offset=' + str(offset) + query_params
+        query = 'http://www.daft.ie/' + county + str(listing_type) + area + str(commercial) + '?offset=' + str(
+            offset) + query_params
 
         req = requests.get(query)
+        if self.verbose:
+            print("Status code: " + str(req.status_code))
+            print("HTML: " + req.content)
         if req.status_code != 200:
             raise DaftException(status_code=req.status_code, reason=req.reason)
         soup = BeautifulSoup(req.content, 'html.parser')
