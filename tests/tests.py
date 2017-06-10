@@ -208,3 +208,4 @@ class DaftTests(unittest.TestCase):
         first_date = time.strptime(first[0], "%d/%m/%Y")
         last_date = time.strptime(last[0], "%d/%m/%Y")
         self.assertTrue(first_date < last_date)
+

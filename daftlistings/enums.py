@@ -79,6 +79,7 @@ class SortOrder(Enum):
     def __repr__(self):
         return "<SortOrder: %s>" % self
 
+
 class SortType(Enum):
     DATE = 'date'
     DISTANCE = 'distance'

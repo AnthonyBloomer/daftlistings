@@ -11,7 +11,6 @@ class Daft(object):
     def set_verbose(self, verbose):
         self.verbose = verbose
 
-
     def get_listings(
             self,
             county,
@@ -91,7 +90,7 @@ class Daft(object):
                 query_params += str(QueryParam.SORT_ORDER) + str(sort_order)
                 query_params += str(QueryParam.SORT_BY) + str(sort_by)
             else:
-                query_params += str(QueryParam.SORT_ORDER) + 'd'
+                query_params += str(QueryParam.SORT_ORDER) + str(SortOrder.DESCENDING)
                 query_params += str(QueryParam.SORT_BY) + sort_by
 
         commercial = str(commercial_property_type) if commercial_property_type is not None else ''
