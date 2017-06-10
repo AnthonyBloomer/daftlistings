@@ -1,14 +1,20 @@
 daftlistings
 ============
 
-A library that enables programmatic interaction with daft.ie. Tested on Python 2.7 and Python 3.5.2
+A library that enables programmatic interaction with daft.ie. The library can retrieve properties by location, sale type,
+price and property type. This library has been tested on Python 2.7 and Python 3.5.2
 
 Install
 -------
 
+daftlistings is available on the Python Package Index (PyPI) at https://pypi.python.org/pypi/daftlistings
+
+You can install daftlistings using pip.
+
 ::
 
     pip install daftlistings
+
 
 Developing Locally
 ------------------
