@@ -3,12 +3,12 @@
 from daftlistings import Daft, CommercialType, SaleType
 
 daft = Daft()
+daft.set_county("Dublin")
+daft.set_listing_type(SaleType.COMMERCIAL)
+daft.set_commercial_property_type(CommercialType.OFFICE)
+daft.set_sale_agreed(True)
 
-listings = daft.get_listings(
-    county='Dublin',
-    listing_type=SaleType.COMMERCIAL,
-    commercial_property_type=CommercialType.OFFICE
-)
+listings = daft.get_listings()
 
 for listing in listings:
     print(listing.get_formalised_address())

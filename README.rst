@@ -1,8 +1,8 @@
 daftlistings
 ============
 
-A library that enables programmatic interaction with daft.ie. The library can retrieve properties by location, sale type,
-price and property type. This library has been tested on Python 2.7 and Python 3.5.2
+A library that enables programmatic interaction with daft.ie allowing you to retrieve properties by location, sale type,
+price and property type. daftlistings has been tested on Python 2.7 and Python 3.5.2
 
 Install
 -------
@@ -138,6 +138,10 @@ Retrieve all properties for sale in Dublin 15. This example loops through each p
         offset += 10
 
 
+Contributing
+____________
+
+Suggestions / Pu
 Full Documentation
 ------------------
 

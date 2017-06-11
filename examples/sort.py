@@ -5,16 +5,15 @@ from daftlistings import Daft, SaleType, SortOrder, SortType
 
 daft = Daft()
 
-listings = daft.get_listings(
-    county='Dublin City',
-    area='Dublin 15',
-    listing_type=SaleType.PROPERTIES,
-    sort_order=SortOrder.ASCENDING,
-    sort_by=SortType.PRICE,
-    min_price=150000,
-    max_price=175000
+daft.set_county("Dublin City")
+daft.set_area("Dublin 15")
+daft.set_listing_type(SaleType.PROPERTIES)
+daft.set_sort_order(SortOrder.ASCENDING)
+daft.set_sort_by(SortType.PRICE)
+daft.set_min_price(150000)
+daft.set_max_price(175000)
 
-)
+listings = daft.get_listings()
 
 for listing in listings:
     print(listing.get_formalised_address())
