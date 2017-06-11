@@ -166,7 +166,7 @@ This will create a directory called site. Copy the site directory to a new direc
 
     git checkout gh-pages
 
-Copy any changes from the **site** directory created to this directory.
+Copy any changes from the **site** directory to this directory and push your changes.
 
 
 Contributing
