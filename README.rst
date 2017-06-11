@@ -136,6 +136,7 @@ Retrieve all properties for sale in Dublin 15. This example loops through each p
 
         offset += 10
 
-------------------
+Documentation
+-------------
 
 https://anthonybloomer.github.io/daftlistings/
