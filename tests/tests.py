@@ -4,7 +4,6 @@ from daftlistings import Daft, SaleType, RentType, SortOrder, SortType, Commerci
 
 
 class DaftTests(unittest.TestCase):
-
     def test_properties(self):
         daft = Daft()
         daft.set_county("Dublin City")
@@ -192,3 +191,12 @@ class DaftTests(unittest.TestCase):
         first_date = time.strptime(first[0], "%d/%m/%Y")
         last_date = time.strptime(last[0], "%d/%m/%Y")
         self.assertTrue(first_date < last_date)
+
+    def test_properties_with_max_beds(self):
+        daft = Daft()
+        daft.set_county('Dublin')
+        daft.set_min_beds(3)
+        daft.set_max_beds(3)
+        listings = daft.get_listings()
+        listing = listings[0]
+        self.assertTrue(listing.get_num_bedrooms() == 3)
