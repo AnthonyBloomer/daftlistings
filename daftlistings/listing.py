@@ -183,6 +183,23 @@ class Listing(object):
         except:
             return
 
+    def get_contact_number(self):
+        """
+        This method returns the contact phone number.
+        :return:
+        """
+        link = self.get_daft_link()
+        req = requests.get(link)
+        if req.status_code != 200:
+            raise DaftException(status_code=req.status_code, reason=req.reason)
+        soup = BeautifulSoup(req.content, 'html.parser')
+        try:
+            number = soup.find('div', {'class': 'phone-number'}).text
+            return number.strip()
+
+        except:
+            return
+
     def get_daft_link(self):
         """
         This method returns the url of the listing.

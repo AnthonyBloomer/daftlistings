@@ -1,5 +1,5 @@
 daftlistings 1.1.0
-============
+==================
 
 A library that enables programmatic interaction with daft.ie allowing you to retrieve properties by location, sale type,
 price and property type. daftlistings has been tested on Python 2.7 and Python 3.5.2
@@ -16,8 +16,11 @@ You can install daftlistings using pip.
     pip install daftlistings
 
 
-Developing Locally
-------------------
+Development Version
+-------------------
+
+This library is under active development.
+Before new versions are pushed to PyPI, you can download the development version to avail of any new features.
 
 ::
 
@@ -140,3 +143,10 @@ Documentation
 -------------
 
 https://anthonybloomer.github.io/daftlistings/
+
+
+Contributing
+------------
+
+Contribute to daftlistings by suggesting new features or providing feedback / criticism.
+Pull requests are always welcome too so feel free to hack away.
