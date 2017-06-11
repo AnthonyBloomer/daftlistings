@@ -27,6 +27,46 @@ class Listing(object):
         except:
             return
 
+    def get_facilities(self):
+        """
+        This method returns the properties facilities.
+        :return:
+        """
+        facilities = []
+        link = self.get_daft_link()
+        req = requests.get(link)
+        if req.status_code != 200:
+            raise DaftException(status_code=req.status_code, reason=req.reason)
+        soup = BeautifulSoup(req.content, 'html.parser')
+        try:
+            facility_table = soup.find('table', {'id': 'facilities'})
+            list_items = facility_table.find_all(['li'])
+            for li in list_items:
+                facilities.append(li.text)
+            return facilities
+        except:
+            return
+
+    def get_features(self):
+        """
+        This method returns the properties features.
+        :return:
+        """
+        features = []
+        link = self.get_daft_link()
+        req = requests.get(link)
+        if req.status_code != 200:
+            raise DaftException(status_code=req.status_code, reason=req.reason)
+        soup = BeautifulSoup(req.content, 'html.parser')
+        try:
+            feats = soup.find('div', {'id': 'features'})
+            list_items = feats.find_all(['li'])
+            for li in list_items:
+                features.append(li.text)
+            return features
+        except:
+            return
+
     def get_formalised_address(self):
         """
         This method returns the formalised address.
@@ -150,7 +190,7 @@ class Listing(object):
         """
         link = self.data.find('a', href=True)
         try:
-            return 'http://www.daft.ie/' + link['href']
+            return 'https://www.daft.ie' + link['href']
         except:
             return
 
