@@ -150,12 +150,14 @@ To update the documentation, clone the repository and edit **docs/index.md**
 
 To view your changes, run:
 
-.. code::
+.. code:: shell
+
     mkdocs serve
 
 To build the documentation, run:
 
-.. code::
+.. code:: shell
+
     mkdocs build
 
 This will create a directory called site. Copy the site directory to a new directory and checkout gh-pages
