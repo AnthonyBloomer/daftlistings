@@ -38,14 +38,13 @@ Get the current properties for rent in Dublin that are between €1000 and
     from daftlistings import Daft, CommercialType, SaleType, RentType
 
     daft = Daft()
+    daft.set_county('Dublin City')
+    daft.set_area('Dublin 15')
+    daft.set_listing_type(RentType.APARTMENTS)
+    daft.set_min_price(1000)
+    daft.set_max_price(1500)
 
-    listings = daft.get_listings(
-        county='Dublin City',
-        area='Dublin 15',
-        listing_type=RentType.APARTMENTS,
-        min_price=1000,
-        max_price=1500,
-    )
+    listings = daft.get_listings()
 
     for listing in listings:
         print(listing.get_formalised_address())
@@ -55,11 +54,11 @@ Retrieve commercial office listings in Dublin.
 
 .. code:: python
 
-    listings = daft.get_listings(
-        county='Dublin',
-        listing_type=SaleType.COMMERCIAL,
-        commercial_property_type=CommercialType.OFFICE
-    )
+    daft.set_county("Dublin")
+    daft.set_listing_type(SaleType.COMMERCIAL)
+    daft.set_commercial_property_type(CommercialType.OFFICE)
+
+    listings = daft.get_listings()
 
     for listing in listings:
         print(listing.get_formalised_address())
@@ -70,14 +69,14 @@ Get the current sale agreed prices for properties in Dublin.
 
 .. code:: python
 
-    listings = daft.get_listings(
-        county='Dublin City',
-        area='Dublin 15',
-        listing_type=SaleType.PROPERTIES,
-        sale_agreed=True,
-        min_price=200000,
-        max_price=250000
-    )
+    daft.set_county('Dublin City')
+    daft.set_area('Dublin 15')
+    daft.set_listing_type(SaleType.PROPERTIES)
+    daft.set_min_price(1000)
+    daft.set_max_price(1500)
+    daft.set_sale_agreed(True)
+
+    listings = daft.get_listings()
 
     for listing in listings:
         print(listing.get_formalised_address())
@@ -90,16 +89,16 @@ The SortOrder object allows you to sort the listings descending or ascending. Fo
 
     from daftlistings import SortOrder, SortType
 
-    listings = daft.get_listings(
-        county='Dublin City',
-        area='Dublin 15',
-        listing_type=SaleType.PROPERTIES,
-        sort_order=SortOrder.ASCENDING,
-        sort_by=SortType.PRICE,
-        min_price=150000,
-        max_price=175000
+    daft.set_county('Dublin City')
+    daft.set_area('Dublin 15')
+    daft.set_listing_type(SaleType.PROPERTIES)
+    daft.set_min_price(150000)
+    daft.set_max_price(175000)
+    daft.set_sort_order(SortOrder.ASCENDING)
+    daft.set_sort_by(SortType.PRICE)
 
-    )
+
+    listings = daft.get_listings()
 
     for listing in listings:
         print(listing.get_formalised_address())
@@ -117,12 +116,12 @@ Retrieve all properties for sale in Dublin 15. This example loops through each p
 
     while pages:
 
-        listings = daft.get_listings(
-            county='Dublin City',
-            area='Dublin 15',
-            offset=offset,
-            listing_type=SaleType.PROPERTIES
-        )
+        daft.set_county('Dublin City')
+        daft.set_area('Dublin 15')
+        daft.set_listing_type(SaleType.PROPERTIES)
+        daft.set_offset(offset)
+
+        listings = daft.get_listings()
 
         if not listings:
             pages = False
@@ -137,12 +136,6 @@ Retrieve all properties for sale in Dublin 15. This example loops through each p
 
         offset += 10
 
-
-Contributing
-____________
-
-Suggestions / Pu
-Full Documentation
 ------------------
 
 https://anthonybloomer.github.io/daftlistings/
