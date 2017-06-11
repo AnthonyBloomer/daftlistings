@@ -142,7 +142,29 @@ Retrieve all properties for sale in Dublin 15. This example loops through each p
 Documentation
 -------------
 
-https://anthonybloomer.github.io/daftlistings/
+The current documentation can be viewed here: https://anthonybloomer.github.io/daftlistings/
+
+The documentation has been created using mkdocs.
+
+To update the documentation, clone the repository and edit **docs/index.md**
+
+To view your changes, run:
+
+.. code::
+    mkdocs serve
+
+To build the documentation, run:
+
+.. code::
+    mkdocs build
+
+This will create a directory called site. Copy the site directory to a new directory and checkout gh-pages
+
+.. code::
+
+    git checkout gh-pages
+
+Copy any changes from the **site** directory created to this directory.
 
 
 Contributing
