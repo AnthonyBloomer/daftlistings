@@ -4,4 +4,4 @@ class DaftException(Exception):
         self.reason = reason
 
     def __str__(self):
-        return "Error: Status code: %s Message: %s" % (self.status_code, self.reason)
+        return "Error: Status code: %s Reason: %s" % (self.status_code, self.reason)
