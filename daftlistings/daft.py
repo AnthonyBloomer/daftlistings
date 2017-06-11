@@ -50,7 +50,7 @@ class Daft(object):
 
     def set_offset(self, offset):
         """
-        The page number.
+        The page number which is in increments of 10. The default page number is 0.
         :param offset:
         :return:
         """

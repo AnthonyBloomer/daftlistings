@@ -14,9 +14,13 @@ mkdocs-bootstrap==0.1.1
 mkdocs-bootswatch==0.4.0
 mkdocs-cinder==0.9.4
 packaging==16.8
+pkginfo==1.4.1
 pyparsing==2.2.0
 PyYAML==3.12
 requests==2.11.1
+requests-toolbelt==0.8.0
 singledispatch==3.4.0.3
 six==1.10.0
 tornado==4.4.2
+tqdm==4.14.0
+twine==1.9.1
