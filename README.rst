@@ -1,4 +1,4 @@
-daftlistings
+daftlistings 1.1.0
 ============
 
 A library that enables programmatic interaction with daft.ie allowing you to retrieve properties by location, sale type,
