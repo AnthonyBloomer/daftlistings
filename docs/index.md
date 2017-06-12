@@ -13,7 +13,10 @@ You can install daftlistings using pip.
     pip install daftlistings
 
 # Developing locally
-    
+
+This library is under active development.
+Before new versions are pushed to PyPI, you can download the development version to avail of any new features.
+
     git clone https://github.com/AnthonyBloomer/daftlistings.git
     cd daftlistings
     virtualenv env
@@ -239,11 +242,55 @@ This method returns the number of bathrooms.
 
 This method returns the price.
 
+## get_price_change
+
+This method returns the price change.
+
+## get_facilities
+
+This method returns the properties facilities.
+
+## get_features
+
+This method returns the properties features.
+
 ## get_area_size
 
 The method returns the area size of the listing. This method should be called when retrieving commercial type listings.
 
 
+## get_contact_number
+
+This method returns the contact number.
+
+Documentation
+-------------
+
+The current documentation can be viewed here: https://anthonybloomer.github.io/daftlistings/
+
+The documentation has been created using mkdocs.
+
+To update the documentation, clone the repository and edit **docs/index.md**
+
+To view your changes, run:
 
 
+    mkdocs serve
 
+To build the documentation, run:
+
+
+    mkdocs build
+
+This will create a directory called site. Copy the site directory to a new directory and checkout gh-pages
+
+    git checkout gh-pages
+
+Copy any changes from the **site** directory to this directory and push your changes.
+
+
+Contributing
+------------
+
+Contribute to daftlistings by suggesting new features or providing feedback / criticism.
+Pull requests are always welcome too so feel free to hack away.

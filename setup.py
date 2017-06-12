@@ -4,7 +4,7 @@ with open("README.rst", "rb") as f:
     long_descr = f.read().decode("utf-8")
     
 setup(name='daftlistings',
-      version='1.1.0',
+      version='1.1.1',
       description='A library that enables programmatic interaction with daft.ie. ',
       long_description=long_descr,
       url='https://github.com/AnthonyBloomer/daftlistings',

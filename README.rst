@@ -1,5 +1,5 @@
-daftlistings 1.1.0
-==================
+daftlistings
+============
 
 A library that enables programmatic interaction with daft.ie allowing you to retrieve properties by location, sale type,
 price and property type. daftlistings has been tested on Python 2.7 and Python 3.5.2
