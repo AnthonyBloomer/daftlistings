@@ -160,7 +160,18 @@ class Daft(object):
         :return:
         """
         self._commercial_property_type = str(commercial_property_type)
-
+        
+    def _call(self, url):
+        req = requests.get(url, headers=self._headers)
+        if self._verbose:
+            print("URL: " + req.url)
+            print("Status code: " + str(req.status_code))
+            print("HTML: " + req.content)
+        if req.status_code != 200:
+            raise DaftException(status_code=req.status_code, reason=req.reason)
+        soup = BeautifulSoup(req.content, 'html.parser')
+        return soup
+        
     def get_listings(self):
         """
         The get listings function returns an array of Listing objects.
@@ -191,16 +202,8 @@ class Daft(object):
                 self._query_params += str(QueryParam.SORT_BY) + self._sort_by
 
         commercial = self._commercial_property_type if self._commercial_property_type is not None else ''
-        req = requests.get(self._base + self._county + str(self._listing_type) + str(self._area) + commercial
-                           + '?offset=' + str(self._offset) + self._query_params, headers=self._headers)
-        if self._verbose:
-            print("Status code: " + str(req.status_code))
-            print("HTML: " + req.content)
-        if req.status_code != 200:
-            raise DaftException(status_code=req.status_code, reason=req.reason)
-        soup = BeautifulSoup(req.content, 'html.parser')
+        soup = self._call(self._base + self._county + str(self._listing_type) + str(self._area) + commercial + '?offset=' + str(self._offset) + self._query_params)
         divs = soup.find_all("div", {"class": "box"})
-
         listings = []
         [listings.append(Listing(div)) for div in divs]
         return listings
