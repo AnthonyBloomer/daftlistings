@@ -56,7 +56,7 @@ class Daft(object):
         """
         if open_viewing:
             self._open_viewing = open_viewing
-            self._query_params += str(QueryParam.OPEN_VIEWING) + str(1)
+            self._query_params += str(QueryParam.OPEN_VIEWING)
 
     def set_offset(self, offset):
         """
