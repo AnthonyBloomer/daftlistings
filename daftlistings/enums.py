@@ -65,7 +65,7 @@ class QueryParam(Enum):
     SORT_ORDER = '&s%5Bsort_type%5D='
     COMMERCIAL_MIN = '&s%5Bmin_size%5D='
     COMMERCIAL_MAX = '&s%5Bmax_size%5D='
-    OPEN_VIEWING = '&s%5Bopenviewing%5D='
+    OPEN_VIEWING = '&s%5Bopenviewing%5D=1'
 
     def __str__(self):
         return self._value_
