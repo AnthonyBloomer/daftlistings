@@ -27,7 +27,7 @@ class Daft(object):
 
     def set_verbose(self, verbose):
         """
-        Set to True to print the HTTP status code and HTML content when making a request to Daft.
+        Set to True to print the HTML content.
         :param verbose
         """
         self._verbose = verbose
@@ -226,7 +226,7 @@ class Daft(object):
                 self._query_params += str(QueryParam.SORT_ORDER) + str(SortOrder.DESCENDING)
                 self._query_params += str(QueryParam.SORT_BY) + self._sort_by
 
-        request = Request()
+        request = Request(verbose=self._verbose)
         commercial_property_type = str(self._commercial_property_type) if self._commercial_property_type is not None else ""
         url = self._base + self._county + commercial_property_type + str(self._listing_type) + str(self._area) + '?offset=' + str(
             self._offset) + self._query_params
