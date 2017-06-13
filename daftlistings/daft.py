@@ -8,6 +8,7 @@ from exception import DaftException
 class Daft(object):
     def __init__(self):
         self._base = 'https://www.daft.ie/'
+        self._headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.0; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'}
         self._verbose = False
         self._area = None
         self._offset = 0
@@ -113,14 +114,13 @@ class Daft(object):
         :param min_beds:
         :return:
         """
-
-        self._min_beds = str(min_beds)
-
+        
         try:
             int(min_beds)
         except:
             raise Exception("Minimum number of beds should be an integer.")
-
+            
+        self._min_beds = str(min_beds)
         self._query_params += str(QueryParam.MIN_BEDS) + self._min_beds
 
     def set_max_beds(self, max_beds):
@@ -192,7 +192,7 @@ class Daft(object):
 
         commercial = self._commercial_property_type if self._commercial_property_type is not None else ''
         req = requests.get(self._base + self._county + str(self._listing_type) + str(self._area) + commercial
-                           + '?offset=' + str(self._offset) + self._query_params)
+                           + '?offset=' + str(self._offset) + self._query_params, headers=self._headers)
         if self._verbose:
             print("Status code: " + str(req.status_code))
             print("HTML: " + req.content)
