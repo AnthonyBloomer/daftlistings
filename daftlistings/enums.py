@@ -8,6 +8,7 @@ class SaleType(Enum):
     APARTMENTS = '/apartments-for-sale/'
     COMMERCIAL = '/commercial-property/'
     NEW = '/new-homes-for-sale/'
+    OVERSEAS='/overseas-property-for-sale/'
 
     def __str__(self):
         return self._value_
@@ -28,6 +29,7 @@ class CommercialType(Enum):
     DEV_LAND = '/development-land/'
     INVESTMENT_PROPERTY = '/investment-property/'
     SERVICED_OFFICE = '/serviced-office/'
+    OVERSEAS = '/overseas-commercial-property-for-sale/'
 
     def __str__(self):
         return self._value_
@@ -61,6 +63,9 @@ class QueryParam(Enum):
     MAX_BEDS = '&s%5Bmxb%5D='
     SORT_BY = '&s%5Bsort_by%5D='
     SORT_ORDER = '&s%5Bsort_type%5D='
+    COMMERCIAL_MIN = '&s%5Bmin_size%5D='
+    COMMERCIAL_MAX = '&s%5Bmax_size%5D='
+    OPEN_VIEWING = '&s%5Bopenviewing%5D='
 
     def __str__(self):
         return self._value_

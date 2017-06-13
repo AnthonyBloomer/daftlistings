@@ -1,15 +1,13 @@
-import requests
 from listing import Listing
 from enums import *
-from bs4 import BeautifulSoup
-from exception import DaftException
+from request import Request
 
 
 class Daft(object):
     def __init__(self):
         self._base = 'https://www.daft.ie/'
-        self._headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.0; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'}
         self._verbose = False
+        self._open_viewing = False
         self._area = None
         self._offset = 0
         self._county = None
@@ -22,6 +20,8 @@ class Daft(object):
         self._sort_by = None
         self._sort_order = None
         self._commercial_property_type = None
+        self._commercial_min_size = None
+        self._commercial_max_size = None
         self._query_params = ""
         self._price = ""
 
@@ -48,6 +48,16 @@ class Daft(object):
         """
         self._county = county.replace(" ", "-").lower()
 
+    def set_open_viewing(self, open_viewing):
+        """
+        Set to True to only search for properties that have upcoming 'open for viewing' dates.
+        :param open_viewing:
+        :return:
+        """
+        if open_viewing:
+            self._open_viewing = open_viewing
+            self._query_params += str(QueryParam.OPEN_VIEWING) + str(1)
+
     def set_offset(self, offset):
         """
         The page number which is in increments of 10. The default page number is 0.
@@ -55,10 +65,8 @@ class Daft(object):
         :return:
         """
 
-        try:
-            int(offset)
-        except:
-            raise Exception("Offset should be an integer.")
+        if not isinstance(offset, int) or offset < 0:
+            raise Exception("Offset should be a positive integer.")
 
         self._offset = str(offset)
 
@@ -114,12 +122,12 @@ class Daft(object):
         :param min_beds:
         :return:
         """
-        
+
         try:
             int(min_beds)
         except:
             raise Exception("Minimum number of beds should be an integer.")
-            
+
         self._min_beds = str(min_beds)
         self._query_params += str(QueryParam.MIN_BEDS) + self._min_beds
 
@@ -160,18 +168,35 @@ class Daft(object):
         :return:
         """
         self._commercial_property_type = str(commercial_property_type)
-        
-    def _call(self, url):
-        req = requests.get(url, headers=self._headers)
-        if self._verbose:
-            print("URL: " + req.url)
-            print("Status code: " + str(req.status_code))
-            print("HTML: " + req.content)
-        if req.status_code != 200:
-            raise DaftException(status_code=req.status_code, reason=req.reason)
-        soup = BeautifulSoup(req.content, 'html.parser')
-        return soup
-        
+
+    def set_commercial_min_size(self, c_min):
+        """
+        The minimum size in sq ft.
+        :param c_min:
+        :return:
+        """
+        try:
+            int(c_min)
+        except:
+            raise Exception("Size should be an integer.")
+
+        self._commercial_min_size = str(c_min)
+        self._query_params += str(QueryParam.COMMERCIAL_MIN) + self._commercial_min_size
+
+    def set_commercial_max_size(self, max):
+        """
+        The maximum size in sq ft.
+        :param max:
+        :return:
+        """
+        try:
+            int(max)
+        except:
+            raise Exception("Size should be an integer.")
+
+        self._commercial_max_size = str(max)
+        self._query_params += str(QueryParam.COMMERCIAL_MAX) + self._commercial_max_size
+
     def get_listings(self):
         """
         The get listings function returns an array of Listing objects.
@@ -201,8 +226,12 @@ class Daft(object):
                 self._query_params += str(QueryParam.SORT_ORDER) + str(SortOrder.DESCENDING)
                 self._query_params += str(QueryParam.SORT_BY) + self._sort_by
 
-        commercial = self._commercial_property_type if self._commercial_property_type is not None else ''
-        soup = self._call(self._base + self._county + str(self._listing_type) + str(self._area) + commercial + '?offset=' + str(self._offset) + self._query_params)
+        request = Request()
+        commercial_property_type = str(self._commercial_property_type) if self._commercial_property_type is not None else ""
+        url = self._base + self._county + commercial_property_type + str(self._listing_type) + str(self._area) + '?offset=' + str(
+            self._offset) + self._query_params
+
+        soup = request.get(url)
         divs = soup.find_all("div", {"class": "box"})
         listings = []
         [listings.append(Listing(div)) for div in divs]

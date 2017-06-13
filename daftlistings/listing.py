@@ -1,11 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
 from exception import DaftException
+from request import Request
 
 
 class Listing(object):
     def __init__(self, data):
-        self.data = data
+        self._data = data
 
     def get_price(self):
         """
@@ -13,7 +14,7 @@ class Listing(object):
         :return:
         """
         try:
-            return self.data.find('strong', {'class': 'price'}).text
+            return self._data.find('strong', {'class': 'price'}).text
         except:
             return
 
@@ -23,9 +24,20 @@ class Listing(object):
         :return:
         """
         try:
-            return self.data.find('div', {'class': 'price-changes-sr'}).text
+            return self._data.find('div', {'class': 'price-changes-sr'}).text
         except:
             return
+
+    def get_upcoming_viewings(self):
+        """
+        Returns an array of upcoming viewings for a property.
+        :return:
+        """
+        upcoming_viewings = []
+        viewings = self._data.find_all('div', {'class': 'smi-onview-text'})
+        for viewing in viewings:
+            upcoming_viewings.append(viewing.text.strip())
+        return upcoming_viewings
 
     def get_facilities(self):
         """
@@ -34,15 +46,12 @@ class Listing(object):
         """
         facilities = []
         link = self.get_daft_link()
-        req = requests.get(link)
-        if req.status_code != 200:
-            raise DaftException(status_code=req.status_code, reason=req.reason)
-        soup = BeautifulSoup(req.content, 'html.parser')
+        req = Request()
+        soup = req.get(link)
         try:
             facility_table = soup.find('table', {'id': 'facilities'})
             list_items = facility_table.find_all(['li'])
-            for li in list_items:
-                facilities.append(li.text)
+            facilities.append([li.text for li in list_items])
             return facilities
         except:
             return
@@ -54,15 +63,12 @@ class Listing(object):
         """
         features = []
         link = self.get_daft_link()
-        req = requests.get(link)
-        if req.status_code != 200:
-            raise DaftException(status_code=req.status_code, reason=req.reason)
-        soup = BeautifulSoup(req.content, 'html.parser')
+        req = Request()
+        soup = req.get(link)
         try:
             feats = soup.find('div', {'id': 'features'})
             list_items = feats.find_all(['li'])
-            for li in list_items:
-                features.append(li.text)
+            features.append([li.text for li in list_items])
             return features
         except:
             return
@@ -73,7 +79,7 @@ class Listing(object):
         :return:
         """
         try:
-            t = self.data.find('a').contents[0]
+            t = self._data.find('a').contents[0]
             s = t.split('-')
             a = s[0].strip()
             if 'SALE AGREED' in a:
@@ -166,7 +172,7 @@ class Listing(object):
         :return:
         """
         try:
-            agent = self.data.find('ul', {'class': 'links'}).text
+            agent = self._data.find('ul', {'class': 'links'}).text
             return agent.split(':')[1].strip()
         except:
             return
@@ -177,7 +183,7 @@ class Listing(object):
         :return:
         """
         try:
-            agent = self.data.find('ul', {'class': 'links'})
+            agent = self._data.find('ul', {'class': 'links'})
             links = agent.find_all('a')
             return links[1]['href']
         except:
@@ -205,7 +211,7 @@ class Listing(object):
         This method returns the url of the listing.
         :return:
         """
-        link = self.data.find('a', href=True)
+        link = self._data.find('a', href=True)
         try:
             return 'https://www.daft.ie' + link['href']
         except:
@@ -217,7 +223,7 @@ class Listing(object):
         :return:
         """
         try:
-            info = self.data.find('ul', {"class": "info"}).text
+            info = self._data.find('ul', {"class": "info"}).text
             s = info.split('|')
             return s[0].strip()
         except:
@@ -229,7 +235,7 @@ class Listing(object):
         :return:
         """
         try:
-            info = self.data.find('div', {"class": "date_entered"}).text
+            info = self._data.find('div', {"class": "date_entered"}).text
             s = info.split(':')
             return s[-1].strip()
         except:
@@ -241,7 +247,7 @@ class Listing(object):
         :return:
         """
         try:
-            info = self.data.find('ul', {"class": "info"}).text
+            info = self._data.find('ul', {"class": "info"}).text
             s = info.split('|')
             nb = s[1].strip()
             return int(nb.split()[0])
@@ -254,7 +260,7 @@ class Listing(object):
         :return:
         """
         try:
-            info = self.data.find('ul', {"class": "info"}).text
+            info = self._data.find('ul', {"class": "info"}).text
             s = info.split('|')
             nb = s[2].strip()
             return int(nb.split()[0])
@@ -267,7 +273,7 @@ class Listing(object):
         :return:
         """
         try:
-            info = self.data.find('ul', {"class": "info"}).text
+            info = self._data.find('ul', {"class": "info"}).text
             s = info.split('|')
             return s[1].strip()
         except:
