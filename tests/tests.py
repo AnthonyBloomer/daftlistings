@@ -114,6 +114,7 @@ class DaftTests(unittest.TestCase):
         self.assertTrue(len(listings) > 0)
 
     def test_commercial_property_types(self):
+
         daft = Daft()
         daft.set_county("Dublin City")
         daft.set_listing_type(SaleType.COMMERCIAL)
@@ -128,6 +129,9 @@ class DaftTests(unittest.TestCase):
         daft.set_commercial_property_type(CommercialType.OFFICE)
         daft.set_min_price(150000)
         listings = daft.get_listings()
+
+        self.assertTrue(len(listings) > 0)
+
         listing = listings[0]
         price = listing.get_price()
         price = price[1:]
@@ -167,6 +171,8 @@ class DaftTests(unittest.TestCase):
         daft.set_max_price(175000)
         listings = daft.get_listings()
 
+        self.assertTrue(len(listings) > 0)
+
         first = listings[0].get_posted_since().split()
         last = listings[-1].get_posted_since().split()
 
@@ -185,6 +191,8 @@ class DaftTests(unittest.TestCase):
         daft.set_max_price(175000)
         listings = daft.get_listings()
 
+        self.assertTrue(len(listings) > 0)
+
         first = listings[0].get_posted_since().split()
         last = listings[-1].get_posted_since().split()
 
@@ -198,5 +206,30 @@ class DaftTests(unittest.TestCase):
         daft.set_min_beds(3)
         daft.set_max_beds(3)
         listings = daft.get_listings()
+        self.assertTrue(len(listings) > 0)
         listing = listings[0]
         self.assertTrue(listing.get_num_bedrooms() == 3)
+
+    def test_properties_without_county(self):
+        try:
+            daft = Daft()
+            listing = daft.get_listings()
+        except Exception:
+            myBoolean = True
+            self.assertTrue(myBoolean)
+
+
+    def test_open_viewing(self):
+        daft = Daft()
+        daft.set_county("Dublin")
+        daft.set_open_viewing(True)
+        daft.set_min_price(1000)
+        daft.set_max_price(1500)
+        daft.set_listing_type(RentType.APARTMENTS)
+        listings =  daft.get_listings()
+        self.assertTrue(len(listings) > 0)
+        for listing in daft.get_listings():
+            self.assertTrue(len(listing.get_upcoming_viewings()) > 0)
+
+
+

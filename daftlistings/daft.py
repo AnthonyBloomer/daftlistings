@@ -203,6 +203,9 @@ class Daft(object):
         :return: Listing object
         """
 
+        if self._county is None:
+            raise Exception("County is required.")
+
         if self._area is None:
             self._area = ''
 
@@ -227,7 +230,9 @@ class Daft(object):
                 self._query_params += str(QueryParam.SORT_BY) + self._sort_by
 
         request = Request(verbose=self._verbose)
-        url = self._base + self._county + str(self._listing_type) + str(self._commercial_property_type) + str( self._area) + '?offset=' + str( self._offset) + self._query_params
+
+        url = self._base + self._county + str(self._listing_type) + str(self._commercial_property_type) + str(
+            self._area) + '?offset=' + str(self._offset) + self._query_params
 
         soup = request.get(url)
         divs = soup.find_all("div", {"class": "box"})
