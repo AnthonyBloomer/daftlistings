@@ -123,7 +123,7 @@ class DaftTests(unittest.TestCase):
 
     def test_commercial_properties_with_price(self):
         daft = Daft()
-        daft.set_county("Dublin City")
+        daft.set_county("Dublin")
         daft.set_listing_type(SaleType.COMMERCIAL)
         daft.set_commercial_property_type(CommercialType.OFFICE)
         daft.set_min_price(150000)

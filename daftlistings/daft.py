@@ -19,7 +19,7 @@ class Daft(object):
         self._sale_agreed = False
         self._sort_by = None
         self._sort_order = None
-        self._commercial_property_type = None
+        self._commercial_property_type = ""
         self._commercial_min_size = None
         self._commercial_max_size = None
         self._query_params = ""
@@ -227,9 +227,7 @@ class Daft(object):
                 self._query_params += str(QueryParam.SORT_BY) + self._sort_by
 
         request = Request(verbose=self._verbose)
-        commercial_property_type = str(self._commercial_property_type) if self._commercial_property_type is not None else ""
-        url = self._base + self._county + commercial_property_type + str(self._listing_type) + str(self._area) + '?offset=' + str(
-            self._offset) + self._query_params
+        url = self._base + self._county + str(self._listing_type) + str(self._commercial_property_type) + str( self._area) + '?offset=' + str( self._offset) + self._query_params
 
         soup = request.get(url)
         divs = soup.find_all("div", {"class": "box"})
