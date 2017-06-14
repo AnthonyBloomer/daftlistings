@@ -93,7 +93,7 @@ class Daft(object):
         try:
             int(max_price)
         except:
-            raise Exception("Min price should be an integer.")
+            raise Exception("Max price should be an integer.")
 
         self._max_price = str(max_price)
         self._price += str(QueryParam.MAX_PRICE) + self._max_price

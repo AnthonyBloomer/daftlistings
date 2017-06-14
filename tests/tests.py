@@ -218,7 +218,6 @@ class DaftTests(unittest.TestCase):
             myBoolean = True
             self.assertTrue(myBoolean)
 
-
     def test_open_viewing(self):
         daft = Daft()
         daft.set_county("Dublin")
@@ -226,10 +225,16 @@ class DaftTests(unittest.TestCase):
         daft.set_min_price(1000)
         daft.set_max_price(1500)
         daft.set_listing_type(RentType.APARTMENTS)
-        listings =  daft.get_listings()
+        listings = daft.get_listings()
         self.assertTrue(len(listings) > 0)
         for listing in daft.get_listings():
             self.assertTrue(len(listing.get_upcoming_viewings()) > 0)
 
-
-
+    def test_properties_with_negative_max(self):
+        daft = Daft()
+        daft.set_county("Dublin City")
+        daft.set_area("Dublin 15")
+        daft.set_max_price(-1000)
+        daft.set_listing_type(SaleType.PROPERTIES)
+        listings = daft.get_listings()
+        self.assertTrue(len(listings) == 0)
