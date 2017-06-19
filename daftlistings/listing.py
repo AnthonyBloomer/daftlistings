@@ -277,6 +277,14 @@ class Listing(object):
             return
 
     def contact_advertiser(self, name, email, contact_number, message):
+        """
+        This method allows you to contact the advertiser of a listing.
+        :param name: Your name
+        :param email: Your email address.
+        :param contact_number: Your contact number.
+        :param message: Your message.
+        :return: 
+        """
         req = Request()
         link = self.get_daft_link()
         soup = req.get(link)
