@@ -34,7 +34,7 @@ Examples
 --------
 
 Get the current properties for rent in Dublin that are between €1000 and
-€1500 per month and cntact the advertiser for each listing.
+€1500 per month and contact the advertiser for each listing.
 
 .. code:: python
 
