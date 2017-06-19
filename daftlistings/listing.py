@@ -303,3 +303,5 @@ class Listing(object):
             'agent_id': agent_id['value'],
             'id': ad_id['value']
         })
+        
+        return True
