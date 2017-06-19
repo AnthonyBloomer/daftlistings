@@ -1,3 +1,5 @@
+# Get apartments to let in Dublin City between 1000 and 1500 and contact each advertiser. 
+
 from daftlistings import Daft, RentType
 
 daft = Daft()
