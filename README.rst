@@ -34,7 +34,7 @@ Examples
 --------
 
 Get the current properties for rent in Dublin that are between €1000 and
-€1500 per month.
+€1500 per month and cntact the advertiser for each listing.
 
 .. code:: python
 
@@ -52,6 +52,16 @@ Get the current properties for rent in Dublin that are between €1000 and
     for listing in listings:
         print(listing.get_formalised_address())
         print(listing.get_daft_link())
+        
+        contact = listing.contact_advertiser(
+            name="Jane Doe",
+            contact_number="019202222",
+            email="jane@example.com",
+            message="Hi, I seen your listing on daft.ie and I would like to schedule a viewing."
+        )
+        
+        if contact:
+            print("Message sent")
 
 Retrieve commercial office listings in Dublin.
 
