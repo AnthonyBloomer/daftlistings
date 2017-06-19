@@ -156,11 +156,9 @@ class Listing(object):
         :return:
         """
         try:
+            req = Request()
             link = self.get_daft_link()
-            req = requests.get(link)
-            if req.status_code != 200:
-                raise DaftException(status_code=req.status_code, reason=req.reason)
-            soup = BeautifulSoup(req.content, 'html.parser')
+            soup = req.get(link)
             span = soup.find("span", {"class": "p1"})
             return span.find('img')['src']
         except:
@@ -195,10 +193,9 @@ class Listing(object):
         :return:
         """
         link = self.get_daft_link()
-        req = requests.get(link)
-        if req.status_code != 200:
-            raise DaftException(status_code=req.status_code, reason=req.reason)
-        soup = BeautifulSoup(req.content, 'html.parser')
+        req = Request()
+        link = self.get_daft_link()
+        soup = req.get(link)
         try:
             number = soup.find('div', {'class': 'phone-number'}).text
             return number.strip()
@@ -213,7 +210,7 @@ class Listing(object):
         """
         link = self._data.find('a', href=True)
         try:
-            return 'https://www.daft.ie' + link['href']
+            return 'http://www.daft.ie' + link['href']
         except:
             return
 
@@ -278,3 +275,23 @@ class Listing(object):
             return s[1].strip()
         except:
             return
+
+    def contact_advertiser(self, name, email, contact_number, message):
+        req = Request()
+        link = self.get_daft_link()
+        soup = req.get(link)
+
+        ad_search_type = soup.find('input', {'id': 'ad_search_type'})
+        agent_id = soup.find('input', {'id': 'agent_id'})
+        ad_id = soup.find('input', {'id': 'ad_id'})
+
+        req.post('https://www.daft.ie/ajax_endpoint.php?', params={
+            'action': 'daft_contact_advertiser',
+            'from': name,
+            'email': email,
+            'message': message,
+            'contact_number': contact_number,
+            'type': ad_search_type['value'],
+            'agent_id': agent_id['value'],
+            'id': ad_id['value']
+        })

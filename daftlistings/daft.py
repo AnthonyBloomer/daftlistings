@@ -5,7 +5,7 @@ from request import Request
 
 class Daft(object):
     def __init__(self):
-        self._base = 'https://www.daft.ie/'
+        self._base = 'http://www.daft.ie/'
         self._verbose = False
         self._open_viewing = False
         self._area = None
