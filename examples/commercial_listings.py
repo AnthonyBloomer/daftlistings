@@ -1,4 +1,4 @@
-# Retrieve commercial office listings in Dublin.
+# Retrieve commercial office listings in Dublin and list any facilities or features included for each listing.
 
 from daftlistings import Daft, CommercialType, SaleType
 
