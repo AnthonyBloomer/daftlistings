@@ -215,8 +215,7 @@ class DaftTests(unittest.TestCase):
             daft = Daft()
             listing = daft.get_listings()
         except Exception:
-            myBoolean = True
-            self.assertTrue(myBoolean)
+            self.assertTrue(True)
 
     def test_open_viewing(self):
         daft = Daft()
@@ -238,3 +237,19 @@ class DaftTests(unittest.TestCase):
         daft.set_listing_type(SaleType.PROPERTIES)
         listings = daft.get_listings()
         self.assertTrue(len(listings) == 0)
+
+    def test_contact_avertiser(self):
+        daft = Daft()
+        daft.set_county("Meath")
+        daft.set_listing_type(RentType.FLAT)
+        listings = daft.get_listings()
+        if len(listings) > 0:
+            first_listing = listings[0]
+            has_sent = first_listing.contact_advertiser(
+                name="Jane Doe",
+                contact_number="019202222",
+                email="jane@example.com",
+                message="Hi, I seen your listing on daft.ie and I would like to schedule a viewing."
+            )
+
+            self.assertTrue(has_sent)
