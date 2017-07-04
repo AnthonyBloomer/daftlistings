@@ -192,7 +192,6 @@ class Listing(object):
         This method returns the contact phone number.
         :return:
         """
-        link = self.get_daft_link()
         req = Request()
         link = self.get_daft_link()
         soup = req.get(link)
