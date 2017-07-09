@@ -2,7 +2,6 @@ import unittest
 import time
 from daftlistings import Daft, SaleType, RentType, SortOrder, SortType, CommercialType
 
-
 class DaftTests(unittest.TestCase):
     def test_properties(self):
         daft = Daft()

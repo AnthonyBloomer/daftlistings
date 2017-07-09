@@ -1,6 +1,3 @@
-import requests
-from bs4 import BeautifulSoup
-from exception import DaftException
 from request import Request
 
 
@@ -302,5 +299,5 @@ class Listing(object):
             'agent_id': agent_id['value'],
             'id': ad_id['value']
         })
-        
+
         return True
