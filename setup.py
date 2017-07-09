@@ -4,7 +4,7 @@ with open("README.rst", "rb") as f:
     long_descr = f.read().decode("utf-8")
     
 setup(name='daftlistings',
-      version='1.1.2',
+      version='1.1.3',
       description='A library that enables programmatic interaction with daft.ie. ',
       long_description=long_descr,
       url='https://github.com/AnthonyBloomer/daftlistings',
@@ -15,6 +15,8 @@ setup(name='daftlistings',
       packages=['daftlistings'],
       install_requires=[
           'beautifulsoup4',
+          'enum34',
+          'requests'
       ],
       classifiers=[
           'Intended Audience :: Developers',
