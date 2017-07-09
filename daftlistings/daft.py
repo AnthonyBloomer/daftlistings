@@ -76,9 +76,8 @@ class Daft(object):
         :param min_price:
         :return:
         """
-        try:
-            int(min_price)
-        except:
+
+        if not isinstance(min_price, int):
             raise Exception("Min price should be an integer.")
 
         self._min_price = str(min_price)
@@ -90,9 +89,8 @@ class Daft(object):
         :param max_price:
         :return:
         """
-        try:
-            int(max_price)
-        except:
+
+        if not isinstance(max_price, int):
             raise Exception("Max price should be an integer.")
 
         self._max_price = str(max_price)
@@ -106,6 +104,10 @@ class Daft(object):
         :param listing_type:
         :return:
         """
+
+        if isinstance(listing_type, SaleType) is False ^ isinstance(listing_type, RentType) is False:
+            raise Exception("listing_type should be an instance of SaleType or RentType.")
+
         self._listing_type = listing_type
 
     def set_sale_agreed(self, sale_agreed):
@@ -123,9 +125,7 @@ class Daft(object):
         :return:
         """
 
-        try:
-            int(min_beds)
-        except:
+        if not isinstance(min_beds, int):
             raise Exception("Minimum number of beds should be an integer.")
 
         self._min_beds = str(min_beds)
@@ -137,9 +137,7 @@ class Daft(object):
         :param max_beds:
         :return:
         """
-        try:
-            int(max_beds)
-        except:
+        if not isinstance(max_beds, int):
             raise Exception("Maximum number of beds should be an integer.")
 
         self._max_beds = str(max_beds)
@@ -159,6 +157,10 @@ class Daft(object):
         :param sort_order:
         :return:
         """
+
+        if not isinstance(sort_order, SortOrder):
+            raise Exception("sort_order should be an instance of SortOrder.")
+
         self._sort_order = str(sort_order)
 
     def set_commercial_property_type(self, commercial_property_type):
@@ -167,34 +169,34 @@ class Daft(object):
         :param commercial_property_type:
         :return:
         """
+
+        if not isinstance(commercial_property_type, CommercialType):
+            raise Exception("commercial_property_type should be an instance of CommercialType.")
+
         self._commercial_property_type = str(commercial_property_type)
 
-    def set_commercial_min_size(self, c_min):
+    def set_commercial_min_size(self, commercial_min_size):
         """
         The minimum size in sq ft.
-        :param c_min:
+        :param commercial_min_size:
         :return:
         """
-        try:
-            int(c_min)
-        except:
-            raise Exception("Size should be an integer.")
+        if not isinstance(commercial_min_size, int):
+            raise Exception("commercial_min_size should be an integer.")
 
-        self._commercial_min_size = str(c_min)
+        self._commercial_min_size = str(commercial_min_size)
         self._query_params += str(QueryParam.COMMERCIAL_MIN) + self._commercial_min_size
 
-    def set_commercial_max_size(self, max):
+    def set_commercial_max_size(self, commercial_max_size):
         """
         The maximum size in sq ft.
-        :param max:
+        :param commercial_max_size:
         :return:
         """
-        try:
-            int(max)
-        except:
-            raise Exception("Size should be an integer.")
+        if not isinstance(commercial_max_size, int):
+            raise Exception("commercial_max_size should be an integer.")
 
-        self._commercial_max_size = str(max)
+        self._commercial_max_size = str(commercial_max_size)
         self._query_params += str(QueryParam.COMMERCIAL_MAX) + self._commercial_max_size
 
     def get_listings(self):

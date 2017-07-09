@@ -253,3 +253,14 @@ class DaftTests(unittest.TestCase):
             )
 
             self.assertTrue(has_sent)
+
+    def test_listing_type_exception(self):
+        daft = Daft()
+        daft.set_county("Meath")
+        has_raised_exception = False
+        try:
+            daft.set_listing_type("flat")
+        except Exception:
+            has_raised_exception = True
+
+        self.assertTrue(has_raised_exception)
