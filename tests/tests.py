@@ -269,7 +269,7 @@ class DaftTests(unittest.TestCase):
         daft = Daft()
         daft.set_listing_type(RentType.STUDENT_ACCOMMODATION)
         daft.set_university(University.TCD)
-        daft.set_student_accommodation_type(StudentAccommodationType.ROOM_TO_SHARE)
+        daft.set_student_accommodation_type(StudentAccommodationType.APARTMENTS)
         daft.set_min_price(800)
         daft.set_max_price(1000)
         daft.set_sort_by(SortType.PRICE)

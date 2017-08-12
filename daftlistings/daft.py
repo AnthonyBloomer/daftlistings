@@ -205,8 +205,8 @@ class Daft(object):
     def set_university(self, university):
         self._university = university
 
-    def set_student_accommodation_type(self, student_accomodation_type):
-        self._student_accommodation_type = str(student_accomodation_type)
+    def set_student_accommodation_type(self, student_accommodation_type):
+        self._student_accommodation_type = str(student_accommodation_type)
 
     def get_listings(self):
         """
@@ -221,7 +221,7 @@ class Daft(object):
                 self._query_params += self._price
 
             if self._student_accommodation_type is None:
-                self._student_accommodation_type = RentType.ANY
+                self._student_accommodation_type = StudentAccommodationType.ANY
 
             accommodation_type = str(self._student_accommodation_type)
 

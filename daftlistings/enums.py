@@ -56,6 +56,11 @@ class RentType(Enum):
 
 class StudentAccommodationType(Enum):
     ROOM_TO_SHARE = '/rooms-to-share/'
+    APARTMENTS = '/apartments-for-rent/'
+    ANY = '/residential-property-for-rent/'
+    STUDIO = '/studio-apartments-for-rent/'
+    FLAT = '/flats-for-rent/'
+    SHORT_TERM = '/short-term-rentals/'
 
     def __str__(self):
         return self._value_
