@@ -31,7 +31,10 @@ class Listing(object):
         :return:
         """
         upcoming_viewings = []
-        viewings = self._data.find_all('div', {'class': 'smi-onview-text'})
+        try:
+            viewings = self._data.find_all('div', {'class': 'smi-onview-text'})
+        except:
+            return
         for viewing in viewings:
             upcoming_viewings.append(viewing.text.strip())
         return upcoming_viewings
@@ -47,12 +50,12 @@ class Listing(object):
         soup = req.get(link)
         try:
             facility_table = soup.find('table', {'id': 'facilities'})
-            list_items = facility_table.find_all(['li'])
-            for li in list_items:
-                facilities.append(li.text)
-            return facilities
         except:
             return
+        list_items = facility_table.find_all(['li'])
+        for li in list_items:
+            facilities.append(li.text)
+        return facilities
 
     def get_features(self):
         """
@@ -65,12 +68,12 @@ class Listing(object):
         soup = req.get(link)
         try:
             feats = soup.find('div', {'id': 'features'})
-            list_items = feats.find_all('li')
-            for li in list_items:
-                features.append(li.text)
-            return features
         except:
             return
+        list_items = feats.find_all('li')
+        for li in list_items:
+            features.append(li.text)
+        return features
 
     def get_formalised_address(self):
         """
@@ -79,15 +82,15 @@ class Listing(object):
         """
         try:
             t = self._data.find('a').contents[0]
-            s = t.split('-')
-            a = s[0].strip()
-            if 'SALE AGREED' in a:
-                a = a.split()
-                a = a[3:]
-                a = ' '.join([str(x) for x in a])
-            return a.lower().title().strip()
         except:
             return
+        s = t.split('-')
+        a = s[0].strip()
+        if 'SALE AGREED' in a:
+            a = a.split()
+            a = a[3:]
+            a = ' '.join([str(x) for x in a])
+        return a.lower().title().strip()
 
     def get_address_line_1(self):
         """
@@ -99,9 +102,10 @@ class Listing(object):
             return
         try:
             address = formalised_address.split(',')
-            return address[0].strip()
         except:
             return
+
+        return address[0].strip()
 
     def get_address_line_2(self):
         """
@@ -114,11 +118,12 @@ class Listing(object):
 
         try:
             address = formalised_address.split(',')
-            if len(address) == 4:
-                return address[1].strip()
-            else:
-                return
         except:
+            return
+
+        if len(address) == 4:
+            return address[1].strip()
+        else:
             return
 
     def get_town(self):
@@ -141,8 +146,10 @@ class Listing(object):
         :return:
         """
         formalised_address = self.get_formalised_address()
+
         if formalised_address is None:
             return
+
         try:
             address = formalised_address.split(',')
             return address[-1].strip()
@@ -154,14 +161,17 @@ class Listing(object):
         This method returns the listing image.
         :return:
         """
+
+        req = Request()
+        link = self.get_daft_link()
+        soup = req.get(link)
+
         try:
-            req = Request()
-            link = self.get_daft_link()
-            soup = req.get(link)
             span = soup.find("span", {"class": "p1"})
-            return span.find('img')['src']
         except:
             return
+
+        return span.find('img')['src']
 
     def get_agent(self):
         """
@@ -170,9 +180,10 @@ class Listing(object):
         """
         try:
             agent = self._data.find('ul', {'class': 'links'}).text
-            return agent.split(':')[1].strip()
         except:
             return
+
+        return agent.split(':')[1].strip()
 
     def get_agent_url(self):
         """
@@ -181,10 +192,11 @@ class Listing(object):
         """
         try:
             agent = self._data.find('ul', {'class': 'links'})
-            links = agent.find_all('a')
-            return links[1]['href']
         except:
             return
+
+        links = agent.find_all('a')
+        return links[1]['href']
 
     def get_contact_number(self):
         """
@@ -196,10 +208,10 @@ class Listing(object):
         soup = req.get(link)
         try:
             number = soup.find('div', {'class': 'phone-number'}).text
-            return number.strip()
-
         except:
             return
+
+        return number.strip()
 
     def get_daft_link(self):
         """
@@ -219,10 +231,11 @@ class Listing(object):
         """
         try:
             info = self._data.find('ul', {"class": "info"}).text
-            s = info.split('|')
-            return s[0].strip()
         except:
             return
+
+        s = info.split('|')
+        return s[0].strip()
 
     def get_posted_since(self):
         """
@@ -231,10 +244,11 @@ class Listing(object):
         """
         try:
             info = self._data.find('div', {"class": "date_entered"}).text
-            s = info.split(':')
-            return s[-1].strip()
         except:
             return
+
+        s = info.split(':')
+        return s[-1].strip()
 
     def get_num_bedrooms(self):
         """
@@ -243,11 +257,12 @@ class Listing(object):
         """
         try:
             info = self._data.find('ul', {"class": "info"}).text
-            s = info.split('|')
-            nb = s[1].strip()
-            return int(nb.split()[0])
         except:
             return
+
+        s = info.split('|')
+        nb = s[1].strip()
+        return int(nb.split()[0])
 
     def get_num_bathrooms(self):
         """
@@ -256,11 +271,12 @@ class Listing(object):
         """
         try:
             info = self._data.find('ul', {"class": "info"}).text
-            s = info.split('|')
-            nb = s[2].strip()
-            return int(nb.split()[0])
         except:
             return
+
+        s = info.split('|')
+        nb = s[2].strip()
+        return int(nb.split()[0])
 
     def get_area_size(self):
         """
@@ -269,10 +285,10 @@ class Listing(object):
         """
         try:
             info = self._data.find('ul', {"class": "info"}).text
-            s = info.split('|')
-            return s[1].strip()
         except:
             return
+        s = info.split('|')
+        return s[1].strip()
 
     def contact_advertiser(self, name, email, contact_number, message):
         """

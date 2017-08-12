@@ -3,7 +3,6 @@ import time
 from daftlistings import Daft, SaleType, RentType, SortOrder, SortType, CommercialType, University, \
     StudentAccommodationType
 
-
 class DaftTests(unittest.TestCase):
     def test_properties(self):
         daft = Daft()
