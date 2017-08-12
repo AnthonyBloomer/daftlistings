@@ -25,6 +25,8 @@ class Daft(object):
         self._commercial_max_size = None
         self._query_params = ""
         self._price = ""
+        self._university = None
+        self._student_accommodation_type = None
 
     def set_verbose(self, verbose):
         """
@@ -200,18 +202,50 @@ class Daft(object):
         self._commercial_max_size = str(commercial_max_size)
         self._query_params += str(QueryParam.COMMERCIAL_MAX) + self._commercial_max_size
 
+    def set_university(self, university):
+        self._university = university
+
+    def set_student_accommodation_type(self, student_accomodation_type):
+        self._student_accommodation_type = str(student_accomodation_type)
+
     def get_listings(self):
         """
         The get listings function returns an array of Listing objects.
         :return: Listing object
         """
+        listings = []
+        request = Request(verbose=self._verbose)
+
+        if self._university and isinstance(self._listing_type, RentType):
+            if self._min_price or self._max_price:
+                self._query_params += self._price
+
+            if self._student_accommodation_type is None:
+                self._student_accommodation_type = RentType.ANY
+
+            accommodation_type = str(self._student_accommodation_type)
+
+            if self._sort_by:
+                if self._sort_order:
+                    self._query_params += str(QueryParam.SORT_ORDER) + str(self._sort_order)
+                    self._query_params += str(QueryParam.SORT_BY) + str(self._sort_by)
+                else:
+                    self._query_params += str(QueryParam.SORT_ORDER) + str(SortOrder.DESCENDING)
+                    self._query_params += str(QueryParam.SORT_BY) + self._sort_by
+
+            url = self._base + str(self._listing_type) + str(
+                self._university) + accommodation_type + '?' + self._query_params
+            soup = request.get(url)
+            divs = soup.find_all("div", {"class": "box"})
+
+            [listings.append(Listing(div)) for div in divs]
+            return listings
 
         if self._county is None:
             raise Exception("County is required.")
 
         if self._area is None:
             self._area = ''
-
         if self._sale_agreed:
             if self._min_price or self._max_price:
                 self._query_params += self._price + str(QueryParam.SALE_AGREED_WITH_PRICE)
@@ -232,13 +266,10 @@ class Daft(object):
                 self._query_params += str(QueryParam.SORT_ORDER) + str(SortOrder.DESCENDING)
                 self._query_params += str(QueryParam.SORT_BY) + self._sort_by
 
-        request = Request(verbose=self._verbose)
-
         url = self._base + self._county + str(self._listing_type) + str(self._commercial_property_type) + str(
             self._area) + '?offset=' + str(self._offset) + self._query_params
 
         soup = request.get(url)
         divs = soup.find_all("div", {"class": "box"})
-        listings = []
         [listings.append(Listing(div)) for div in divs]
         return listings

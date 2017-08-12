@@ -8,7 +8,7 @@ class SaleType(Enum):
     APARTMENTS = '/apartments-for-sale/'
     COMMERCIAL = '/commercial-property/'
     NEW = '/new-homes-for-sale/'
-    OVERSEAS='/overseas-property-for-sale/'
+    OVERSEAS = '/overseas-property-for-sale/'
 
     def __str__(self):
         return self._value_
@@ -45,12 +45,23 @@ class RentType(Enum):
     STUDIO = '/studio-apartments-for-rent/'
     FLAT = '/flats-for-rent/'
     SHORT_TERM = '/short-term-rentals/'
+    STUDENT_ACCOMMODATION = '/student-accommodation/'
 
     def __str__(self):
         return self._value_
 
     def __repr__(self):
         return "<RentType: %s>" % self
+
+
+class StudentAccommodationType(Enum):
+    ROOM_TO_SHARE = '/rooms-to-share/'
+
+    def __str__(self):
+        return self._value_
+
+    def __repr__(self):
+        return "<SharedAccommodationType: %s>" % self
 
 
 class QueryParam(Enum):
@@ -96,3 +107,17 @@ class SortType(Enum):
 
     def __repr__(self):
         return "<SortType: %s>" % self
+
+
+class University(Enum):
+    NCI = 'national-college-of-ireland-nci'
+    UCD = 'university-college-dublin-nui'
+    GCD = 'griffith-college-dublin'
+    TCD = 'trinity-college-university-of-dublin'
+    DCU = 'dublin-city-university'
+
+    def __str__(self):
+        return self._value_
+
+    def __repr__(self):
+        return "<University: %s>" % self

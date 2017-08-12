@@ -1,6 +1,8 @@
 import unittest
 import time
-from daftlistings import Daft, SaleType, RentType, SortOrder, SortType, CommercialType
+from daftlistings import Daft, SaleType, RentType, SortOrder, SortType, CommercialType, University, \
+    StudentAccommodationType
+
 
 class DaftTests(unittest.TestCase):
     def test_properties(self):
@@ -263,3 +265,15 @@ class DaftTests(unittest.TestCase):
             has_raised_exception = True
 
         self.assertTrue(has_raised_exception)
+
+    def test_student_accommodation(self):
+        daft = Daft()
+        daft.set_listing_type(RentType.STUDENT_ACCOMMODATION)
+        daft.set_university(University.TCD)
+        daft.set_student_accommodation_type(StudentAccommodationType.ROOM_TO_SHARE)
+        daft.set_min_price(800)
+        daft.set_max_price(1000)
+        daft.set_sort_by(SortType.PRICE)
+        daft.set_sort_order(SortOrder.ASCENDING)
+        listings = daft.get_listings()
+        self.assertTrue(len(listings) > 0)
