@@ -1,3 +1,6 @@
+# Find student accommodation near National College of Ireland that is between 500 and 700 per month
+# and provides internet facilities.
+
 from daftlistings import Daft, SortOrder, SortType, RentType, University, StudentAccommodationType
 
 offset = 0
@@ -18,8 +21,13 @@ while True:
         break
 
     for listing in listings:
-        print listing.get_price()
-        print listing.get_formalised_address()
-        print listing.get_daft_link()
+        facilities = listing.get_facilities()
+        if facilities is not None:
+            if "Internet" in facilities:
+                for facility in facilities:
+                    print facility
+                print listing.get_price()
+                print listing.get_formalised_address()
+                print listing.get_daft_link()
 
     offset += 10
