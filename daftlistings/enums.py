@@ -61,7 +61,7 @@ class StudentAccommodationType(Enum):
         return self._value_
 
     def __repr__(self):
-        return "<SharedAccommodationType: %s>" % self
+        return "<StudentAccommodationType: %s>" % self
 
 
 class QueryParam(Enum):

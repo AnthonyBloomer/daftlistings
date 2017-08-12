@@ -152,6 +152,8 @@ Retrieve all properties for sale in Dublin 15. This example loops through each p
 Find student accommodation near Trinity College Dublin that is between 800 and 1000 per month.
 
 .. code:: python
+
+
     daft.set_listing_type(RentType.STUDENT_ACCOMMODATION)
     daft.set_university(University.TCD)
     daft.set_student_accommodation_type(StudentAccommodationType.ROOM_TO_SHARE)
