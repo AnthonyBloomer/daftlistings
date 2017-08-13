@@ -26,7 +26,7 @@ class Daft(object):
         self._query_params = ""
         self._price = ""
         self._university = None
-        self._student_accommodation_type = None
+        self._student_accommodation_type = StudentAccommodationType.ANY
 
     def set_verbose(self, verbose):
         """
@@ -152,6 +152,8 @@ class Daft(object):
         :param sort_by:
         :return:
         """
+        if not isinstance(sort_by, SortType):
+            raise DaftInputException("sort_by should be an instance of SortType.")
         self._sort_by = str(sort_by)
 
     def set_sort_order(self, sort_order):
@@ -203,9 +205,12 @@ class Daft(object):
         self._query_params += str(QueryParam.COMMERCIAL_MAX) + self._commercial_max_size
 
     def set_university(self, university):
-        self._university = university
+        self._university = str(university)
 
     def set_student_accommodation_type(self, student_accommodation_type):
+        if not isinstance(student_accommodation_type, StudentAccommodationType):
+            raise DaftInputException("student_accommodation_type should be an instance of StudentAccommodationType.")
+
         self._student_accommodation_type = str(student_accommodation_type)
 
     def get_listings(self):
@@ -220,9 +225,6 @@ class Daft(object):
             if self._min_price or self._max_price:
                 self._query_params += self._price
 
-            if self._student_accommodation_type is None:
-                self._student_accommodation_type = StudentAccommodationType.ANY
-
             accommodation_type = str(self._student_accommodation_type)
 
             if self._sort_by:
@@ -233,8 +235,8 @@ class Daft(object):
                     self._query_params += str(QueryParam.SORT_ORDER) + str(SortOrder.DESCENDING)
                     self._query_params += str(QueryParam.SORT_BY) + self._sort_by
 
-            url = self._base + str(self._listing_type) + str(
-                self._university) + accommodation_type + '?' + self._query_params
+            url = self._base + str(
+                self._listing_type) + self._university + accommodation_type + '?' + self._query_params
             soup = request.get(url)
             divs = soup.find_all("div", {"class": "box"})
 

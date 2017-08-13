@@ -3,6 +3,7 @@ import time
 from daftlistings import Daft, SaleType, RentType, SortOrder, SortType, CommercialType, University, \
     StudentAccommodationType
 
+
 class DaftTests(unittest.TestCase):
     def test_properties(self):
         daft = Daft()
@@ -238,7 +239,7 @@ class DaftTests(unittest.TestCase):
         listings = daft.get_listings()
         self.assertTrue(len(listings) == 0)
 
-    def test_contact_avertiser(self):
+    def test_contact_advertiser(self):
         daft = Daft()
         daft.set_county("Meath")
         daft.set_listing_type(RentType.FLAT)

@@ -50,9 +50,10 @@ class Listing(object):
         soup = req.get(link)
         try:
             facility_table = soup.find('table', {'id': 'facilities'})
+            list_items = facility_table.find_all(['li'])
         except:
             return
-        list_items = facility_table.find_all(['li'])
+
         for li in list_items:
             facilities.append(li.text)
         return facilities
@@ -68,9 +69,10 @@ class Listing(object):
         soup = req.get(link)
         try:
             feats = soup.find('div', {'id': 'features'})
+            list_items = feats.find_all('li')
         except:
             return
-        list_items = feats.find_all('li')
+
         for li in list_items:
             features.append(li.text)
         return features
