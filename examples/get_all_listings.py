@@ -1,4 +1,4 @@
-# Retrieve all properties for sale in Dublin 15. This example loops through each page of listings and prints the result.
+ # Retrieve all properties for sale in Dublin 15. This example loops through each page of listings and prints the result.
 
 from daftlistings import Daft, SaleType
 

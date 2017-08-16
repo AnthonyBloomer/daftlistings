@@ -221,19 +221,19 @@ class Daft(object):
         listings = []
         request = Request(verbose=self._verbose)
 
+        if self._sort_by:
+            if self._sort_order:
+                self._query_params += str(QueryParam.SORT_ORDER) + str(self._sort_order)
+                self._query_params += str(QueryParam.SORT_BY) + str(self._sort_by)
+            else:
+                self._query_params += str(QueryParam.SORT_ORDER) + str(SortOrder.DESCENDING)
+                self._query_params += str(QueryParam.SORT_BY) + self._sort_by
+
         if self._university and isinstance(self._listing_type, RentType):
             if self._min_price or self._max_price:
                 self._query_params += self._price
 
             accommodation_type = str(self._student_accommodation_type)
-
-            if self._sort_by:
-                if self._sort_order:
-                    self._query_params += str(QueryParam.SORT_ORDER) + str(self._sort_order)
-                    self._query_params += str(QueryParam.SORT_BY) + str(self._sort_by)
-                else:
-                    self._query_params += str(QueryParam.SORT_ORDER) + str(SortOrder.DESCENDING)
-                    self._query_params += str(QueryParam.SORT_BY) + self._sort_by
 
             url = self._base + str(
                 self._listing_type) + self._university + accommodation_type + '?' + self._query_params
@@ -259,14 +259,6 @@ class Daft(object):
 
         if self._min_price or self._max_price and isinstance(self._listing_type, RentType):
             self._query_params += str(QueryParam.IGNORED_AGENTS)
-
-        if self._sort_by:
-            if self._sort_order:
-                self._query_params += str(QueryParam.SORT_ORDER) + str(self._sort_order)
-                self._query_params += str(QueryParam.SORT_BY) + str(self._sort_by)
-            else:
-                self._query_params += str(QueryParam.SORT_ORDER) + str(SortOrder.DESCENDING)
-                self._query_params += str(QueryParam.SORT_BY) + self._sort_by
 
         url = self._base + self._county + str(self._listing_type) + str(self._commercial_property_type) + str(
             self._area) + '?offset=' + str(self._offset) + self._query_params
