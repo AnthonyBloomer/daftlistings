@@ -3,12 +3,9 @@
 from daftlistings import Daft, SaleType
 
 offset = 0
-pages = True
 
-daft = Daft()
-
-while pages:
-
+while True:
+    daft = Daft()
     daft.set_county("Dublin City")
     daft.set_area("Dublin 15")
     daft.set_offset(offset)
@@ -17,7 +14,7 @@ while pages:
     listings = daft.get_listings()
 
     if not listings:
-        pages = False
+        break
 
     for listing in listings:
         print(listing.get_agent_url())
