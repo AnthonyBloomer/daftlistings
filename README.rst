@@ -202,5 +202,7 @@ Copy any changes from the **site** directory to this directory and push your cha
 Contributing
 ------------
 
-Contribute to daftlistings by suggesting new features or providing feedback / criticism.
-Pull requests are always welcome too so feel free to hack away.
+- Fork the project and clone locally.
+- Create a new branch for what you're going to work on. 
+- Push to your origin repository.
+- Create a new pull request in GitHub.
