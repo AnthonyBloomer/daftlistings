@@ -8,6 +8,8 @@ daft.set_county("Dublin City")
 daft.set_listing_type(RentType.APARTMENTS)
 daft.set_min_price(1000)
 daft.set_max_price(1500)
+daft.set_furnished(True)
+daft.set_keywords(['quiet'])
 
 listings = daft.get_listings()
 

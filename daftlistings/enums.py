@@ -46,6 +46,7 @@ class RentType(Enum):
     FLAT = '/flats-for-rent/'
     SHORT_TERM = '/short-term-rentals/'
     STUDENT_ACCOMMODATION = '/student-accommodation/'
+    PARKING_SPACES = '/parking-spaces/'
 
     def __str__(self):
         return self._value_
