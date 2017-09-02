@@ -16,7 +16,6 @@ for listing in listings:
     print(listing.get_daft_link())
     print(listing.get_price())
     print(listing.get_contact_number())
-    print(listing.get_views())
     facilities = listing.get_facilities()
     if facilities is not None:
         print('Facilities: ')

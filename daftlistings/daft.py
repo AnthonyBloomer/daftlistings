@@ -51,6 +51,15 @@ class Daft(object):
         """
         self._query_params += str(QueryParam.KEYWORDS) + '+'.join(keywords)
 
+    def set_furnished(self, furnished):
+        """
+        Set to true to only get rental properties that are furnished.
+        :param furnished:
+        :return:
+        """
+        if furnished:
+            self._query_params += str(QueryParam.FURNISHED)
+
     def set_area(self, area):
         """
         The area to retrieve listings from.

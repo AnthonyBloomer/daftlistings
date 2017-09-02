@@ -84,6 +84,7 @@ class QueryParam(Enum):
     OPEN_VIEWING = '&s%5Bopenviewing%5D=1'
     WITH_PHOTOS = '&s%5Bphotos%5D=1'
     KEYWORDS = '&s%5Btxt%5D='
+    FURNISHED = '&s%5Bfurn%5D=1'
 
     def __str__(self):
         return self._value_
