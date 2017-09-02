@@ -82,6 +82,8 @@ class QueryParam(Enum):
     COMMERCIAL_MIN = '&s%5Bmin_size%5D='
     COMMERCIAL_MAX = '&s%5Bmax_size%5D='
     OPEN_VIEWING = '&s%5Bopenviewing%5D=1'
+    WITH_PHOTOS = '&s%5Bphotos%5D=1'
+    KEYWORDS = '&s%5Btxt%5D='
 
     def __str__(self):
         return self._value_

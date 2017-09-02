@@ -10,8 +10,6 @@ livereload==2.4.1
 Markdown==2.6.7
 MarkupSafe==0.23
 mkdocs==0.15.3
-mkdocs-bootstrap==0.1.1
-mkdocs-bootswatch==0.4.0
 mkdocs-cinder==0.9.4
 packaging==16.8
 pkginfo==1.4.1

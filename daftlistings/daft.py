@@ -12,6 +12,7 @@ class Daft(object):
         self._area = None
         self._offset = 0
         self._county = None
+        self._keywords = []
         self._min_price = None
         self._max_price = None
         self._min_beds = None
@@ -34,6 +35,21 @@ class Daft(object):
         :param verbose
         """
         self._verbose = verbose
+
+    def set_with_photos(self, with_photos):
+        """
+        Set to True to only get listings that has photos.
+        :param with_photos
+        """
+        if with_photos:
+            self._query_params += str(QueryParam.WITH_PHOTOS)
+
+    def set_keywords(self, keywords):
+        """
+        Pass an array to filter the result by keywords.
+        :param keywords
+        """
+        self._query_params += str(QueryParam.KEYWORDS) + '+'.join(keywords)
 
     def set_area(self, area):
         """
