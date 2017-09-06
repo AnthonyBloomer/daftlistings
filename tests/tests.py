@@ -1,7 +1,7 @@
 import unittest
 import time
 from daftlistings import Daft, SaleType, RentType, SortOrder, SortType, CommercialType, University, \
-    StudentAccommodationType
+    StudentAccommodationType, RoomType
 
 
 class DaftTests(unittest.TestCase):
@@ -275,5 +275,17 @@ class DaftTests(unittest.TestCase):
         daft.set_max_price(1000)
         daft.set_sort_by(SortType.PRICE)
         daft.set_sort_order(SortOrder.ASCENDING)
+        listings = daft.get_listings()
+        self.assertTrue(len(listings) > 0)
+
+    def test_room_to_share(self):
+        daft = Daft()
+        daft.set_county('Dublin')
+        daft.set_area('Castleknock')
+        daft.set_listing_type(RentType.ROOMS_TO_SHARE)
+        daft.set_furnished(True)
+        daft.set_min_price(500)
+        daft.set_max_price(1000)
+        daft.set_room_type(RoomType.DOUBLE)
         listings = daft.get_listings()
         self.assertTrue(len(listings) > 0)

@@ -47,6 +47,10 @@ class RentType(Enum):
     SHORT_TERM = '/short-term-rentals/'
     STUDENT_ACCOMMODATION = '/student-accommodation/'
     PARKING_SPACES = '/parking-spaces/'
+    ROOMS_TO_SHARE = '/rooms-to-share/'
+    FLAT_TO_SHARE = '/flat-to-share/'
+    APARTMENT_TO_SHARE = '/apartment-share/'
+    HOUSE_SHARE = '/house-share/'
 
     def __str__(self):
         return self._value_
@@ -56,7 +60,7 @@ class RentType(Enum):
 
 
 class StudentAccommodationType(Enum):
-    ROOM_TO_SHARE = '/rooms-to-share/'
+    ROOMS_TO_SHARE = '/rooms-to-share/'
     APARTMENTS = '/apartments-for-rent/'
     ANY = '/residential-property-for-rent/'
     STUDIO = '/studio-apartments-for-rent/'
@@ -68,6 +72,20 @@ class StudentAccommodationType(Enum):
 
     def __repr__(self):
         return "<StudentAccommodationType: %s>" % self
+
+
+class RoomType(Enum):
+    SINGLE = 'single'
+    DOUBLE = 'double'
+    TWIN_ROOM = 'twin'
+    SHARED = 'shared'
+    SINGLE_OR_DOUBLE = 'own'
+
+    def __str__(self):
+        return self._value_
+
+    def __repr__(self):
+        return "<RoomType: %s>" % self
 
 
 class QueryParam(Enum):
@@ -86,6 +104,9 @@ class QueryParam(Enum):
     WITH_PHOTOS = '&s%5Bphotos%5D=1'
     KEYWORDS = '&s%5Btxt%5D='
     FURNISHED = '&s%5Bfurn%5D=1'
+    COUPLES_ACCEPTED = '&couples=1'
+    ENSUITE_ONLY = '&s%5Bes%5D=1'
+    ROOM_TYPE = '&s%5Broom_type%5D='
 
     def __str__(self):
         return self._value_

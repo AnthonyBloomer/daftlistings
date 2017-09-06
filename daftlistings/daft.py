@@ -36,6 +36,22 @@ class Daft(object):
         """
         self._verbose = verbose
 
+    def set_couples_accepted(self, couples_accepted):
+        """
+        Set to true to
+        :param couples_accepted:
+        :return:
+        """
+        if couples_accepted:
+            self._query_params += str(QueryParam.COUPLES_ACCEPTED)
+
+    def set_ensuite_only(self, ensuite_only):
+        if ensuite_only:
+            self._query_params += QueryParam.ENSUITE_ONLY
+
+    def set_room_type(self, room_type):
+        self._query_params += str(QueryParam.ROOM_TYPE) + str(room_type)
+
     def set_with_photos(self, with_photos):
         """
         Set to True to only get listings that has photos.
