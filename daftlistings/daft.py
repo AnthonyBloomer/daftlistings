@@ -46,7 +46,7 @@ class Daft(object):
 
     def set_ensuite_only(self, ensuite_only):
         """
-        Set to true to onluy return listings that are ensuite only.
+        Set to true to only return listings that are ensuite only.
         :param ensuite_only:
         """
         if ensuite_only:
