@@ -38,18 +38,27 @@ class Daft(object):
 
     def set_couples_accepted(self, couples_accepted):
         """
-        Set to true to
+        Set to true to only return listings that accept couples.
         :param couples_accepted:
-        :return:
         """
         if couples_accepted:
             self._query_params += str(QueryParam.COUPLES_ACCEPTED)
 
     def set_ensuite_only(self, ensuite_only):
+        """
+        Set to true to onluy return listings that are ensuite only.
+        :param ensuite_only:
+        """
         if ensuite_only:
             self._query_params += QueryParam.ENSUITE_ONLY
 
     def set_room_type(self, room_type):
+        """
+        Set the room type.
+        :param room_type:
+        """
+        if not isinstance(room_type, RoomType):
+            raise DaftInputException("room_type should be an instance of RoomType.")
         self._query_params += str(QueryParam.ROOM_TYPE) + str(room_type)
 
     def set_with_photos(self, with_photos):
