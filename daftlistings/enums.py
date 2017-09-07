@@ -107,12 +107,25 @@ class QueryParam(Enum):
     COUPLES_ACCEPTED = '&couples=1'
     ENSUITE_ONLY = '&s%5Bes%5D=1'
     ROOM_TYPE = '&s%5Broom_type%5D='
+    GENDER = '&gender='
 
     def __str__(self):
         return self._value_
 
     def __repr__(self):
         return "<QueryParam: %s>" % self
+
+
+class Gender(Enum):
+    MALE = 'male'
+    FEMALE = 'female'
+    EITHER = 'on'
+
+    def __str__(self):
+        return self._value_
+
+    def __repr__(self):
+        return "<Gender: %s>" % self
 
 
 class SortOrder(Enum):

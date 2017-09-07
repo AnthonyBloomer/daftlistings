@@ -25,6 +25,7 @@ class Listing(object):
         except:
             return
 
+
     def get_upcoming_viewings(self):
         """
         Returns an array of upcoming viewings for a property.

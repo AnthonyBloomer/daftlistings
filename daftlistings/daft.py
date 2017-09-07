@@ -44,6 +44,9 @@ class Daft(object):
         if couples_accepted:
             self._query_params += str(QueryParam.COUPLES_ACCEPTED)
 
+    def set_gender(self, gender_type):
+        self._query_params += str(QueryParam.GENDER) + str(gender_type)
+
     def set_ensuite_only(self, ensuite_only):
         """
         Set to true to only return listings that are ensuite only.
@@ -204,6 +207,7 @@ class Daft(object):
         """
         if not isinstance(sort_by, SortType):
             raise DaftInputException("sort_by should be an instance of SortType.")
+
         self._sort_by = str(sort_by)
 
     def set_sort_order(self, sort_order):
@@ -298,6 +302,7 @@ class Daft(object):
 
         if self._area is None:
             self._area = ''
+
         if self._sale_agreed:
             if self._min_price or self._max_price:
                 self._query_params += self._price + str(QueryParam.SALE_AGREED_WITH_PRICE)
