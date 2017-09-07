@@ -320,5 +320,5 @@ class Daft(object):
 
         soup = request.get(url)
         divs = soup.find_all("div", {"class": "box"})
-        [listings.append(Listing(div)) for div in divs]
+        [listings.append(Listing(div, self._verbose)) for div in divs]
         return listings

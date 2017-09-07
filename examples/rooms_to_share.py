@@ -6,9 +6,8 @@ daft.set_room_type(RoomType.DOUBLE)
 daft.set_furnished(True)
 daft.set_county('Dublin')
 daft.set_area('Castleknock')
-daft.set_gender(Gender.EITHER)
-daft.set_keywords(['internet'])
 daft.set_with_photos(True)
+daft.set_verbose(True)
 
 listings = daft.get_listings()
 
@@ -22,3 +21,5 @@ for listing in listings:
     if listing.get_features():
         for feature in listing.get_features:
             print feature
+
+    print listing.get_contact_number()

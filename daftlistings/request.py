@@ -13,9 +13,6 @@ class Request:
         print("URL: " + req.url)
         print("Status code: " + str(req.status_code))
 
-        if self._verbose:
-            print req.content
-
         if req.status_code != 200:
             raise DaftRequestException(status_code=req.status_code, reason=req.reason)
 
@@ -27,9 +24,6 @@ class Request:
 
         print("URL: " + req.url)
         print("Status code: " + str(req.status_code))
-
-        if self._verbose:
-            print req.content
 
         if req.status_code != 200:
             raise DaftRequestException(status_code=req.status_code, reason=req.reason)
