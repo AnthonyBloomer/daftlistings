@@ -53,7 +53,7 @@ class Daft(object):
         :param ensuite_only:
         """
         if ensuite_only:
-            self._query_params += QueryParam.ENSUITE_ONLY
+            self._query_params += str(QueryParam.ENSUITE_ONLY)
 
     def set_room_type(self, room_type):
         """
