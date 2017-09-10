@@ -161,7 +161,7 @@ class Daft(object):
         :return:
         """
 
-        if isinstance(listing_type, SaleType) is False ^ isinstance(listing_type, RentType) is False:
+        if not isinstance(listing_type, SaleType) and not isinstance(listing_type, RentType):
             raise DaftInputException("listing_type should be an instance of SaleType or RentType.")
 
         self._listing_type = listing_type

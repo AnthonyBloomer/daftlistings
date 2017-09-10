@@ -8,8 +8,8 @@ class Request:
         self._headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.0; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'}
         self._verbose = verbose
 
-    def get(self, url):
-        req = requests.get(url, headers=self._headers)
+    def get(self, url, params=None):
+        req = requests.get(url, headers=self._headers, params=params)
         print("URL: " + req.url)
         print("Status code: " + str(req.status_code))
 
@@ -27,5 +27,3 @@ class Request:
 
         if req.status_code != 200:
             raise DaftRequestException(status_code=req.status_code, reason=req.reason)
-
-        return True
