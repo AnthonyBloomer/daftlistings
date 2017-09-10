@@ -4,7 +4,7 @@ from request import Request
 class Listing(object):
     def __init__(self, data, verbose=False):
         self._data = data
-        self.verbose = verbose
+        self._verbose = verbose
 
     def get_price(self):
         """
@@ -14,8 +14,8 @@ class Listing(object):
         try:
             return self._data.find('strong', {'class': 'price'}).text
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
 
     def get_price_change(self):
@@ -26,8 +26,8 @@ class Listing(object):
         try:
             return self._data.find('div', {'class': 'price-changes-sr'}).text
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
 
     def get_upcoming_viewings(self):
@@ -39,8 +39,8 @@ class Listing(object):
         try:
             viewings = self._data.find_all('div', {'class': 'smi-onview-text'})
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
         for viewing in viewings:
             upcoming_viewings.append(viewing.text.strip())
@@ -53,14 +53,14 @@ class Listing(object):
         """
         facilities = []
         link = self.get_daft_link()
-        req = Request()
+        req = Request(verbose=self._verbose)
         soup = req.get(link)
         try:
             facility_table = soup.find('table', {'id': 'facilities'})
             list_items = facility_table.find_all(['li'])
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
 
         for li in list_items:
@@ -74,14 +74,14 @@ class Listing(object):
         """
         features = []
         link = self.get_daft_link()
-        req = Request()
+        req = Request(verbose=self._verbose)
         soup = req.get(link)
         try:
             feats = soup.find('div', {'id': 'features'})
             list_items = feats.find_all('li')
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
 
         for li in list_items:
@@ -96,8 +96,8 @@ class Listing(object):
         try:
             t = self._data.find('a').contents[0]
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
         s = t.split('-')
         a = s[0].strip()
@@ -118,8 +118,8 @@ class Listing(object):
         try:
             address = formalised_address.split(',')
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
 
         return address[0].strip()
@@ -136,8 +136,8 @@ class Listing(object):
         try:
             address = formalised_address.split(',')
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
 
         if len(address) == 4:
@@ -157,8 +157,8 @@ class Listing(object):
             address = formalised_address.split(',')
             return address[-2].strip()
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
 
     def get_county(self):
@@ -175,8 +175,8 @@ class Listing(object):
             address = formalised_address.split(',')
             return address[-1].strip()
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
 
     def get_listing_image(self):
@@ -185,15 +185,15 @@ class Listing(object):
         :return:
         """
 
-        req = Request()
+        req = Request(verbose=self._verbose)
         link = self.get_daft_link()
         soup = req.get(link)
 
         try:
             span = soup.find("span", {"class": "p1"})
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
 
         return span.find('img')['src']
@@ -206,8 +206,8 @@ class Listing(object):
         try:
             agent = self._data.find('ul', {'class': 'links'}).text
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
 
         return agent.split(':')[1].strip()
@@ -220,8 +220,8 @@ class Listing(object):
         try:
             agent = self._data.find('ul', {'class': 'links'})
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
 
         links = agent.find_all('a')
@@ -232,14 +232,14 @@ class Listing(object):
         This method returns the contact phone number.
         :return:
         """
-        req = Request()
+        req = Request(verbose=self._verbose)
         link = self.get_daft_link()
         soup = req.get(link)
         try:
             number = soup.find('div', {'class': 'phone-number'}).text
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
 
         return number.strip()
@@ -253,8 +253,8 @@ class Listing(object):
         try:
             return 'http://www.daft.ie' + link['href']
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
 
     def get_dwelling_type(self):
@@ -265,8 +265,8 @@ class Listing(object):
         try:
             info = self._data.find('ul', {"class": "info"}).text
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
 
         s = info.split('|')
@@ -280,8 +280,8 @@ class Listing(object):
         try:
             info = self._data.find('div', {"class": "date_entered"}).text
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
 
         s = info.split(':')
@@ -295,8 +295,8 @@ class Listing(object):
         try:
             info = self._data.find('ul', {"class": "info"}).text
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
 
         s = info.split('|')
@@ -311,8 +311,8 @@ class Listing(object):
         try:
             info = self._data.find('ul', {"class": "info"}).text
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
 
         s = info.split('|')
@@ -327,8 +327,8 @@ class Listing(object):
         try:
             info = self._data.find('ul', {"class": "info"}).text
         except Exception as e:
-            if self.verbose:
-                print e.message
+            if self._verbose:
+                print(e.message)
             return
         s = info.split('|')
         return s[1].strip()
@@ -342,7 +342,7 @@ class Listing(object):
         :param message: Your message.
         :return: 
         """
-        req = Request()
+        req = Request(verbose=self._verbose)
         link = self.get_daft_link()
         soup = req.get(link)
 

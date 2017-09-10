@@ -10,8 +10,10 @@ class Request:
 
     def get(self, url, params=None):
         req = requests.get(url, headers=self._headers, params=params)
-        print("URL: " + req.url)
-        print("Status code: " + str(req.status_code))
+
+        if self._verbose:
+            print("URL: " + req.url)
+            print("Status code: " + str(req.status_code))
 
         if req.status_code != 200:
             raise DaftRequestException(status_code=req.status_code, reason=req.reason)
@@ -22,8 +24,9 @@ class Request:
     def post(self, url, params):
         req = requests.post(url, params=params, headers=self._headers)
 
-        print("URL: " + req.url)
-        print("Status code: " + str(req.status_code))
+        if self._verbose:
+            print("URL: " + req.url)
+            print("Status code: " + str(req.status_code))
 
         if req.status_code != 200:
             raise DaftRequestException(status_code=req.status_code, reason=req.reason)
