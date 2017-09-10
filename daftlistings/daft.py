@@ -287,8 +287,6 @@ class Daft(object):
             if self._min_price or self._max_price:
                 self._query_params += self._price
 
-            accommodation_type = str(self._student_accommodation_type)
-
             url = self._base + str(
                 self._listing_type) + self._university + accommodation_type + '?' + self._query_params
             soup = request.get(url)
