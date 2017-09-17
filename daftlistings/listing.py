@@ -205,12 +205,11 @@ class Listing(object):
         """
         try:
             agent = self._data.find('ul', {'class': 'links'}).text
+            return agent.split(':')[1].strip()
         except Exception as e:
             if self._verbose:
                 print(e.message)
             return
-
-        return agent.split(':')[1].strip()
 
     def get_agent_url(self):
         """
@@ -219,13 +218,12 @@ class Listing(object):
         """
         try:
             agent = self._data.find('ul', {'class': 'links'})
+            links = agent.find_all('a')
+            return links[1]['href']
         except Exception as e:
             if self._verbose:
                 print(e.message)
             return
-
-        links = agent.find_all('a')
-        return links[1]['href']
 
     def get_contact_number(self):
         """
@@ -362,3 +360,31 @@ class Listing(object):
         })
 
         return True
+
+    def as_dict(self):
+        """
+        Return a Listing object as Dictionary
+        :return: dict
+        """
+        return {
+            'price': self.get_price(),
+            'price_change': self.get_price_change(),
+            'viewings': self.get_upcoming_viewings(),
+            'facilities': self.get_features(),
+            'features': self.get_features(),
+            'formalised_address': self.get_formalised_address(),
+            'address_line_1': self.get_address_line_1(),
+            'address_line_2': self.get_address_line_2(),
+            'town': self.get_town(),
+            'county': self.get_county(),
+            'listing_image': self.get_listing_image(),
+            'agent': self.get_agent(),
+            'agent_url': self.get_agent_url(),
+            'contact_number': self.get_contact_number(),
+            'daft_link': self.get_daft_link(),
+            'dwelling_type': self.get_dwelling_type(),
+            'posted_since': self.get_posted_since(),
+            'num_bedrooms': self.get_num_bedrooms(),
+            'num_bathrooms': self.get_num_bathrooms(),
+            'area_size': self.get_area_size()
+        }
