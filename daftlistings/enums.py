@@ -111,7 +111,7 @@ class QueryParam(Enum):
     ADDRESS = '&s%5Baddress%5D='
     ADVANCED = '&s%5Badvanced%5D=1'
     MIN_LEASE = '&s%5Bmin_lease%5D='
-    MAX_LEASE = 's%5Bmax_lease%5D='
+    MAX_LEASE = '&s%5Bmax_lease%5D='
 
     def __str__(self):
         return self._value_
