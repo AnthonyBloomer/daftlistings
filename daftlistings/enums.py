@@ -108,6 +108,8 @@ class QueryParam(Enum):
     ENSUITE_ONLY = '&s%5Bes%5D=1'
     ROOM_TYPE = '&s%5Broom_type%5D='
     GENDER = '&gender='
+    ADDRESS = '&s%5Baddress%5D='
+    ADVANCED = '&s%5Badvanced%5D=1'
 
     def __str__(self):
         return self._value_

@@ -29,9 +29,16 @@ class Daft(object):
         self._university = None
         self._student_accommodation_type = StudentAccommodationType.ANY
 
+    def set_address(self, address):
+        """
+        Set the address.
+        :param address:
+        """
+        self._query_params += str(QueryParam.ADVANCED) + str(QueryParam.ADDRESS) + address.replace(" ", "+").lower()
+
     def set_verbose(self, verbose):
         """
-        Set to True to print the HTML content.
+        Set to True to print the HTTP requests.
         :param verbose
         """
         self._verbose = verbose
@@ -288,7 +295,7 @@ class Daft(object):
                 self._query_params += self._price
 
             url = self._base + str(
-                self._listing_type) + self._university + accommodation_type + '?' + self._query_params
+                self._listing_type) + self._university + self._student_accommodation_type + '?' + self._query_params
             soup = request.get(url)
             divs = soup.find_all("div", {"class": "box"})
 
@@ -296,7 +303,7 @@ class Daft(object):
             return listings
 
         if self._county is None:
-            raise Exception("County is required.")
+            self._county = 'ireland'
 
         if self._area is None:
             self._area = ''
