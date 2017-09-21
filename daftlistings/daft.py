@@ -36,6 +36,20 @@ class Daft(object):
         """
         self._query_params += str(QueryParam.ADVANCED) + str(QueryParam.ADDRESS) + address.replace(" ", "+").lower()
 
+    def set_min_lease(self, min_lease):
+        """
+        Set the minimum lease period in months.
+        :param min_lease: int
+        """
+        self._query_params += str(QueryParam.MIN_LEASE) + str(min_lease)
+
+    def set_max_lease(self, max_lease):
+        """
+        Set the maximum lease period in months.
+        :param max_lease: int
+        """
+        self._query_params += str(QueryParam.MAX_LEASE) + str(max_lease)
+
     def set_verbose(self, verbose):
         """
         Set to True to print the HTTP requests.
@@ -266,9 +280,18 @@ class Daft(object):
         self._query_params += str(QueryParam.COMMERCIAL_MAX) + self._commercial_max_size
 
     def set_university(self, university):
+        """
+        Set the university.
+        :param university: University
+        :return:
+        """
         self._university = str(university)
 
     def set_student_accommodation_type(self, student_accommodation_type):
+        """
+        Set the student accomodation type.
+        :param student_accommodation_type: StudentAccomodationType
+        """
         if not isinstance(student_accommodation_type, StudentAccommodationType):
             raise DaftInputException("student_accommodation_type should be an instance of StudentAccommodationType.")
 
