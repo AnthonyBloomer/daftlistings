@@ -43,6 +43,14 @@ class Daft(object):
         """
         self._query_params += str(QueryParam.MIN_LEASE) + str(min_lease)
 
+    def set_added_since(self, added):
+        """
+        Set this to retrieve ads that are a given number of days old.
+        For example to retrieve listings that have been been added a week ago: set_added_since(7)
+        :param added: int
+        """
+        self._query_params + str(QueryParam.DAYS_OLD) + str(added)
+
     def set_max_lease(self, max_lease):
         """
         Set the maximum lease period in months.
@@ -325,6 +333,7 @@ class Daft(object):
             [listings.append(Listing(div)) for div in divs]
             return listings
 
+        # If the county is not set then we'll look at properties throughout Ireland.
         if self._county is None:
             self._county = 'ireland'
 
