@@ -46,7 +46,7 @@ class PublishCommand(Command):
 
 
 setup(name='daftlistings',
-      version='1.1.5',
+      version='1.1.6',
       description='A library that enables programmatic interaction with daft.ie. ',
       long_description=long_descr,
       url='https://github.com/AnthonyBloomer/daftlistings',

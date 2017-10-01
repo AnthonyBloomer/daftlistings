@@ -305,6 +305,27 @@ class Daft(object):
 
         self._student_accommodation_type = str(student_accommodation_type)
 
+    def set_num_occupants(self, num_occupants):
+        """
+        Set the max number of occupants living in the property for rent.
+        :param num_occupants: int
+        """
+        self._query_params += str(QueryParam.NUM_OCCUPANTS) + str(num_occupants)
+
+    def set_area_type(self, area_type):
+        """
+        Set the area type.
+        :param area_type: AreaType
+        """
+        self._query_params += str(area_type)
+
+    def set_public_transport_route(self, public_transport_route):
+        """
+        Set the public transport route.
+        :param public_transport_route: TransportRoute
+        """
+        self._query_params += str(QueryParam.ROUTE_ID) + str(public_transport_route)
+
     def get_listings(self):
         """
         The get listings function returns an array of Listing objects.

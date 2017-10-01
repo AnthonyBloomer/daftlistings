@@ -104,15 +104,17 @@ class QueryParam(Enum):
     WITH_PHOTOS = '&s%5Bphotos%5D=1'
     KEYWORDS = '&s%5Btxt%5D='
     FURNISHED = '&s%5Bfurn%5D=1'
-    COUPLES_ACCEPTED = '&couples=1'
+    COUPLES_ACCEPTED = '&s%5Bcouples%5D=1'
     ENSUITE_ONLY = '&s%5Bes%5D=1'
     ROOM_TYPE = '&s%5Broom_type%5D='
-    GENDER = '&gender='
+    GENDER = '&s%5Bgender%5D='
     ADDRESS = '&s%5Baddress%5D='
     ADVANCED = '&s%5Badvanced%5D=1'
     MIN_LEASE = '&s%5Bmin_lease%5D='
     MAX_LEASE = '&s%5Bmax_lease%5D='
     DAYS_OLD = '&s%5Bdays_old%5D='
+    NUM_OCCUPANTS = '&s%5Boccupants%5D='
+    ROUTE_ID = '&s%5Broute_id%5D='
 
     def __str__(self):
         return self._value_
@@ -169,3 +171,26 @@ class University(Enum):
 
     def __repr__(self):
         return "<University: %s>" % self
+
+
+class AreaType(Enum):
+    ENROUTE = '&s%5Barea_type%5D=enroute'
+    TRANSPORT_ROUTE = '&s%5Barea_type%5D=trans'
+
+    def __str__(self):
+        return self._value_
+
+    def __repr__(self):
+        return "<AreaType: %s>" % self
+
+
+class TransportRoute(Enum):
+    DART = "1"
+    LUAS_TALLAGHT_LINE = "2"
+    LUAS_SANDYFORD_LINE = "3"
+
+    def __str__(self):
+        return self._value_
+
+    def __repr__(self):
+        return "<TransportRoute: %s>" % self
