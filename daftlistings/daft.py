@@ -119,11 +119,14 @@ class Daft(object):
 
     def set_area(self, area):
         """
-        The area to retrieve listings from.
+        The area to retrieve listings from. Use an array to search multiple areas.
         :param area:
         :return:
         """
-        self._area = area.replace(" ", "-").lower()
+        if isinstance(area, str):
+            self._area = area.replace(" ", "-").lower()
+        elif isinstance(area, list):
+            self._area = ','.join(map(lambda x: x.lower(), area))
 
     def set_county(self, county):
         """
