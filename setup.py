@@ -46,12 +46,12 @@ class PublishCommand(Command):
 
 
 setup(name='daftlistings',
-      version='1.1.6',
+      version='1.2.0',
       description='A library that enables programmatic interaction with daft.ie. ',
       long_description=long_descr,
       url='https://github.com/AnthonyBloomer/daftlistings',
       author='Anthony Bloomer',
-      keywords=['daft', 'web scraping', 'real estate', 'web scraper'],
+      keywords=['daft', 'web scraping', 'real estate', 'web scraper', 'daft.ie'],
       author_email='ant0@protonmail.ch',
       license='MIT',
       packages=['daftlistings'],
