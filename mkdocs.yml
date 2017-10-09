@@ -1,5 +1,5 @@
 site_name: daftlistings
-theme: yeti
+theme: readthedocs
 site_author: Anthony Bloomer
 site_description: A web scraper for Daft.ie
 extra:

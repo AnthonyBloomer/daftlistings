@@ -123,6 +123,23 @@ Retrieve all properties for sale in Dublin 15. This example loops through each p
 
         offset += 10
 
+Find student accommodation near Trinity College Dublin that is between 800 and 1000 per month.
+        
+        daft.set_listing_type(RentType.STUDENT_ACCOMMODATION)
+        daft.set_university(University.TCD)
+        daft.set_student_accommodation_type(StudentAccommodationType.ROOM_TO_SHARE)
+        daft.set_min_price(800)
+        daft.set_max_price(1000)
+        daft.set_sort_by(SortType.PRICE)
+        daft.set_sort_order(SortOrder.ASCENDING)
+        listings = daft.get_listings()
+
+        for listing in listings:
+            print(listing.get_price())
+            print(listing.get_formalised_address())
+            print(listing.get_daft_link())
+            print(' ')
+
 # Daft
 
 ## set_verbose
@@ -131,7 +148,7 @@ Set to True to print the HTTP status code and HTML content when making a request
 
 ## set_area
 
-The area to retrieve listings from.
+The area to retrieve listings from. Use an array to search multiple areas.
 
 ## set_county
 
@@ -177,6 +194,78 @@ Use the SortOrder object to sort the listings descending or ascending.
 ## set_commercial_property_type
 
 Use the CommercialType object to set the commercial property type.
+
+## set_address
+
+Set the address.
+
+## set_min_lease
+
+Set the minimum lease period in months.
+
+## set_max_lease
+
+Set the maximum lease period in months.
+
+## set_couples_accepted
+
+Set to true to only return listings that accept couples.
+
+## set_gender
+
+Set the gender accepted using the Gender enum.
+
+## set_ensuite_only
+
+Set to true to only return listings that are ensuite only.
+
+## set_added_since
+
+Set this to retrieve ads that are a given number of days old. For example to retrieve listings that have been been added a week ago: set_added_since(7)
+
+## set_room_type
+
+Set the room type.
+
+## set_with_photos
+
+Set to True to only get listings that has photos.
+
+## set_keywords
+
+Pass an array to filter the result by keywords.
+
+## set_furnished
+
+Set to true to only get rental properties that are furnished.
+
+## set_commercial_min_size
+
+The minimum size in sq ft.
+
+## set_commercial_max_size
+
+The maximum size in sq ft.
+
+## set_university
+
+Set the university.
+
+## set_student_accommodation_type
+
+Set the student accomodation type.
+
+## set_num_occupants
+
+Set the max number of occupants living in the property for rent.
+ 
+## set_area_type
+ 
+Set the area type.
+
+## set_public_transport_route
+
+Set the public transport route.
 
 
 ## get_listings
@@ -262,6 +351,10 @@ The method returns the area size of the listing. This method should be called wh
 ## get_contact_number
 
 This method returns the contact number.
+
+## as_dict
+
+Return a Listing object as Dictionary
 
 Documentation
 -------------
