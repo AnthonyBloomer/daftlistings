@@ -1,6 +1,8 @@
 daftlistings
 ============
 
+|Build Status|
+
 A library that enables programmatic interaction with daft.ie allowing you to retrieve properties by location, sale type,
 price and property type. daftlistings has been tested on Python 2.7 and Python 3.5.2
 
@@ -217,3 +219,6 @@ Contributing
 - Create a new branch for what you're going to work on. 
 - Push to your origin repository.
 - Create a new pull request in GitHub.
+
+.. |Build Status| image:: https://travis-ci.org/AnthonyBloomer/daftlistings.svg?branch=master
+   :target: https://travis-ci.org/AnthonyBloomer/daftlistings
