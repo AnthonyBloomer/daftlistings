@@ -12,8 +12,8 @@ daft.set_with_photos(True)
 listings = daft.get_listings()
 
 for listing in listings:
-    print listing.get_price()
-    print listing.get_formalised_address()
-    print listing.get_daft_link()
-    print listing.get_contact_number()
-    print ' '
+    print(listing.get_price())
+    print(listing.get_formalised_address())
+    print(listing.get_daft_link())
+    print(listing.get_contact_number())
+    print(' ')

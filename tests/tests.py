@@ -156,7 +156,6 @@ class DaftTests(unittest.TestCase):
             price = price[6:]
         else:
             price = price[1:]
-        print price
         price = price.replace(',', '')
         self.assertTrue(len(listings) > 0)
         self.assertTrue(int(price) <= 175000)

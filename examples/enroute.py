@@ -11,6 +11,6 @@ daft.set_listing_type(RentType.ANY)
 listings = daft.get_listings()
 
 for listing in listings:
-    print listing.get_formalised_address()
-    print listing.get_price()
-    print ' '
+    print(listing.get_formalised_address())
+    print(listing.get_price())
+    print(' ')

@@ -1,4 +1,4 @@
-from request import Request
+from .request import Request
 
 
 class Listing(object):
@@ -15,7 +15,7 @@ class Listing(object):
             return self._data.find('strong', {'class': 'price'}).text
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
 
     def get_price_change(self):
@@ -27,7 +27,7 @@ class Listing(object):
             return self._data.find('div', {'class': 'price-changes-sr'}).text
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
 
     def get_upcoming_viewings(self):
@@ -40,7 +40,7 @@ class Listing(object):
             viewings = self._data.find_all('div', {'class': 'smi-onview-text'})
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
         for viewing in viewings:
             upcoming_viewings.append(viewing.text.strip())
@@ -60,7 +60,7 @@ class Listing(object):
             list_items = facility_table.find_all(['li'])
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
 
         for li in list_items:
@@ -81,7 +81,7 @@ class Listing(object):
             list_items = feats.find_all('li')
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
 
         for li in list_items:
@@ -97,7 +97,7 @@ class Listing(object):
             t = self._data.find('a').contents[0]
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
         s = t.split('-')
         a = s[0].strip()
@@ -119,7 +119,7 @@ class Listing(object):
             address = formalised_address.split(',')
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
 
         return address[0].strip()
@@ -137,7 +137,7 @@ class Listing(object):
             address = formalised_address.split(',')
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
 
         if len(address) == 4:
@@ -158,7 +158,7 @@ class Listing(object):
             return address[-2].strip()
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
 
     def get_county(self):
@@ -176,7 +176,7 @@ class Listing(object):
             return address[-1].strip()
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
 
     def get_listing_image(self):
@@ -193,7 +193,7 @@ class Listing(object):
             span = soup.find("span", {"class": "p1"})
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
 
         return span.find('img')['src']
@@ -208,7 +208,7 @@ class Listing(object):
             return agent.split(':')[1].strip()
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
 
     def get_agent_url(self):
@@ -222,7 +222,7 @@ class Listing(object):
             return links[1]['href']
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
 
     def get_contact_number(self):
@@ -237,7 +237,7 @@ class Listing(object):
             number = soup.find('div', {'class': 'phone-number'}).text
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
 
         return number.strip()
@@ -252,7 +252,7 @@ class Listing(object):
             return 'http://www.daft.ie' + link['href']
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
 
     def get_dwelling_type(self):
@@ -264,7 +264,7 @@ class Listing(object):
             info = self._data.find('ul', {"class": "info"}).text
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
 
         s = info.split('|')
@@ -279,7 +279,7 @@ class Listing(object):
             info = self._data.find('div', {"class": "date_entered"}).text
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
 
         s = info.split(':')
@@ -294,7 +294,7 @@ class Listing(object):
             info = self._data.find('ul', {"class": "info"}).text
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
 
         s = info.split('|')
@@ -310,7 +310,7 @@ class Listing(object):
             info = self._data.find('ul', {"class": "info"}).text
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
 
         s = info.split('|')
@@ -326,7 +326,7 @@ class Listing(object):
             info = self._data.find('ul', {"class": "info"}).text
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                print(e.args)
             return
         s = info.split('|')
         return s[1].strip()

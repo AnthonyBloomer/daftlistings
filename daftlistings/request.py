@@ -1,5 +1,5 @@
 import requests
-from exception import DaftRequestException
+from .exception import DaftRequestException
 from bs4 import BeautifulSoup
 
 

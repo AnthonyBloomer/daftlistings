@@ -1,1 +1,1 @@
-from daft import *
+from .daft import *

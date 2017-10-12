@@ -25,9 +25,9 @@ while True:
         if facilities is not None:
             if "Internet" in facilities:
                 for facility in facilities:
-                    print facility
-                print listing.get_price()
-                print listing.get_formalised_address()
-                print listing.get_daft_link()
+                    print(facility)
+                print(listing.get_price())
+                print(listing.get_formalised_address())
+                print(listing.get_daft_link())
 
     offset += 10
