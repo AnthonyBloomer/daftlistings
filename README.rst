@@ -31,7 +31,8 @@ Before new versions are pushed to PyPI, you can download the development version
     $ pip install -r requirements.txt
 
 Tests
-_____
+-----
+
 
 The Python unittest module contains its own test discovery function, which you can run from the command line:
 
