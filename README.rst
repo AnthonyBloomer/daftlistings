@@ -13,7 +13,7 @@ You can install daftlistings using pip.
 
 ::
 
-    pip install daftlistings
+    $ pip install daftlistings
 
 
 Development Version
@@ -24,11 +24,21 @@ Before new versions are pushed to PyPI, you can download the development version
 
 ::
 
-    git clone https://github.com/AnthonyBloomer/daftlistings.git
-    cd daftlistings
-    virtualenv env
-    source env/bin/activate
-    pip install -r requirements.txt
+    $ git clone https://github.com/AnthonyBloomer/daftlistings.git
+    $ cd daftlistings
+    $ virtualenv env
+    $ source env/bin/activate
+    $ pip install -r requirements.txt
+
+Tests
+_____
+
+The Python unittest module contains its own test discovery function, which you can run from the command line:
+
+::
+
+    $ python -m unittest discover tests/
+
 
 Examples
 --------
@@ -182,19 +192,19 @@ To view your changes, run:
 
 .. code:: shell
 
-    mkdocs serve
+    $ mkdocs serve
 
 To build the documentation, run:
 
 .. code:: shell
 
-    mkdocs build
+    $ mkdocs build
 
 This will create a directory called site. Copy the site directory to a new directory and checkout gh-pages
 
 .. code::
 
-    git checkout gh-pages
+    $ git checkout gh-pages
 
 Copy any changes from the **site** directory to this directory and push your changes.
 
