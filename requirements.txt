@@ -14,7 +14,6 @@ MarkupSafe==0.23
 mkdocs==0.17.2
 mkdocs-material==2.7.0
 packaging==16.8
-pdoc==0.3.2
 pkginfo==1.4.1
 Pygments==2.2.0
 pymdown-extensions==4.9
