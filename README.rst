@@ -1,7 +1,7 @@
 daftlistings
 ============
 
-daftlistings enables programmatic interaction with `daft.ie`_
+daftlistings enables programmatic interaction with `daft.ie`_ Daft.ie has nationwide coverage and contains about 80% of the total available properties in Ireland.
 
 Installation
 ------------
@@ -10,7 +10,7 @@ daftlistings is available on the `Python Package Index (PyPI)`_.
 
 You can install daftlistings using pip.
 
-::
+.. code-block:: shell
 
     $ virtualenv env
     $ source env/bin/activate
@@ -19,7 +19,7 @@ You can install daftlistings using pip.
 Usage
 -----
 
-::
+.. code-block:: python
 
     from daftlistings import Daft
 
