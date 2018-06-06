@@ -10,21 +10,21 @@ daft.set_sale_agreed(True)
 daft.set_min_price(200000)
 daft.set_max_price(250000)
 
-listings = daft.get_listings()
+listings = daft.search()
 
 for listing in listings:
 
-    print(listing.get_formalised_address())
-    print(listing.get_daft_link())
+    print(listing.formalised_address)
+    print(listing.daft_link)
 
-    facilities = listing.get_facilities()
+    facilities = listing.facilities
     if facilities is not None:
         print('Facilities: ')
 
         for facility in facilities:
             print(facility)
 
-    features = listing.get_features()
+    features = listing.features
     if features is not None:
         print('Features: ')
         for feature in features:

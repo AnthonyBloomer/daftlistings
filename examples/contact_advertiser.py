@@ -9,7 +9,7 @@ daft.set_listing_type(RentType.APARTMENTS)
 daft.set_min_price(1000)
 daft.set_max_price(1500)
 
-listings = daft.get_listings()
+listings = daft.search()
 
 if len(listings) > 0:
     first = listings[0]

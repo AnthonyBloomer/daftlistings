@@ -12,7 +12,7 @@ daft.set_sort_by(SortType.PRICE)
 daft.set_with_photos(True)
 daft.set_open_viewing(True)
 
-listings = daft.get_listings()
+listings = daft.search()
 
 first = listings[0]
 

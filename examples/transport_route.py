@@ -10,9 +10,9 @@ daft.set_listing_type(RentType.APARTMENTS)
 daft.set_public_transport_route(TransportRoute.DART)
 daft.set_verbose(True)
 
-listings = daft.get_listings()
+listings = daft.search()
 
 for listing in listings:
-    print(listing.get_formalised_address())
-    print(listing.get_price())
+    print(listing.formalised_address)
+    print(listing.price)
     print(' ')

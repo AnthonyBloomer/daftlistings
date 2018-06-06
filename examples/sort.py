@@ -12,21 +12,21 @@ daft.set_sort_by(SortType.PRICE)
 daft.set_min_price(500)
 daft.set_max_price(1200)
 
-listings = daft.get_listings()
+listings = daft.search()
 
 for listing in listings:
-    print(listing.get_formalised_address())
-    print(listing.get_daft_link())
-    print(listing.get_price())
+    print(listing.formalised_address)
+    print(listing.daft_link)
+    print(listing.price)
 
-    facilities = listing.get_facilities()
+    facilities = listing.facilities
     if facilities is not None:
         print('Facilities: ')
 
         for facility in facilities:
             print(facility)
 
-    features = listing.get_features()
+    features = listing.features
     if features is not None:
         print('Features: ')
         for feature in features:

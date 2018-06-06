@@ -16,9 +16,9 @@ daft.set_verbose(True)
 daft.set_sort_order(SortOrder.ASCENDING)
 daft.set_sort_by(SortType.PRICE)
 
-listings = daft.get_listings()
+listings = daft.search()
 
 for listing in listings:
-    print(listing.get_formalised_address())
-    print(listing.get_price())
-    print(listing.get_daft_link())
+    print(listing.formalised_address)
+    print(listing.price)
+    print(listing.daft_link)

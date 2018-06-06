@@ -10,7 +10,6 @@ class Request:
 
     def get(self, url, params=None):
         req = requests.get(url, headers=self._headers, params=params)
-
         if self._verbose:
             print("URL: " + req.url)
             print("Status code: " + str(req.status_code))

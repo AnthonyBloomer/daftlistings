@@ -9,11 +9,11 @@ daft.set_area('Castleknock')
 daft.set_gender(Gender.MALE)
 daft.set_with_photos(True)
 
-listings = daft.get_listings()
+listings = daft.search()
 
 for listing in listings:
-    print(listing.get_price())
-    print(listing.get_formalised_address())
-    print(listing.get_daft_link())
-    print(listing.get_contact_number())
+    print(listing.get_price)
+    print(listing.formalised_address)
+    print(listing.daft_link)
+    print(listing.contact_number)
     print(' ')

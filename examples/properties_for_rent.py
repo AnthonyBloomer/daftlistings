@@ -11,21 +11,18 @@ daft.set_max_price(1500)
 daft.set_furnished(True)
 daft.set_keywords(['quiet'])
 
-listings = daft.get_listings()
+listings = daft.search()
 
 for listing in listings:
-    print(listing.get_formalised_address())
-    print(listing.get_daft_link())
-    print(listing.get_price())
-    print(listing.get_contact_number())
-    facilities = listing.get_facilities()
+    print(listing.formalised_address)
+    facilities = listing.facilities
     if facilities is not None:
         print('Facilities: ')
 
         for facility in facilities:
             print(facility)
 
-    features = listing.get_features()
+    features = listing.features
     if features is not None:
         print('Features: ')
         for feature in features:

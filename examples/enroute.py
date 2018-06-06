@@ -8,9 +8,9 @@ daft.set_area_type(AreaType.ENROUTE)
 daft.set_area('Blackrock')
 daft.set_listing_type(RentType.ANY)
 
-listings = daft.get_listings()
+listings = daft.search()
 
 for listing in listings:
-    print(listing.get_formalised_address())
-    print(listing.get_price())
+    print(listing.formalised_address)
+    print(listing.price)
     print(' ')

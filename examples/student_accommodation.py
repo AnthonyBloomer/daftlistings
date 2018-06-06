@@ -15,19 +15,19 @@ while True:
     daft.set_sort_by(SortType.PRICE)
     daft.set_sort_order(SortOrder.ASCENDING)
     daft.set_offset(offset)
-    listings = daft.get_listings()
+    listings = daft.search()
 
     if len(listings) == 0:
         break
 
     for listing in listings:
-        facilities = listing.get_facilities()
+        facilities = listing.facilities
         if facilities is not None:
             if "Internet" in facilities:
                 for facility in facilities:
                     print(facility)
-                print(listing.get_price())
-                print(listing.get_formalised_address())
-                print(listing.get_daft_link())
+                print(listing.price)
+                print(listing.formalised_address)
+                print(listing.daft_link)
 
     offset += 10
