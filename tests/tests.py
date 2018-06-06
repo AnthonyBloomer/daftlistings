@@ -214,7 +214,7 @@ class DaftTests(unittest.TestCase):
         listings = daft.search()
         self.assertTrue(len(listings) > 0)
         listing = listings[0]
-        self.assertTrue(listing.num_bedrooms == 3)
+        self.assertTrue(listing.bedrooms == 3)
 
     def test_properties_without_county(self):
         try:
