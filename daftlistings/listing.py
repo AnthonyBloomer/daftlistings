@@ -337,7 +337,7 @@ class Listing(object):
 
         s = info.split(':')
         return s[-1].strip()
-
+    
     @property
     def bedrooms(self):
         """

@@ -216,13 +216,6 @@ class DaftTests(unittest.TestCase):
         listing = listings[0]
         self.assertTrue(listing.bedrooms == 3)
 
-    def test_properties_without_county(self):
-        try:
-            daft = Daft()
-            listing = daft.search()
-        except Exception:
-            self.assertTrue(True)
-
     def test_open_viewing(self):
         daft = Daft()
         daft.set_open_viewing(True)
