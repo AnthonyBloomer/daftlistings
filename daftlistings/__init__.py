@@ -1,4 +1,4 @@
-from daft import Daft
+from daftlistings import Daft
 from enums import *
 from exceptions import *
 from listing import Listing
