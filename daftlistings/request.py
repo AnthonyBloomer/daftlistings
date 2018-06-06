@@ -1,5 +1,5 @@
 import requests
-from .exceptions import DaftRequestException
+from .exceptions import DaftException
 from bs4 import BeautifulSoup
 
 
@@ -15,7 +15,7 @@ class Request:
             print("Status code: " + str(req.status_code))
 
         if req.status_code != 200:
-            raise DaftRequestException(status_code=req.status_code, reason=req.reason)
+            raise DaftException(status_code=req.status_code, reason=req.reason)
 
         soup = BeautifulSoup(req.content, 'html.parser')
         return soup
@@ -28,6 +28,6 @@ class Request:
             print("Status code: " + str(req.status_code))
 
         if req.status_code != 200:
-            raise DaftRequestException(status_code=req.status_code, reason=req.reason)
+            raise DaftException(status_code=req.status_code, reason=req.reason)
 
         return req

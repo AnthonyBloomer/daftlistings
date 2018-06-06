@@ -1,7 +1,7 @@
 from .listing import Listing
 from .enums import *
 from .request import Request
-from .exceptions import DaftInputException
+from .exceptions import DaftException
 
 
 class Daft(object):
@@ -90,7 +90,7 @@ class Daft(object):
         :param room_type:
         """
         if not isinstance(room_type, RoomType):
-            raise DaftInputException("room_type should be an instance of RoomType.")
+            raise DaftException("room_type should be an instance of RoomType.")
         self._query_params += str(QueryParam.ROOM_TYPE) + str(room_type)
 
     def set_with_photos(self, with_photos):
@@ -152,7 +152,7 @@ class Daft(object):
         """
 
         if not isinstance(offset, int) or offset < 0:
-            raise DaftInputException("Offset should be a positive integer.")
+            raise DaftException("Offset should be a positive integer.")
 
         self._offset = str(offset)
 
@@ -164,7 +164,7 @@ class Daft(object):
         """
 
         if not isinstance(min_price, int):
-            raise DaftInputException("Min price should be an integer.")
+            raise DaftException("Min price should be an integer.")
 
         self._min_price = str(min_price)
         self._price += str(QueryParam.MIN_PRICE) + self._min_price
@@ -177,7 +177,7 @@ class Daft(object):
         """
 
         if not isinstance(max_price, int):
-            raise DaftInputException("Max price should be an integer.")
+            raise DaftException("Max price should be an integer.")
 
         self._max_price = str(max_price)
         self._price += str(QueryParam.MAX_PRICE) + self._max_price
@@ -192,7 +192,7 @@ class Daft(object):
         """
 
         if not isinstance(listing_type, SaleType) and not isinstance(listing_type, RentType):
-            raise DaftInputException("listing_type should be an instance of SaleType or RentType.")
+            raise DaftException("listing_type should be an instance of SaleType or RentType.")
 
         self._listing_type = listing_type
 
@@ -212,7 +212,7 @@ class Daft(object):
         """
 
         if not isinstance(min_beds, int):
-            raise DaftInputException("Minimum number of beds should be an integer.")
+            raise DaftException("Minimum number of beds should be an integer.")
 
         self._min_beds = str(min_beds)
         self._query_params += str(QueryParam.MIN_BEDS) + self._min_beds
@@ -224,7 +224,7 @@ class Daft(object):
         :return:
         """
         if not isinstance(max_beds, int):
-            raise DaftInputException("Maximum number of beds should be an integer.")
+            raise DaftException("Maximum number of beds should be an integer.")
 
         self._max_beds = str(max_beds)
         self._query_params += str(QueryParam.MAX_BEDS) + self._max_beds
@@ -236,7 +236,7 @@ class Daft(object):
         :return:
         """
         if not isinstance(sort_by, SortType):
-            raise DaftInputException("sort_by should be an instance of SortType.")
+            raise DaftException("sort_by should be an instance of SortType.")
 
         self._sort_by = str(sort_by)
 
@@ -248,7 +248,7 @@ class Daft(object):
         """
 
         if not isinstance(sort_order, SortOrder):
-            raise DaftInputException("sort_order should be an instance of SortOrder.")
+            raise DaftException("sort_order should be an instance of SortOrder.")
 
         self._sort_order = str(sort_order)
 
@@ -260,7 +260,7 @@ class Daft(object):
         """
 
         if not isinstance(commercial_property_type, CommercialType):
-            raise DaftInputException("commercial_property_type should be an instance of CommercialType.")
+            raise DaftException("commercial_property_type should be an instance of CommercialType.")
 
         self._commercial_property_type = str(commercial_property_type)
 
@@ -271,7 +271,7 @@ class Daft(object):
         :return:
         """
         if not isinstance(commercial_min_size, int):
-            raise DaftInputException("commercial_min_size should be an integer.")
+            raise DaftException("commercial_min_size should be an integer.")
 
         self._commercial_min_size = str(commercial_min_size)
         self._query_params += str(QueryParam.COMMERCIAL_MIN) + self._commercial_min_size
@@ -283,7 +283,7 @@ class Daft(object):
         :return:
         """
         if not isinstance(commercial_max_size, int):
-            raise DaftInputException("commercial_max_size should be an integer.")
+            raise DaftException("commercial_max_size should be an integer.")
 
         self._commercial_max_size = str(commercial_max_size)
         self._query_params += str(QueryParam.COMMERCIAL_MAX) + self._commercial_max_size
@@ -302,7 +302,7 @@ class Daft(object):
         :param student_accommodation_type: StudentAccomodationType
         """
         if not isinstance(student_accommodation_type, StudentAccommodationType):
-            raise DaftInputException("student_accommodation_type should be an instance of StudentAccommodationType.")
+            raise DaftException("student_accommodation_type should be an instance of StudentAccommodationType.")
 
         self._student_accommodation_type = str(student_accommodation_type)
 

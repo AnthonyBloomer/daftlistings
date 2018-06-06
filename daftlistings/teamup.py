@@ -1,5 +1,5 @@
 from .enums import TeamUpWith, TeamupSearch, QueryParam, County
-from .exceptions import DaftInputException
+from .exceptions import DaftException
 from .request import Request
 from .person import Person
 
@@ -21,7 +21,7 @@ class Teamup(object):
         :return:
         """
         if not isinstance(team_up_with, TeamUpWith):
-            raise DaftInputException("team_up_with should be an instance of TeamUpWith")
+            raise DaftException("team_up_with should be an instance of TeamUpWith")
         self.team_up_with = str(TeamupSearch.TEAM_UP_WITH) + str(team_up_with)
 
     def set_county(self, county):
