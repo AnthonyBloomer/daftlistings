@@ -1,2 +1,2 @@
-from daftlistings import *
-from teamup import Teamup
+from .daft import *
+from .teamup import Teamup
