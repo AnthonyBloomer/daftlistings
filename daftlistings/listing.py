@@ -428,7 +428,7 @@ class Listing(object):
             'price': self.price,
             'price_change': self.price_change,
             'viewings': self.upcoming_viewings,
-            'facilities': self.features,
+            'facilities': self.facilities,
             'features': self.features,
             'formalised_address': self.formalised_address,
             'address_line_1': self.address_line_1,
