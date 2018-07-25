@@ -49,7 +49,7 @@ class Daft(object):
         For example to retrieve listings that have been been added a week ago: set_added_since(7)
         :param added: int
         """
-        self._query_params + str(QueryParam.DAYS_OLD) + str(added)
+        self._query_params += str(QueryParam.DAYS_OLD) + str(added)
 
     def set_max_lease(self, max_lease):
         """
