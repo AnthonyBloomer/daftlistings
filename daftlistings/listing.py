@@ -1,4 +1,5 @@
 from .request import Request
+import base64
 
 
 class Listing(object):
@@ -283,14 +284,12 @@ class Listing(object):
         if self._ad_page_content is None:
             self._ad_page_content = Request(verbose=self._verbose).get(self.daft_link)
         try:
-            number = self._ad_page_content.find('div', {'class': 'phone-number'}).text
-            return number.strip()
+            number = self._ad_page_content.find('button', {'class': 'phone-number'})
+            return base64.b64decode(number.attrs['data-p'])
         except Exception as e:
             if self._verbose:
                 print(e.message)
             return 'N/A'
-
-
 
     @property
     def daft_link(self):
