@@ -94,8 +94,7 @@ class Listing(object):
         if self._ad_page_content is None:
             self._ad_page_content = Request(verbose=self._verbose).get(self.daft_link)
         try:
-            facility_table = self._ad_page_content.find('table', {'id': 'facilities'})
-            list_items = facility_table.find_all(['li'])
+            list_items = self._ad_page_content.select("#facilities li")
         except Exception as e:
             if self._verbose:
                 print(e.message)
@@ -115,8 +114,7 @@ class Listing(object):
         if self._ad_page_content is None:
             self._ad_page_content = Request(verbose=self._verbose).get(self.daft_link)
         try:
-            feats = self._ad_page_content.find('div', {'id': 'features'})
-            list_items = feats.find_all('li')
+            list_items = self._ad_page_content.select("#features li")
         except Exception as e:
             if self._verbose:
                 print(e.message)
@@ -428,7 +426,6 @@ class Listing(object):
             'price_change': self.price_change,
             'viewings': self.upcoming_viewings,
             'facilities': self.facilities,
-            'features': self.features,
             'formalised_address': self.formalised_address,
             'address_line_1': self.address_line_1,
             'address_line_2': self.address_line_2,
