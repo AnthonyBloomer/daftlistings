@@ -1,7 +1,7 @@
 import requests
 from .exceptions import DaftException
 from bs4 import BeautifulSoup
-from logger import logger
+from .logger import logger
 
 class Request:
     def __init__(self, verbose=False):
