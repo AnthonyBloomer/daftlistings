@@ -1,5 +1,5 @@
 from .request import Request
-from logger import logger
+from .logger import logger
 import base64
 
 
