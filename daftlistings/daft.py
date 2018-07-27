@@ -5,9 +5,9 @@ from .exceptions import DaftException
 
 
 class Daft(object):
-    def __init__(self):
+    def __init__(self, verbose=False):
         self._base = 'http://www.daft.ie/'
-        self._verbose = False
+        self._verbose = verbose
         self._sale_agreed = False
         self._open_viewing = False
         self._offset = 0

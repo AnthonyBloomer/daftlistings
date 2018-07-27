@@ -1,7 +1,7 @@
 import requests
 from .exceptions import DaftException
 from bs4 import BeautifulSoup
-
+from logger import logger
 
 class Request:
     def __init__(self, verbose=False):
@@ -11,11 +11,11 @@ class Request:
     def get(self, url, params=None):
         req = requests.get(url, headers=self._headers, params=params)
         if self._verbose:
-            print("URL: " + req.url)
-            print("Status code: " + str(req.status_code))
+            logger.info("URL: " + req.url)
+            logger.info("Status code: " + str(req.status_code))
 
         if req.status_code != 200:
-            raise DaftException(status_code=req.status_code, reason=req.reason)
+            raise DaftException(reason=req.reason)
 
         soup = BeautifulSoup(req.content, 'html.parser')
         return soup
@@ -24,10 +24,10 @@ class Request:
         req = requests.post(url, params=params, headers=self._headers)
 
         if self._verbose:
-            print("URL: " + req.url)
-            print("Status code: " + str(req.status_code))
+            logger.info("URL: " + req.url)
+            logger.info("Status code: " + str(req.status_code))
 
         if req.status_code != 200:
-            raise DaftException(status_code=req.status_code, reason=req.reason)
+            raise DaftException(reason=req.reason)
 
         return req

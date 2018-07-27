@@ -1,4 +1,5 @@
 from .request import Request
+from logger import logger
 import base64
 
 
@@ -16,7 +17,7 @@ class Listing(object):
             return self._ad_page_content.find('input', {'id': 'ad_id'})['value']
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
 
     @property
@@ -27,7 +28,7 @@ class Listing(object):
             return self._ad_page_content.find('input', {'id': 'agent_id'})['value']
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
 
     @property
@@ -38,7 +39,7 @@ class Listing(object):
             return self._ad_page_content.find('input', {'id': 'ad_search_type'})['value']
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
 
     @property
@@ -51,7 +52,7 @@ class Listing(object):
             return self._data.find('strong', {'class': 'price'}).text
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
 
     @property
@@ -64,7 +65,7 @@ class Listing(object):
             return self._data.find('div', {'class': 'price-changes-sr'}).text
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
 
     @property
@@ -78,7 +79,7 @@ class Listing(object):
             viewings = self._data.find_all('div', {'class': 'smi-onview-text'})
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
         for viewing in viewings:
             upcoming_viewings.append(viewing.text.strip())
@@ -97,7 +98,7 @@ class Listing(object):
             list_items = self._ad_page_content.select("#facilities li")
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
 
         for li in list_items:
@@ -117,7 +118,7 @@ class Listing(object):
             list_items = self._ad_page_content.select("#features li")
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
 
         for li in list_items:
@@ -134,7 +135,7 @@ class Listing(object):
             t = self._data.find('a').contents[0]
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
         s = t.split('-')
         a = s[0].strip()
@@ -157,7 +158,7 @@ class Listing(object):
             address = formalised_address.split(',')
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
 
         return address[0].strip()
@@ -176,7 +177,7 @@ class Listing(object):
             address = formalised_address.split(',')
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
 
         if len(address) == 4:
@@ -198,7 +199,7 @@ class Listing(object):
             return address[-2].strip()
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
 
     @property
@@ -217,7 +218,7 @@ class Listing(object):
             return address[-1].strip()
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
 
     @property
@@ -233,7 +234,7 @@ class Listing(object):
             uls = self._ad_page_content.find("ul", {"class": "smi-gallery-list"})
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
         images = []
         if uls is None:
@@ -255,7 +256,7 @@ class Listing(object):
             return agent.split(':')[1].strip()
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
 
     @property
@@ -270,7 +271,7 @@ class Listing(object):
             return links[1]['href']
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
 
     @property
@@ -286,7 +287,7 @@ class Listing(object):
             return base64.b64decode(number.attrs['data-p'])
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return 'N/A'
 
     @property
@@ -300,7 +301,7 @@ class Listing(object):
             return 'http://www.daft.ie' + link['href']
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
 
     @property
@@ -313,7 +314,7 @@ class Listing(object):
             info = self._data.find('ul', {"class": "info"}).text
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
 
         s = info.split('|')
@@ -329,7 +330,7 @@ class Listing(object):
             info = self._data.find('div', {"class": "date_entered"}).text
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return
 
         s = info.split(':')
@@ -348,7 +349,7 @@ class Listing(object):
             return int(nb.split()[0])
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return 'N/A'
 
     @property
@@ -364,7 +365,7 @@ class Listing(object):
             return int(nb.split()[0])
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return 'N/A'
 
     @property
@@ -379,7 +380,7 @@ class Listing(object):
             return s[1].strip()
         except Exception as e:
             if self._verbose:
-                print(e.message)
+                logger.error(e.message)
             return 'N/A'
 
     def contact_advertiser(self, name, email, contact_number, message):
@@ -410,7 +411,7 @@ class Listing(object):
         })
 
         if self._verbose:
-            print("Status code: %d" % response.status_code)
+            logger.info("Status code: %d" % response.status_code)
         return response.status_code == 200
 
     def as_dict(self):
