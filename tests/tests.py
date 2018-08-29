@@ -9,7 +9,7 @@ class DaftTests(unittest.TestCase):
         daft = Daft()
         daft.set_county("Dublin City")
         daft.set_area("Dublin 15")
-        daft.set_added_since(7)
+        daft.set_added_since(14)
         daft.set_listing_type(SaleType.PROPERTIES)
         listings = daft.search()
         self.assertTrue(len(listings) > 0)
