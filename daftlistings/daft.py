@@ -124,7 +124,7 @@ class Daft(object):
         :return:
         """
         self._area = area.replace(" ", "-").lower() if isinstance(area, str) else ','.join(
-            map(lambda x: x.lower(), area))
+            map(lambda x: x.lower().replace(' ', '-'), area))
 
     def set_county(self, county):
         """
