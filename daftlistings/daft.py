@@ -346,6 +346,8 @@ class Daft(object):
         request = Request(verbose=self._verbose)
 
         if self._result_url:
+            if self._offset:
+                self._result_url += '&offset=' + str(self._offset)
             soup = request.get(self._result_url)
             divs = soup.find_all("div", {"class": "box"})
             [listings.append(Listing(div, self._verbose)) for div in divs]
