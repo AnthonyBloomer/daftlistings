@@ -28,6 +28,16 @@ class Daft(object):
         self._commercial_min_size = None
         self._commercial_max_size = None
         self._university = None
+        self._result_url = None
+
+    def set_result_url(self, result_url):
+        """
+        Pass result url to scrape search results.
+        :param result_url: string
+        :return:
+        """
+        self._result_url = result_url
+
 
     def set_address(self, address):
         """
@@ -334,6 +344,12 @@ class Daft(object):
         """
         listings = []
         request = Request(verbose=self._verbose)
+
+        if self._result_url:
+            soup = request.get(self._result_url)
+            divs = soup.find_all("div", {"class": "box"})
+            [listings.append(Listing(div, self._verbose)) for div in divs]
+            return listings
 
         if self._sort_by:
             if self._sort_order:

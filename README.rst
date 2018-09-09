@@ -16,6 +16,12 @@ You can install daftlistings using pip.
     $ source env/bin/activate
     $ pip install daftlistings
 
+To install the development version, run:
+
+.. code-block:: shell
+
+    pip install https://github.com/AnthonyBloomer/daftlistings/archive/dev.zip
+
 Usage
 -----
 
