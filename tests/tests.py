@@ -1,12 +1,14 @@
 import unittest
 import time
+import logging
 from daftlistings import Daft, SaleType, RentType, SortOrder, SortType, CommercialType, University, \
-    StudentAccommodationType, RoomType, Teamup, TeamUpWith, County, AreaType, TransportRoute, Gender
+    StudentAccommodationType, RoomType, AreaType, TransportRoute, Gender
 
 
 class DaftTests(unittest.TestCase):
+
     def test_properties(self):
-        daft = Daft()
+        daft = Daft(debug=True, log_level=logging.INFO)
         daft.set_county("Dublin City")
         daft.set_area("Dublin 15")
         daft.set_added_since(14)

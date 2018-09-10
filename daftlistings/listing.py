@@ -1,45 +1,47 @@
 from .request import Request
-from .logger import logger
+from .logger import Logger
+import logging
 import base64
 
 
 class Listing(object):
-    def __init__(self, data, verbose=False):
+    def __init__(self, data, debug=False, log_level=logging.ERROR):
         self._data = data
-        self._verbose = verbose
+        self._debug = debug
         self._ad_page_content = None
+        self._logger = Logger(log_level)
 
     @property
     def id(self):
         if self._ad_page_content is None:
-            self._ad_page_content = Request(verbose=self._verbose).get(self.daft_link)
+            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             return self._ad_page_content.find('input', {'id': 'ad_id'})['value']
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
 
     @property
     def agent_id(self):
         if self._ad_page_content is None:
-            self._ad_page_content = Request(verbose=self._verbose).get(self.daft_link)
+            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             return self._ad_page_content.find('input', {'id': 'agent_id'})['value']
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
 
     @property
     def search_type(self):
         if self._ad_page_content is None:
-            self._ad_page_content = Request(verbose=self._verbose).get(self.daft_link)
+            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             return self._ad_page_content.find('input', {'id': 'ad_search_type'})['value']
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
 
     @property
@@ -51,8 +53,8 @@ class Listing(object):
         try:
             return self._data.find('strong', {'class': 'price'}).text
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
 
     @property
@@ -64,8 +66,8 @@ class Listing(object):
         try:
             return self._data.find('div', {'class': 'price-changes-sr'}).text
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
 
     @property
@@ -78,8 +80,8 @@ class Listing(object):
         try:
             viewings = self._data.find_all('div', {'class': 'smi-onview-text'})
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
         for viewing in viewings:
             upcoming_viewings.append(viewing.text.strip())
@@ -93,12 +95,12 @@ class Listing(object):
         """
         facilities = []
         if self._ad_page_content is None:
-            self._ad_page_content = Request(verbose=self._verbose).get(self.daft_link)
+            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             list_items = self._ad_page_content.select("#facilities li")
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
 
         for li in list_items:
@@ -113,12 +115,12 @@ class Listing(object):
         """
         features = []
         if self._ad_page_content is None:
-            self._ad_page_content = Request(verbose=self._verbose).get(self.daft_link)
+            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             list_items = self._ad_page_content.select("#features li")
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
 
         for li in list_items:
@@ -134,8 +136,8 @@ class Listing(object):
         try:
             t = self._data.find('a').contents[0]
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
         s = t.split('-')
         a = s[0].strip()
@@ -157,8 +159,8 @@ class Listing(object):
         try:
             address = formalised_address.split(',')
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
 
         return address[0].strip()
@@ -176,8 +178,8 @@ class Listing(object):
         try:
             address = formalised_address.split(',')
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
 
         if len(address) == 4:
@@ -198,8 +200,8 @@ class Listing(object):
             address = formalised_address.split(',')
             return address[-2].strip()
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
 
     @property
@@ -217,8 +219,8 @@ class Listing(object):
             address = formalised_address.split(',')
             return address[-1].strip()
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
 
     @property
@@ -229,12 +231,12 @@ class Listing(object):
         """
 
         if self._ad_page_content is None:
-            self._ad_page_content = Request(verbose=self._verbose).get(self.daft_link)
+            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             uls = self._ad_page_content.find("ul", {"class": "smi-gallery-list"})
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
         images = []
         if uls is None:
@@ -255,8 +257,8 @@ class Listing(object):
             agent = self._data.find('ul', {'class': 'links'}).text
             return agent.split(':')[1].strip()
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
 
     @property
@@ -270,8 +272,8 @@ class Listing(object):
             links = agent.find_all('a')
             return links[1]['href']
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
 
     @property
@@ -281,13 +283,13 @@ class Listing(object):
         :return:
         """
         if self._ad_page_content is None:
-            self._ad_page_content = Request(verbose=self._verbose).get(self.daft_link)
+            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             number = self._ad_page_content.find('button', {'class': 'phone-number'})
             return base64.b64decode(number.attrs['data-p'])
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return 'N/A'
 
     @property
@@ -300,8 +302,8 @@ class Listing(object):
         try:
             return 'http://www.daft.ie' + link['href']
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
 
     @property
@@ -313,8 +315,8 @@ class Listing(object):
         try:
             info = self._data.find('ul', {"class": "info"}).text
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
 
         s = info.split('|')
@@ -329,8 +331,8 @@ class Listing(object):
         try:
             info = self._data.find('div', {"class": "date_entered"}).text
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return
 
         s = info.split(':')
@@ -348,8 +350,8 @@ class Listing(object):
             nb = s[1].strip()
             return int(nb.split()[0])
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return 'N/A'
 
     @property
@@ -364,8 +366,8 @@ class Listing(object):
             nb = s[2].strip()
             return int(nb.split()[0])
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return 'N/A'
 
     @property
@@ -379,8 +381,8 @@ class Listing(object):
             s = info.split('|')
             return s[1].strip()
         except Exception as e:
-            if self._verbose:
-                logger.error(e.message)
+            if self._debug:
+                self._logger.error(e.message)
             return 'N/A'
 
     def contact_advertiser(self, name, email, contact_number, message):
@@ -393,7 +395,7 @@ class Listing(object):
         :return: 
         """
 
-        req = Request(verbose=self._verbose)
+        req = Request(debug=self._debug)
 
         ad_search_type = self.search_type
         agent_id = self.agent_id
@@ -410,8 +412,12 @@ class Listing(object):
             'id': ad_id
         })
 
-        if self._verbose:
-            logger.info("Status code: %d" % response.status_code)
+        if self._debug:
+            self._logger.info("Status code: %d" % response.status_code)
+            self._logger.info("Response: %s" % response.content)
+        if response.status_code != 200:
+            self._logger.error("Status code: %d" % response.status_code)
+            self._logger.error("Response: %s" % response.content)
         return response.status_code == 200
 
     def as_dict(self):

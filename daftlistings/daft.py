@@ -2,12 +2,14 @@ from .listing import Listing
 from .enums import *
 from .request import Request
 from .exceptions import DaftException
+from .logger import Logger
+import logging
 
 
 class Daft(object):
-    def __init__(self, verbose=False):
+    def __init__(self, debug=False, log_level=logging.ERROR):
         self._base = 'http://www.daft.ie/'
-        self._verbose = verbose
+        self._debug = debug
         self._sale_agreed = False
         self._open_viewing = False
         self._offset = 0
@@ -29,6 +31,7 @@ class Daft(object):
         self._commercial_max_size = None
         self._university = None
         self._result_url = None
+        self.logger = Logger(log_level)
 
     def set_result_url(self, result_url):
         """
@@ -37,7 +40,6 @@ class Daft(object):
         :return:
         """
         self._result_url = result_url
-
 
     def set_address(self, address):
         """
@@ -73,7 +75,7 @@ class Daft(object):
         Set to True to print the HTTP requests.
         :param verbose
         """
-        self._verbose = verbose
+        self._debug = verbose
 
     def set_couples_accepted(self, couples_accepted):
         """
@@ -343,14 +345,14 @@ class Daft(object):
         :return: Listing object
         """
         listings = []
-        request = Request(verbose=self._verbose)
+        request = Request(debug=self._debug)
 
         if self._result_url:
             if self._offset:
                 self._result_url += '&offset=' + str(self._offset)
             soup = request.get(self._result_url)
             divs = soup.find_all("div", {"class": "box"})
-            [listings.append(Listing(div, self._verbose)) for div in divs]
+            [listings.append(Listing(div, self._debug)) for div in divs]
             return listings
 
         if self._sort_by:
@@ -397,5 +399,5 @@ class Daft(object):
 
         soup = request.get(url)
         divs = soup.find_all("div", {"class": "box"})
-        [listings.append(Listing(div, self._verbose)) for div in divs]
+        [listings.append(Listing(div, self._debug)) for div in divs]
         return listings
