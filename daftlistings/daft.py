@@ -339,21 +339,12 @@ class Daft(object):
         """
         self._query_params += str(QueryParam.ROUTE_ID) + str(public_transport_route)
 
-    def search(self):
-        """
-        The search function returns an array of Listing objects.
-        :return: Listing object
-        """
-        listings = []
-        request = Request(debug=self._debug)
+    def get_url(self):
 
         if self._result_url:
             if self._offset:
                 self._result_url += '&offset=' + str(self._offset)
-            soup = request.get(self._result_url)
-            divs = soup.find_all("div", {"class": "box"})
-            [listings.append(Listing(div, self._debug)) for div in divs]
-            return listings
+            return self._result_url
 
         if self._sort_by:
             if self._sort_order:
@@ -369,11 +360,7 @@ class Daft(object):
 
             url = self._base + str(
                 self._listing_type) + self._university + self._student_accommodation_type + '?' + self._query_params
-            soup = request.get(url)
-            divs = soup.find_all("div", {"class": "box"})
-
-            [listings.append(Listing(div)) for div in divs]
-            return listings
+            return url
 
         # If the county is not set then we'll look at properties throughout Ireland.
         if self._county is None:
@@ -396,7 +383,17 @@ class Daft(object):
 
         url = self._base + self._county + str(self._listing_type) + str(self._commercial_property_type) + str(
             self._area) + '?offset=' + str(self._offset) + self._query_params
+        return url
 
+
+    def search(self):
+        """
+        The search function returns an array of Listing objects.
+        :return: Listing object
+        """
+        listings = []
+        request = Request(debug=self._debug)
+        url = self.get_url()
         soup = request.get(url)
         divs = soup.find_all("div", {"class": "box"})
         [listings.append(Listing(div, self._debug)) for div in divs]
