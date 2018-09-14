@@ -94,6 +94,7 @@ class QueryParam(Enum):
     MIN_PRICE = '&s%5Bmnp%5D='
     MAX_PRICE = '&s%5Bmxp%5D='
     IGNORED_AGENTS = '&s%5Bignored_agents%5D%5B1%5D'
+    AVALIABILITY = '&s%5Bavailable_for%5D='
     MIN_BEDS = '&s%5Bmnb%5D='
     MAX_BEDS = '&s%5Bmxb%5D='
     SORT_BY = '&s%5Bsort_by%5D='

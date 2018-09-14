@@ -70,6 +70,15 @@ class Daft(object):
         """
         self._query_params += str(QueryParam.MAX_LEASE) + str(max_lease)
 
+    def set_avaliability(self, min_avaliability):
+        """
+        Set the maximum lease period in months.
+        :param max_lease: int
+        """
+        if(min_avaliability>=5):
+            min_avaliability = '5%2B'
+        self._query_params += str(QueryParam.AVALIABILITY) + str(min_avaliability)
+
     def set_verbose(self, verbose):
         """
         Set to True to print the HTTP requests.
