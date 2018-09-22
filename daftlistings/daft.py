@@ -2,12 +2,14 @@ from .listing import Listing
 from .enums import *
 from .request import Request
 from .exceptions import DaftException
+from .logger import Logger
+import logging
 
 
 class Daft(object):
-    def __init__(self, verbose=False):
+    def __init__(self, debug=False, log_level=logging.ERROR):
         self._base = 'http://www.daft.ie/'
-        self._verbose = verbose
+        self._debug = debug
         self._sale_agreed = False
         self._open_viewing = False
         self._offset = 0
@@ -29,6 +31,7 @@ class Daft(object):
         self._commercial_max_size = None
         self._university = None
         self._result_url = None
+        self.logger = Logger(log_level)
 
     def set_result_url(self, result_url):
         """
@@ -37,7 +40,6 @@ class Daft(object):
         :return:
         """
         self._result_url = result_url
-
 
     def set_address(self, address):
         """
@@ -68,12 +70,21 @@ class Daft(object):
         """
         self._query_params += str(QueryParam.MAX_LEASE) + str(max_lease)
 
+    def set_avaliability(self, min_avaliability):
+        """
+        Set the maximum lease period in months.
+        :param max_lease: int
+        """
+        if(min_avaliability>=5):
+            min_avaliability = '5%2B'
+        self._query_params += str(QueryParam.AVALIABILITY) + str(min_avaliability)
+
     def set_verbose(self, verbose):
         """
         Set to True to print the HTTP requests.
         :param verbose
         """
-        self._verbose = verbose
+        self._debug = verbose
 
     def set_couples_accepted(self, couples_accepted):
         """
@@ -337,19 +348,12 @@ class Daft(object):
         """
         self._query_params += str(QueryParam.ROUTE_ID) + str(public_transport_route)
 
-    def search(self):
-        """
-        The search function returns an array of Listing objects.
-        :return: Listing object
-        """
-        listings = []
-        request = Request(verbose=self._verbose)
+    def get_url(self):
 
         if self._result_url:
-            soup = request.get(self._result_url)
-            divs = soup.find_all("div", {"class": "box"})
-            [listings.append(Listing(div, self._verbose)) for div in divs]
-            return listings
+            if self._offset:
+                self._result_url += '&offset=' + str(self._offset)
+            return self._result_url
 
         if self._sort_by:
             if self._sort_order:
@@ -365,11 +369,7 @@ class Daft(object):
 
             url = self._base + str(
                 self._listing_type) + self._university + self._student_accommodation_type + '?' + self._query_params
-            soup = request.get(url)
-            divs = soup.find_all("div", {"class": "box"})
-
-            [listings.append(Listing(div)) for div in divs]
-            return listings
+            return url
 
         # If the county is not set then we'll look at properties throughout Ireland.
         if self._county is None:
@@ -392,8 +392,18 @@ class Daft(object):
 
         url = self._base + self._county + str(self._listing_type) + str(self._commercial_property_type) + str(
             self._area) + '?offset=' + str(self._offset) + self._query_params
+        return url
 
+
+    def search(self):
+        """
+        The search function returns an array of Listing objects.
+        :return: Listing object
+        """
+        listings = []
+        request = Request(debug=self._debug)
+        url = self.get_url()
         soup = request.get(url)
         divs = soup.find_all("div", {"class": "box"})
-        [listings.append(Listing(div, self._verbose)) for div in divs]
+        [listings.append(Listing(div, self._debug)) for div in divs]
         return listings
