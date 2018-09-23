@@ -449,3 +449,7 @@ class Listing(object):
             'num_bathrooms': self.bathrooms,
             'area_size': self.commercial_area_size
         }
+
+    def __repr__(self):
+        return "Listing (%s)" % self.formalised_address
+        
