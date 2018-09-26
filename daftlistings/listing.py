@@ -248,6 +248,30 @@ class Listing(object):
         return images
 
     @property
+    def hires_images(self):
+        """
+        This method returns the listing big image.
+        :return:
+        """
+
+        if self._ad_page_content is None:
+            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
+        try:
+            uls = self._ad_page_content.find("div", {"id": "pbxl_carousel"})
+        except Exception as e:
+            if self._debug:
+                self._logger.error(e.message)
+            return
+        hires_images = []
+        if uls is None:
+            return
+        for li in uls.find_all("li", {"class": "pbxl_carousel_item"}):
+            if li.find('img')['src']:
+                hires_images.append(li.find('img')['src'])
+
+        return hires_images
+
+    @property
     def agent(self):
         """
         This method returns the agent name.
@@ -439,6 +463,7 @@ class Listing(object):
             'town': self.town,
             'county': self.county,
             'listing_image': self.images,
+            'listing_hires_image': self.hires_images,
             'agent': self.agent,
             'agent_url': self.agent_url,
             'contact_number': self.contact_number,
