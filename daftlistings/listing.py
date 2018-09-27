@@ -2,7 +2,8 @@ from .request import Request
 from .logger import Logger
 import logging
 import base64
-
+import re
+import html2text
 
 class Listing(object):
     def __init__(self, data, debug=False, log_level=logging.ERROR):
@@ -17,6 +18,17 @@ class Listing(object):
             self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             return self._ad_page_content.find('input', {'id': 'ad_id'})['value']
+        except Exception as e:
+            if self._debug:
+                self._logger.error(e.message)
+            return
+
+    @property
+    def description(self):
+        if self._ad_page_content is None:
+            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
+        try:
+            return html2text.html2text(str(self._ad_page_content.find('div', {'id': 'description'})))
         except Exception as e:
             if self._debug:
                 self._logger.error(e.message)
@@ -106,6 +118,26 @@ class Listing(object):
         for li in list_items:
             facilities.append(li.text)
         return facilities
+
+    @property
+    def overviews(self):
+        """
+        This method returns the properties overviews.
+        :return:
+        """
+        overviews = []
+        if self._ad_page_content is None:
+            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
+        try:
+            list_items = self._ad_page_content.select("#overview li")
+        except Exception as e:
+            if self._debug:
+                self._logger.error(e.message)
+            return
+
+        for li in list_items:
+            overviews.append(li.text)
+        return overviews
 
     @property
     def features(self):
@@ -331,6 +363,57 @@ class Listing(object):
             return
 
     @property
+    def shortcode(self):
+        """
+        This method returns the shortcode url of the listing.
+        :return:
+        """
+        if self._ad_page_content is None:
+            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
+        try:
+            div = self._ad_page_content.find('div', {'class': 'description_extras'})
+            index = [i for i, s in enumerate(div.contents) if 'Shortcode' in str(s)][0]+1
+            return div.contents[index]['href']
+        except Exception as e:
+            if self._debug:
+                self._logger.error(e.message)
+            return 'N/A'
+
+    @property
+    def date_insert_update(self):
+        """
+        This method returns the shortcode url of the listing.
+        :return:
+        """
+        if self._ad_page_content is None:
+            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
+        try:
+            div = self._ad_page_content.find('div', {'class': 'description_extras'})
+            index = [i for i, s in enumerate(div.contents) if 'Entered/Renewed' in str(s)][0]+1
+            return re.search("([0-9]{1,2}/[0-9]{1,2}/[0-9]{4})", str(div.contents[index]))[0]
+        except Exception as e:
+            if self._debug:
+                self._logger.error(e.message)
+            return 'N/A'
+
+    @property
+    def views(self):
+        """
+        This method returns the "Property Views" from listing.
+        :return:
+        """
+        if self._ad_page_content is None:
+            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
+        try:
+            div = self._ad_page_content.find('div', {'class': 'description_extras'})
+            index = [i for i, s in enumerate(div.contents) if 'Property Views' in str(s)][0]+1
+            return int(''.join(list(filter(str.isdigit, div.contents[index]))))
+        except Exception as e:
+            if self._debug:
+                self._logger.error(e.message)
+            return 'N/A'
+
+    @property
     def dwelling_type(self):
         """
         This method returns the dwelling type.
@@ -457,6 +540,7 @@ class Listing(object):
             'price_change': self.price_change,
             'viewings': self.upcoming_viewings,
             'facilities': self.facilities,
+            'overviews': self.overviews,
             'formalised_address': self.formalised_address,
             'address_line_1': self.address_line_1,
             'address_line_2': self.address_line_2,
@@ -468,6 +552,10 @@ class Listing(object):
             'agent_url': self.agent_url,
             'contact_number': self.contact_number,
             'daft_link': self.daft_link,
+            'shortcode': self.shortcode,
+            'date_insert_update': self.date_insert_update,
+            'views': self.views,
+            'description': self.description,
             'dwelling_type': self.dwelling_type,
             'posted_since': self.posted_since,
             'num_bedrooms': self.bedrooms,
