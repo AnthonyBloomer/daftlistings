@@ -26,3 +26,4 @@ six==1.10.0
 tornado==4.4.2
 tqdm==4.14.0
 twine==1.9.1
+html2text==2018.1.9
