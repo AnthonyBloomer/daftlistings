@@ -1,6 +1,6 @@
 # Daftlistings
 
-Python library that enables Programmatic interaction with [Daft.ie](https://daft.ie)
+A library that enables programmatic interaction with [Daft.ie](https://daft.ie)
 
 ## Installation
 
@@ -121,23 +121,6 @@ for listing in listings:
     print(listing.formalised_address)
     print(listing.daft_link)
 
-```
-
-## Documentation
-
-The documentation has been created using [mkdocs](http://www.mkdocs.org/) and the [mkdocs material theme](https://squidfunk.github.io/mkdocs-material/). To update the documentation, clone the repository and edit the markdown files in the docs/ directory.
-
-To view your changes, run:
-
-``` bash
-mkdocs serve
-```
-
-
-To build and publish the documentation, run:
-
-``` bash
-sh deploy_docs.sh "Updating documentation"
 ```
 
 ## Tests
