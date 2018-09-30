@@ -70,14 +70,14 @@ class Daft(object):
         """
         self._query_params += str(QueryParam.MAX_LEASE) + str(max_lease)
 
-    def set_avaliability(self, min_avaliability):
+    def set_availability(self, availability):
         """
         Set the maximum lease period in months.
-        :param max_lease: int
+        :param availability:
         """
-        if(min_avaliability>=5):
-            min_avaliability = '5%2B'
-        self._query_params += str(QueryParam.AVALIABILITY) + str(min_avaliability)
+        if availability >= 5:
+            availability = '5%2B'
+        self._query_params += str(QueryParam.AVALIABILITY) + str(availability)
 
     def set_verbose(self, verbose):
         """
@@ -393,7 +393,6 @@ class Daft(object):
         url = self._base + self._county + str(self._listing_type) + str(self._commercial_property_type) + str(
             self._area) + '?offset=' + str(self._offset) + self._query_params
         return url
-
 
     def search(self):
         """
