@@ -1,0 +1,169 @@
+Daftlistings
+============
+
+Python library that enables Programmatic interaction with
+`Daft.ie <https://daft.ie>`__
+
+Installation
+------------
+
+daftlistings is available on the Python Package Index (PyPI). You can
+install daftlistings using pip.
+
+.. code:: bash
+
+   virtualenv env
+   source env/bin/activate
+   pip install daftlistings
+
+To install the development version, run:
+
+.. code:: bash
+
+   pip install https://github.com/AnthonyBloomer/daftlistings/archive/dev.zip
+
+Examples
+--------
+
+Get apartments to let in Dublin City that are between €1000 and €1500
+and contact the advertiser of each listing.
+
+.. code:: python
+
+   from daftlistings import Daft, RentType
+
+   daft = Daft()
+
+   daft.set_county("Dublin City")
+   daft.set_listing_type(RentType.APARTMENTS)
+   daft.set_min_price(1000)
+   daft.set_max_price(1500)
+
+   listings = daft.search()
+
+   if len(listings) > 0:
+       first = listings[0]
+
+       contact = first.contact_advertiser(
+           name="Jane Doe",
+           contact_number="019202222",
+           email="jane@example.com",
+           message="Hi, I seen your listing on daft.ie and I would like to schedule a viewing."
+       )
+
+       if contact:
+           print("Advertiser contacted")
+
+You can sort the listings by price, distance, upcoming viewing or date
+using the SortType object. The SortOrder object allows you to sort the
+listings descending or ascending.
+
+.. code:: python
+
+
+   from daftlistings import Daft, SortOrder, SortType, RentType
+
+   daft = Daft()
+
+   daft.set_county("Dublin City")
+   daft.set_listing_type(RentType.ANY)
+   daft.set_sort_order(SortOrder.ASCENDING)
+   daft.set_sort_by(SortType.PRICE)
+   daft.set_max_price(2500)
+
+   listings = daft.search()
+
+   for listing in listings:
+       print(listing.formalised_address)
+       print(listing.daft_link)
+       print(listing.price)
+       features = listing.features
+       if features is not None:
+           print('Features: ')
+           for feature in features:
+               print(feature)
+       print("")
+
+Parse listing data from a given search result url.
+
+.. code:: python
+
+
+   from daftlistings import Daft
+
+   offset = 0
+
+   while 1:
+       daft = Daft()
+       daft.set_result_url("https://www.daft.ie/dublin-city/new-homes-for-sale/?ad_type=new_development")
+       daft.set_offset(offset)
+       listings = daft.search()
+       if not listings:
+           break
+       for listing in listings:
+           print(listing.formalised_address)
+           print(listing.price)
+           print(' ')
+       offset += 10
+
+Find student accommodation near UCD that is between 850 and 1000 per
+month
+
+.. code:: python
+
+   from daftlistings import Daft, SortOrder, SortType, RentType, University, StudentAccommodationType
+
+   daft = Daft()
+   daft.set_listing_type(RentType.STUDENT_ACCOMMODATION)
+   daft.set_university(University.UCD)
+   daft.set_student_accommodation_type(StudentAccommodationType.ROOMS_TO_SHARE)
+   daft.set_min_price(850)
+   daft.set_max_price(1000)
+   daft.set_sort_by(SortType.PRICE)
+   daft.set_sort_order(SortOrder.ASCENDING)
+   daft.set_offset(offset)
+   listings = daft.search()
+
+   for listing in listings:
+       print(listing.price)
+       print(listing.formalised_address)
+       print(listing.daft_link)
+
+Documentation
+-------------
+
+The documentation has been created using
+`mkdocs <http://www.mkdocs.org/>`__ and the `mkdocs material
+theme <https://squidfunk.github.io/mkdocs-material/>`__. To update the
+documentation, clone the repository and edit the markdown files in the
+docs/ directory.
+
+To view your changes, run:
+
+.. code:: bash
+
+   mkdocs serve
+
+To build and publish the documentation, run:
+
+.. code:: bash
+
+   sh deploy_docs.sh "Updating documentation"
+
+Tests
+-----
+
+The Python unittest module contains its own test discovery function,
+which you can run from the command line:
+
+::
+
+    python -m unittest discover tests/
+
+Contributing
+------------
+
+-  Fork the project and clone locally.
+-  Create a new branch for what you’re going to work on.
+-  Push to your origin repository.
+-  Create a new pull request in GitHub.
