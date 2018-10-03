@@ -348,6 +348,19 @@ class Daft(object):
         """
         self._query_params += str(QueryParam.ROUTE_ID) + str(public_transport_route)
 
+    def set_property_type(self, property_types):
+        """
+        Set the property type for rents.
+        :param property_types: Array of Enum PropertyType
+        """
+        query_add = ''
+        for property_type in property_types:
+            if not isinstance(property_type, PropertyType):
+                raise DaftException("property_types should be an instance of PropertyType.")
+            query_add += str(property_type)
+
+        self._query_params += query_add
+
     def get_url(self):
 
         if self._result_url:

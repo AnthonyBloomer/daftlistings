@@ -440,6 +440,52 @@ class Listing(object):
             return 'N/A'
 
     @property
+    def city_center_distance(self):
+        """
+        This method gets the distance to city center, in km.
+        :return:
+        """
+        if self._ad_page_content is None:
+            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
+
+        try:
+            infos = self._ad_page_content.find_all('div', {"class": "map_info_box"})
+            for info in infos:
+                if('Distance to City Centre' in info.text):
+                    distance_list = re.findall('Distance to City Centre: (.*) km', info.text)
+                    return distance_list[0]
+            return None
+        except Exception as e:
+            if self._debug:
+                self._logger.error(e.message)
+            print(e)
+            return 'N/A'
+
+    @property
+    def transport_routes(self):
+        """
+        This method gets a dict of routes listed in Daft.
+        :return:
+        """
+        if self._ad_page_content is None:
+            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
+        routes = {}
+        try:
+            big_div = self._ad_page_content.find('div', {"class": "half_area_box_right"})
+            uls = big_div.find("ul")
+            if uls is None:
+                return None
+            for li in uls.find_all('li'):
+                route_li = li.text.split(':')
+                routes[route_li[0]] = [x.strip() for x in route_li[1].split(',')]
+            return routes
+        except Exception as e:
+            if self._debug:
+                self._logger.error(e.message)
+            return 'N/A'
+
+
+    @property
     def commercial_area_size(self):
         """
         This method returns the area size. This method should only be called when retrieving commercial type listings.
