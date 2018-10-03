@@ -105,6 +105,27 @@ class DaftTests(unittest.TestCase):
         listings = daft.search()
 
         self.assertTrue(len(listings) > 0)
+        apartment = listings[0]
+        self.assertIsNotNone(apartment.address_line_1)
+        self.assertIsNotNone(apartment.agent)
+        self.assertIsNotNone(apartment.agent_id)
+        self.assertIsNotNone(apartment.commercial_area_size)
+        self.assertIsNotNone(apartment.contact_number)
+        self.assertIsNotNone(apartment.county)
+        self.assertIsNotNone(apartment.daft_link)
+        self.assertIsNotNone(apartment.date_insert_update)
+        self.assertIsNotNone(apartment.description)
+        self.assertIsNotNone(apartment.dwelling_type)
+        self.assertIsNotNone(apartment.facilities)
+        self.assertIsNotNone(apartment.formalised_address)
+        self.assertIsNotNone(apartment.id)
+        self.assertIsNotNone(apartment.bathrooms)
+        self.assertIsNotNone(apartment.bedrooms)
+        self.assertIsNotNone(apartment.overviews)
+        self.assertIsNotNone(apartment.price)
+        self.assertIsNotNone(apartment.search_type)
+        self.assertIsNotNone(apartment.shortcode)
+        self.assertIsNotNone(apartment.views)
 
     def test_apartments_to_let_with_price(self):
         daft = Daft()
