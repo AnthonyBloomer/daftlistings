@@ -1,6 +1,19 @@
 from enum import Enum
 
 
+class PropertyType(Enum):
+    APARTMENT = '&s%5Bpt_id%5D%5B0%5D=1'
+    HOUSE = '&s%5Bpt_id%5D%5B1%5D=2'
+    STUDIO = '&s%5Bpt_id%5D%5B2%5D=3'
+    FLAT = '&s%5Bpt_id%5D%5B3%5D=4'
+
+    def __str__(self):
+        return self._value_
+
+    def __repr__(self):
+        return "<SaleType: %s>" % self
+
+
 class SaleType(Enum):
     HOUSES = '/houses-for-sale/'
     PROPERTIES = '/property-for-sale/'
