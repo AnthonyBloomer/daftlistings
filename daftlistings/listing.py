@@ -484,6 +484,48 @@ class Listing(object):
                 self._logger.error(e.message)
             return 'N/A'
 
+    @property
+    def latitude(self):
+        """
+        This method gets a dict of routes listed in Daft.
+        :return:
+        """
+        if self._ad_page_content is None:
+            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
+        try:
+            scripts = self._ad_page_content.find_all('script')
+            for script in scripts:
+                if('latitude' in script.text):
+                    find_list = re.findall(r'"latitude":"([\-]?[0-9.]*[0-9]+)"', script.text)
+                    if(len(find_list) >= 1):
+                        return find_list[0]
+            return None
+        except Exception as e:
+            if self._debug:
+                self._logger.error("Error getting latitude. Error message: " + e.message)
+            return None
+
+    @property
+    def longitude(self):
+        """
+        This method gets a dict of routes listed in Daft.
+        :return:
+        """
+        if self._ad_page_content is None:
+            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
+        try:
+            scripts = self._ad_page_content.find_all('script')
+            for script in scripts:
+                if('longitude' in script.text):
+                    find_list = re.findall(r'"longitude":"([\-]?[0-9.]*[0-9]+)"', script.text)
+                    if(len(find_list) >= 1):
+                        return find_list[0]
+            return None
+        except Exception as e:
+            if self._debug:
+                self._logger.error("Error getting longitude. Error message: " + e.message)
+            return None
+
 
     @property
     def commercial_area_size(self):
@@ -566,6 +608,10 @@ class Listing(object):
             'posted_since': self.posted_since,
             'num_bedrooms': self.bedrooms,
             'num_bathrooms': self.bathrooms,
+            'city_center_distance': self.city_center_distance,
+            'transport_routes': self.transport_routes,
+            'latitude': self.latitude,
+            'longitude': self.longitude,
             'commercial_area_size': self.commercial_area_size
         }
 
