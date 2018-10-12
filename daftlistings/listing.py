@@ -304,7 +304,7 @@ class Listing(object):
             self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             number = self._ad_page_content.find('button', {'class': 'phone-number'})
-            return base64.b64decode(number.attrs['data-p'])
+            return str(base64.b64decode(number.attrs['data-p']))
         except Exception as e:
             if self._debug:
                 self._logger.error("Error getting contact_number. Error message: " + e.message)
