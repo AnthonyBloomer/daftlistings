@@ -8,6 +8,12 @@ import html2text
 
 class Listing(object):
     def __init__(self, data, debug=False, log_level=logging.ERROR):
+
+        if(isinstance(data, str)):
+            from bs4 import BeautifulSoup
+            soup = BeautifulSoup(data)
+            data = soup.div
+
         self._data = data
         self._debug = debug
         self._ad_page_content = None
