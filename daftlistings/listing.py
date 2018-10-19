@@ -16,13 +16,21 @@ class Listing(object):
 
         self._data = data
         self._debug = debug
-        self._ad_page_content = None
+        self._ad_page_content_data = None
         self._logger = Logger(log_level)
+
+
+    @property
+    def _ad_page_content(self):
+        if(self._ad_page_content_data is not None):
+            return self._ad_page_content_data
+        self._ad_page_content_data = Request(debug=self._debug).get(self.daft_link)
+
+        return self._ad_page_content_data
+    
 
     @property
     def id(self):
-        if self._ad_page_content is None:
-            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             return self._ad_page_content.find('input', {'id': 'ad_id'})['value']
         except Exception as e:
@@ -30,10 +38,9 @@ class Listing(object):
                 self._logger.error("Error getting id. Error message: " + e.message)
             return
 
+
     @property
     def description(self):
-        if self._ad_page_content is None:
-            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             return html2text.html2text(str(self._ad_page_content.find('div', {'id': 'description'})))
         except Exception as e:
@@ -43,8 +50,6 @@ class Listing(object):
 
     @property
     def agent_id(self):
-        if self._ad_page_content is None:
-            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             return self._ad_page_content.find('input', {'id': 'agent_id'})['value']
         except Exception as e:
@@ -54,8 +59,6 @@ class Listing(object):
 
     @property
     def search_type(self):
-        if self._ad_page_content is None:
-            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             return self._ad_page_content.find('input', {'id': 'ad_search_type'})['value']
         except Exception as e:
@@ -113,8 +116,6 @@ class Listing(object):
         :return:
         """
         facilities = []
-        if self._ad_page_content is None:
-            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             list_items = self._ad_page_content.select("#facilities li")
         except Exception as e:
@@ -133,8 +134,6 @@ class Listing(object):
         :return:
         """
         overviews = []
-        if self._ad_page_content is None:
-            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             list_items = self._ad_page_content.select("#overview li")
         except Exception as e:
@@ -153,8 +152,6 @@ class Listing(object):
         :return:
         """
         features = []
-        if self._ad_page_content is None:
-            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             list_items = self._ad_page_content.select("#features li")
         except Exception as e:
@@ -229,9 +226,6 @@ class Listing(object):
         This method returns the listing image.
         :return:
         """
-
-        if self._ad_page_content is None:
-            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             uls = self._ad_page_content.find("ul", {"class": "smi-gallery-list"})
         except Exception as e:
@@ -253,9 +247,6 @@ class Listing(object):
         This method returns the listing big image.
         :return:
         """
-
-        if self._ad_page_content is None:
-            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             uls = self._ad_page_content.find("div", {"id": "pbxl_carousel"})
         except Exception as e:
@@ -306,8 +297,6 @@ class Listing(object):
         This method returns the contact phone number.
         :return:
         """
-        if self._ad_page_content is None:
-            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             number = self._ad_page_content.find('button', {'class': 'phone-number'})
             return (base64.b64decode(number.attrs['data-p'])).decode('ascii')
@@ -336,8 +325,6 @@ class Listing(object):
         This method returns the shortcode url of the listing.
         :return:
         """
-        if self._ad_page_content is None:
-            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             div = self._ad_page_content.find('div', {'class': 'description_extras'})
             index = [i for i, s in enumerate(div.contents) if 'Shortcode' in str(s)][0] + 1
@@ -353,8 +340,6 @@ class Listing(object):
         This method returns the shortcode url of the listing.
         :return:
         """
-        if self._ad_page_content is None:
-            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             div = self._ad_page_content.find('div', {'class': 'description_extras'})
             index = [i for i, s in enumerate(div.contents) if 'Entered/Renewed' in str(s)][0] + 1
@@ -370,8 +355,6 @@ class Listing(object):
         This method returns the "Property Views" from listing.
         :return:
         """
-        if self._ad_page_content is None:
-            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             div = self._ad_page_content.find('div', {'class': 'description_extras'})
             index = [i for i, s in enumerate(div.contents) if 'Property Views' in str(s)][0] + 1
@@ -451,9 +434,6 @@ class Listing(object):
         This method gets the distance to city center, in km.
         :return:
         """
-        if self._ad_page_content is None:
-            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
-
         try:
             infos = self._ad_page_content.find_all('div', {"class": "map_info_box"})
             for info in infos:
@@ -473,8 +453,6 @@ class Listing(object):
         This method gets a dict of routes listed in Daft.
         :return:
         """
-        if self._ad_page_content is None:
-            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         routes = {}
         try:
             big_div = self._ad_page_content.find('div', {"class": "half_area_box_right"})
@@ -496,8 +474,6 @@ class Listing(object):
         This method gets a dict of routes listed in Daft.
         :return:
         """
-        if self._ad_page_content is None:
-            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             scripts = self._ad_page_content.find_all('script')
             for script in scripts:
@@ -517,8 +493,6 @@ class Listing(object):
         This method gets a dict of routes listed in Daft.
         :return:
         """
-        if self._ad_page_content is None:
-            self._ad_page_content = Request(debug=self._debug).get(self.daft_link)
         try:
             scripts = self._ad_page_content.find_all('script')
             for script in scripts:
