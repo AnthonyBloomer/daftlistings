@@ -16,7 +16,7 @@ class Listing(object):
         if(isinstance(data_from_search, str)):
             from bs4 import BeautifulSoup
             soup = BeautifulSoup(data_from_search)
-            data = soup.div
+            data_from_search = soup.div
 
         self._data_from_search = data_from_search
         self._url = url
