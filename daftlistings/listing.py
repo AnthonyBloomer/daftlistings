@@ -123,6 +123,8 @@ class Listing(object):
             if(self._data_from_search):
                 viewings = self._data_from_search.find_all(
                     'div', {'class': 'smi-onview-text'})
+            else:
+                viewings = []
         except Exception as e:
             if self._debug:
                 self._logger.error(
