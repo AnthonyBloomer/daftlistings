@@ -202,7 +202,8 @@ class Listing(object):
                 t = self._data_from_search.find('a').contents[0]
             else:
                 t = self._ad_page_content.find(
-                    'div', {'class': 'smi-object-header'}).text.strip()
+                    'div', {'class': 'smi-object-header'}).find(
+                    'h1').text.strip()
 
         except Exception as e:
             if self._debug:
