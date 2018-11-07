@@ -493,7 +493,7 @@ class Listing(object):
                 for span in spans:
                     # print(span.text)
                     if('bed' in span.text.lower()):
-                        return int(''.join([n for n in span.text if n.isdigit()]))+20
+                        return int(''.join([n for n in span.text if n.isdigit()]))
                 return
         except Exception as e:
             if self._debug:
@@ -521,7 +521,7 @@ class Listing(object):
                 for span in spans:
                     # print(span.text)
                     if('bath' in span.text.lower()):
-                        return int(''.join([n for n in span.text if n.isdigit()]))+10
+                        return int(''.join([n for n in span.text if n.isdigit()]))
                 return
 
         except Exception as e:
