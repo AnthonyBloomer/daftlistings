@@ -51,7 +51,14 @@ class Listing(object):
     @property
     def description(self):
         try:
-            return html2text.html2text(str(self._ad_page_content.find('div', {'id': 'description'})))
+            description_div = str(
+                self._ad_page_content.find('div', {'id': 'description'})
+            )
+
+            pos_token = description_div.find('<!-- dont_cut_below_here -->')
+            if pos_token == -1:
+                return None
+            return html2text.html2text(description_div[0:pos_token])
         except Exception as e:
             if self._debug:
                 self._logger.error(
@@ -441,7 +448,9 @@ class Listing(object):
                 s = info.split('|')
                 return s[0].strip()
             else:
-                return self._ad_page_content.find('div', {'id': 'smi-summary-items'}).find('span', {'class': 'header_text'}).text
+                return self._ad_page_content.find(
+                    'div', {'id': 'smi-summary-items'}
+                ).find('span', {'class': 'header_text'}).text
 
         except Exception as e:
             if self._debug:
@@ -617,6 +626,31 @@ class Listing(object):
             return None
 
     @property
+    def ber_code(self):
+        """
+        This method gets ber code listed in Daft.
+        :return:
+        """
+        try:
+            alt_text = self._ad_page_content.find(
+                'span', {'class': 'ber-hover'}
+            ).find('img')['alt']
+
+            if('exempt' in alt_text):
+                return 'exempt'
+            else:
+                alt_arr = alt_text.split()
+                if('ber' in alt_arr[0].lower()):
+                    return alt_arr[1].lower()
+                else:
+                    return None
+        except Exception as e:
+            if self._debug:
+                self._logger.error(
+                    "Error getting the Ber Code. Error message: " + e.message)
+            return None
+
+    @property
     def commercial_area_size(self):
         """
         This method returns the area size. This method should only be called when retrieving commercial type listings.
@@ -706,6 +740,7 @@ class Listing(object):
             'transport_routes': self.transport_routes,
             'latitude': self.latitude,
             'longitude': self.longitude,
+            'longitude': self.ber_code,
             'commercial_area_size': self.commercial_area_size
         }
 
