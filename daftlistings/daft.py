@@ -7,9 +7,10 @@ import logging
 
 
 class Daft(object):
-    def __init__(self, debug=False, log_level=logging.ERROR):
+    def __init__(self, xml_url=None, debug=False, log_level=logging.ERROR):
         self._base = 'http://www.daft.ie/'
         self._debug = debug
+        self._xml_url = xml_url
         self._sale_agreed = False
         self._open_viewing = False
         self._offset = 0
@@ -361,6 +362,13 @@ class Daft(object):
 
         self._query_params += query_add
 
+    def set_xml_url(self, xml_url):
+        """
+        Set the url from xml to loop
+        :param set_xml_url: String with url
+        """
+        self._xml_url = xml_url
+
     def get_url(self):
 
         if self._result_url:
@@ -418,4 +426,18 @@ class Daft(object):
         soup = request.get(url)
         divs = soup.find_all("div", {"class": "box"})
         [listings.append(Listing(div, self._debug)) for div in divs]
+        return listings
+
+    def read_xml(self, xml_url=None):
+        if(xml_url):
+            self._xml_url = xml_url
+        listings = []
+        request = Request(debug=self._debug)
+        soup = request.get(self._xml_url)
+        divs = soup.find_all("item")
+        for div in divs:
+            listings.append(Listing(
+                url=div.find('guid').text,
+                debug=self._debug
+            ))
         return listings
