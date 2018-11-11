@@ -3,8 +3,9 @@ backports-abc==0.4
 beautifulsoup4==4.5.1
 bleach==2.1.4
 bs4==0.0.1
-certifi==2016.9.26
+certifi==2018.10.15
 cffi==1.11.5
+chardet==3.0.4
 click==6.6
 cmarkgfm==0.4.2
 docutils==0.14
@@ -12,6 +13,7 @@ enum34==1.1.6
 future==0.16.0
 html2text==2018.1.9
 html5lib==1.0.1
+idna==2.7
 Jinja2==2.8
 livereload==2.5.1
 Mako==1.0.7
@@ -27,11 +29,12 @@ pymdown-extensions==4.9
 pyparsing==2.2.0
 PyYAML==3.12
 readme-renderer==22.0
-requests==2.11.1
+requests==2.20.0
 requests-toolbelt==0.8.0
 singledispatch==3.4.0.3
 six==1.10.0
 tornado==4.4.2
 tqdm==4.14.0
 twine==1.12.1
+urllib3==1.24
 webencodings==0.5.1
