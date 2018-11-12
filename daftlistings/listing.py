@@ -740,7 +740,7 @@ class Listing(object):
             'transport_routes': self.transport_routes,
             'latitude': self.latitude,
             'longitude': self.longitude,
-            'longitude': self.ber_code,
+            'ber_code': self.ber_code,
             'commercial_area_size': self.commercial_area_size
         }
 
