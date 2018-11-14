@@ -501,8 +501,10 @@ class Listing(object):
                 spans = div.find_all('span', {'class': 'header_text'})
                 for span in spans:
                     # print(span.text)
-                    if('Beds' in span.text.lower() and len(span.text.lower()) <= 8):
-                        return int(''.join([n for n in span.text if n.isdigit()]))
+                    if('bed' in span.text.lower()):
+                        return int(re.findall(
+                        r'([\-]?[0-9.]*[0-9]+) bed', span.text.lower())[0])
+                        # return int(''.join([n for n in span.text if n.isdigit()]))
                 return
         except Exception as e:
             if self._debug:
@@ -529,8 +531,10 @@ class Listing(object):
                 spans = div.find_all('span', {'class': 'header_text'})
                 for span in spans:
                     # print(span.text)
-                    if('Baths' in span.text.lower() and len(span.text.lower()) <= 9):
-                        return int(''.join([n for n in span.text if n.isdigit()]))
+                    if('bath' in span.text.lower()):
+                        return int(re.findall(
+                        r'([\-]?[0-9.]*[0-9]+) bath', span.text.lower())[0])
+                        # return int(''.join([n for n in span.text if n.isdigit()]))
                 return
 
         except Exception as e:
