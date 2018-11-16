@@ -356,7 +356,10 @@ class Listing(object):
         try:
             number = self._ad_page_content.find(
                 'button', {'class': 'phone-number'})
-            return (base64.b64decode(number.attrs['data-p'])).decode('ascii')
+            try:
+                return (base64.b64decode(number.attrs['data-p'])).decode('ascii')
+            except:
+                return number.attrs['data-p']
         except Exception as e:
             if self._debug:
                 self._logger.error(
@@ -674,6 +677,36 @@ class Listing(object):
                     "Error getting commercial_area_size. Error message: " + e.message)
             return 'N/A'
 
+    @property
+    def advertiser_name(self):
+        """
+        This method returns the area size. This method should only be called when retrieving commercial type listings.
+        :return:
+        """
+        try:
+            return self._ad_page_content.find('div', {'id': 'smi-negotiator-photo'}
+            ).find('h2').text
+        except Exception as e:
+            if self._debug:
+                self._logger.error(
+                    "Error getting commercial_area_size. Error message: " + e.message)
+            return 'N/A'
+
+    @property
+    def contact_info(self):
+        """
+        This method returns the area size. This method should only be called when retrieving commercial type listings.
+        :return:
+        """
+        try:
+            return self._ad_page_content.find('div', {'class': 'smi-contact-numbers'}
+            ).find('div', {'class': 'phone-info'}).text.strip()
+        except Exception as e:
+            if self._debug:
+                self._logger.error(
+                    "Error getting commercial_area_size. Error message: " + e.message)
+            return 'N/A'
+
     def contact_advertiser(self, name, email, contact_number, message):
         """
         This method allows you to contact the advertiser of a listing.
@@ -731,6 +764,8 @@ class Listing(object):
             'agent': self.agent,
             'agent_url': self.agent_url,
             'contact_number': self.contact_number,
+            'contact_info': self.contact_info,
+            'advertiser_name': self.advertiser_name,
             'daft_link': self.daft_link,
             'shortcode': self.shortcode,
             'date_insert_update': self.date_insert_update,
