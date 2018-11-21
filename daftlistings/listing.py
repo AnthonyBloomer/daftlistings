@@ -43,6 +43,10 @@ class Listing(object):
         try:
             return self._ad_page_content.find('input', {'id': 'ad_id'})['value']
         except Exception as e:
+            try:
+                return self._ad_page_content.find('li', {'id': 'saved-ad'})['data-adid']
+            except:
+                pass
             if self._debug:
                 self._logger.error(
                     "Error getting id. Error message: " + e.message)
