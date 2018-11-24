@@ -12,7 +12,7 @@ daft.set_with_photos(True)
 listings = daft.search()
 
 for listing in listings:
-    print(listing.get_price)
+    print(listing.price)
     print(listing.formalised_address)
     print(listing.daft_link)
     print(listing.contact_number)

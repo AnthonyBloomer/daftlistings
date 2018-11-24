@@ -1,9 +1,11 @@
-from .request import Request
-from .logger import Logger
-import logging
 import base64
+import logging
 import re
+
 import html2text
+
+from .logger import Logger
+from .request import Request
 
 
 class Listing(object):
@@ -13,7 +15,7 @@ class Listing(object):
                  debug=False,
                  log_level=logging.ERROR):
 
-        if(isinstance(data_from_search, str)):
+        if isinstance(data_from_search, str):
             from bs4 import BeautifulSoup
             soup = BeautifulSoup(data_from_search)
             data_from_search = soup.div
@@ -26,10 +28,10 @@ class Listing(object):
 
     @property
     def _ad_page_content(self):
-        if(self._ad_page_content_data is not None):
+        if self._ad_page_content_data is not None:
             return self._ad_page_content_data
 
-        if(self._url):
+        if self._url:
             self._ad_page_content_data = Request(
                 debug=self._debug).get(self._url)
         else:
@@ -92,7 +94,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 return self._data_from_search.find('strong', {'class': 'price'}).text
             else:
                 return self._ad_page_content.find('div', {'id': 'smi-price-string'}).text
@@ -109,7 +111,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 return self._data_from_search.find('div', {'class': 'price-changes-sr'}).text
             else:
                 return self._ad_page_content.find('div', {'class': 'price-changes-sr'}).text
@@ -127,7 +129,7 @@ class Listing(object):
         """
         upcoming_viewings = []
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 viewings = self._data_from_search.find_all(
                     'div', {'class': 'smi-onview-text'})
             else:
@@ -205,7 +207,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 t = self._data_from_search.find('a').contents[0]
             else:
                 t = self._ad_page_content.find(
@@ -316,7 +318,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 agent = self._data_from_search.find(
                     'ul', {'class': 'links'}).text
                 return agent.split(':')[1].strip()
@@ -335,7 +337,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 agent = self._data_from_search.find('ul', {'class': 'links'})
                 links = agent.find_all('a')
                 return links[1]['href']
@@ -370,7 +372,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 link = self._data_from_search.find('a', href=True)
                 return 'http://www.daft.ie' + link['href']
             else:
@@ -442,7 +444,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 info = self._data_from_search.find(
                     'ul', {"class": "info"}).text
                 s = info.split('|')
@@ -465,7 +467,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 info = self._data_from_search.find(
                     'div', {"class": "date_entered"}).text
                 s = info.split(':')
@@ -489,7 +491,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 info = self._data_from_search.find(
                     'ul', {"class": "info"}).text
                 s = info.split('|')
@@ -501,7 +503,7 @@ class Listing(object):
                 spans = div.find_all('span', {'class': 'header_text'})
                 for span in spans:
                     # print(span.text)
-                    if('bed' in span.text.lower()):
+                    if 'bed' in span.text.lower():
                         return int(''.join([n for n in span.text if n.isdigit()]))
                 return
         except Exception as e:
@@ -517,7 +519,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 info = self._data_from_search.find(
                     'ul', {"class": "info"}).text
                 s = info.split('|')
@@ -529,7 +531,7 @@ class Listing(object):
                 spans = div.find_all('span', {'class': 'header_text'})
                 for span in spans:
                     # print(span.text)
-                    if('bath' in span.text.lower()):
+                    if 'bath' in span.text.lower():
                         return int(''.join([n for n in span.text if n.isdigit()]))
                 return
 
@@ -549,7 +551,7 @@ class Listing(object):
             infos = self._ad_page_content.find_all(
                 'div', {"class": "map_info_box"})
             for info in infos:
-                if('Distance to City Centre' in info.text):
+                if 'Distance to City Centre' in info.text:
                     distance_list = re.findall(
                         'Distance to City Centre: (.*) km', info.text)
                     return distance_list[0]
@@ -592,10 +594,10 @@ class Listing(object):
         try:
             scripts = self._ad_page_content.find_all('script')
             for script in scripts:
-                if('latitude' in script.text):
+                if 'latitude' in script.text:
                     find_list = re.findall(
                         r'"latitude":"([\-]?[0-9.]*[0-9]+)"', script.text)
-                    if(len(find_list) >= 1):
+                    if len(find_list) >= 1:
                         return find_list[0]
             return None
         except Exception as e:
@@ -613,10 +615,10 @@ class Listing(object):
         try:
             scripts = self._ad_page_content.find_all('script')
             for script in scripts:
-                if('longitude' in script.text):
+                if 'longitude' in script.text:
                     find_list = re.findall(
                         r'"longitude":"([\-]?[0-9.]*[0-9]+)"', script.text)
-                    if(len(find_list) >= 1):
+                    if len(find_list) >= 1:
                         return find_list[0]
             return None
         except Exception as e:
@@ -636,11 +638,11 @@ class Listing(object):
                 'span', {'class': 'ber-hover'}
             ).find('img')['alt']
 
-            if('exempt' in alt_text):
+            if ('exempt' in alt_text):
                 return 'exempt'
             else:
                 alt_arr = alt_text.split()
-                if('ber' in alt_arr[0].lower()):
+                if 'ber' in alt_arr[0].lower():
                     return alt_arr[1].lower()
                 else:
                     return None
@@ -657,7 +659,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 info = self._data_from_search.find(
                     'ul', {"class": "info"}).text
                 s = info.split('|')
@@ -740,7 +742,7 @@ class Listing(object):
             'transport_routes': self.transport_routes,
             'latitude': self.latitude,
             'longitude': self.longitude,
-            'longitude': self.ber_code,
+            'ber_code': self.ber_code,
             'commercial_area_size': self.commercial_area_size
         }
 

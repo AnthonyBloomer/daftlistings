@@ -4,7 +4,7 @@ from daftlistings import Daft, RentType, SortOrder, SortType
 import pprint
 import logging
 
-daft = Daft(debug=True, log_level=logging.CRITICAL)
+daft = Daft(debug=True, log_level=logging.INFO)
 
 daft.set_county('Dublin')
 daft.set_listing_type(RentType.APARTMENTS)

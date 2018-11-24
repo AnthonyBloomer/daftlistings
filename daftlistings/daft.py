@@ -1,9 +1,10 @@
-from .listing import Listing
-from .enums import *
-from .request import Request
-from .exceptions import DaftException
-from .logger import Logger
 import logging
+
+from .enums import *
+from .exceptions import DaftException
+from .listing import Listing
+from .logger import Logger
+from .request import Request
 
 
 class Daft(object):
@@ -429,15 +430,11 @@ class Daft(object):
         return listings
 
     def read_xml(self, xml_url=None):
-        if(xml_url):
+        if xml_url:
             self._xml_url = xml_url
         listings = []
         request = Request(debug=self._debug)
         soup = request.get(self._xml_url)
         divs = soup.find_all("item")
-        for div in divs:
-            listings.append(Listing(
-                url=div.find('guid').text,
-                debug=self._debug
-            ))
+        [listings.append(Listing(div.find('guid').text, self._debug)) for div in divs]
         return listings

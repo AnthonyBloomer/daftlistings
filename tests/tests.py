@@ -93,28 +93,18 @@ class DaftTests(unittest.TestCase):
 
     def test_apartments_to_let(self):
         daft = Daft()
-        daft.set_county("Dublin")
-        daft.set_couples_accepted(True)
-        daft.set_with_photos(True)
-        daft.set_ensuite_only(True)
-        daft.set_area_type(AreaType.TRANSPORT_ROUTE)
-        daft.set_public_transport_route(TransportRoute.DART)
         daft.set_listing_type(RentType.APARTMENTS)
-        daft.set_added_since(7)
-        daft.set_gender(Gender.EITHER)
         listings = daft.search()
 
         self.assertTrue(len(listings) > 0)
         apartment = listings[0]
         self.assertIsNotNone(apartment.address_line_1)
-        self.assertIsNotNone(apartment.agent)
         self.assertIsNotNone(apartment.agent_id)
         self.assertIsNotNone(apartment.commercial_area_size)
         self.assertIsNotNone(apartment.contact_number)
         self.assertIsNotNone(apartment.county)
         self.assertIsNotNone(apartment.daft_link)
         self.assertIsNotNone(apartment.date_insert_update)
-        self.assertIsNotNone(apartment.description)
         self.assertIsNotNone(apartment.dwelling_type)
         self.assertIsNotNone(apartment.facilities)
         self.assertIsNotNone(apartment.formalised_address)
@@ -326,6 +316,7 @@ class DaftTests(unittest.TestCase):
 
     def test_as_dict(self):
         daft = Daft()
+        daft.set_listing_type(RentType.APARTMENT_TO_SHARE)
         listings = daft.search()
         self.assertIsNotNone(listings[0].as_dict())
 
