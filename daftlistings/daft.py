@@ -1,14 +1,11 @@
-import logging
-
 from .enums import *
 from .exceptions import DaftException
 from .listing import Listing
-from .logger import Logger
 from .request import Request
 
 
 class Daft(object):
-    def __init__(self, xml_url=None, debug=False, log_level=logging.ERROR):
+    def __init__(self, xml_url=None, debug=False):
         self._base = 'http://www.daft.ie/'
         self._debug = debug
         self._xml_url = xml_url
@@ -33,7 +30,6 @@ class Daft(object):
         self._commercial_max_size = None
         self._university = None
         self._result_url = None
-        self.logger = Logger(log_level)
 
     def set_result_url(self, result_url):
         """

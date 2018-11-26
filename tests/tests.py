@@ -1,6 +1,5 @@
 import unittest
 import time
-import logging
 from daftlistings import Daft, SaleType, RentType, SortOrder, SortType, CommercialType, University, \
     StudentAccommodationType, RoomType, AreaType, TransportRoute, Gender
 
@@ -8,7 +7,7 @@ from daftlistings import Daft, SaleType, RentType, SortOrder, SortType, Commerci
 class DaftTests(unittest.TestCase):
 
     def test_properties(self):
-        daft = Daft(debug=True, log_level=logging.INFO)
+        daft = Daft(debug=True)
         daft.set_county("Dublin City")
         daft.set_area("Dublin 15")
         daft.set_added_since(14)
@@ -94,8 +93,10 @@ class DaftTests(unittest.TestCase):
     def test_apartments_to_let(self):
         daft = Daft()
         daft.set_listing_type(RentType.APARTMENTS)
+        daft.set_area_type(AreaType.ENROUTE)
+        daft.set_public_transport_route(TransportRoute.BUS_LINE_15)
+        daft.set_gender(Gender.MALE)
         listings = daft.search()
-
         self.assertTrue(len(listings) > 0)
         apartment = listings[0]
         self.assertIsNotNone(apartment.address_line_1)
