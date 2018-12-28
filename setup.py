@@ -8,7 +8,7 @@ from setuptools import setup, Command
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-with open("README.md", "rb") as f:
+with open("README.rst", "rb") as f:
     long_descr = f.read().decode("utf-8")
 
 
@@ -46,8 +46,8 @@ class PublishCommand(Command):
 
 
 setup(name='daftlistings',
-      version='1.6.1',
-      description='A library that enables programmatic interaction with daft.ie. ',
+      version='1.7.0',
+      description='A library that enables programmatic interaction with daft.ie. Daft.ie has nationwide coverage and contains about 80% of the total available properties in Ireland.',
       long_description=long_descr,
       url='https://github.com/AnthonyBloomer/daftlistings',
       author='Anthony Bloomer',
