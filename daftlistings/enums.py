@@ -130,6 +130,7 @@ class QueryParam(Enum):
     NUM_OCCUPANTS = '&s%5Boccupants%5D='
     ROUTE_ID = '&s%5Broute_id%5D='
     FIND_TEAMUPS = "&submit_search=Find+Teamups+%BB"
+    PETS_ALLOWED = "&s%5Bfacilities%5D%5Bf9%5D=512"
 
     def __str__(self):
         return self._value_
