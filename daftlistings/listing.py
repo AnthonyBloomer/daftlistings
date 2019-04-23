@@ -44,7 +44,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting id. Error message: " + e.message)
+                    "Error getting id. Error message: " + e.args[0])
             return
 
     @property
@@ -61,7 +61,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting description. Error message: " + e.message)
+                    "Error getting description. Error message: " + e.args[0])
             return
 
     @property
@@ -70,7 +70,7 @@ class Listing(object):
             return self._ad_page_content.find('input', {'id': 'agent_id'})['value']
         except Exception as e:
             if self._debug:
-                logging.error("Error getting agent_id. Error message: " + e.message)
+                logging.error("Error getting agent_id. Error message: " + e.args[0])
             return
 
     @property
@@ -80,7 +80,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting search_type. Error message: " + e.message)
+                    "Error getting search_type. Error message: " + e.args[0])
             return
 
     @property
@@ -97,7 +97,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting price. Error message: " + e.message)
+                    "Error getting price. Error message: " + e.args[0])
             return
 
     @property
@@ -114,7 +114,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting price_change. Error message: " + e.message)
+                    "Error getting price_change. Error message: " + e.args[0])
             return
 
     @property
@@ -133,7 +133,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting upcoming_viewings. Error message: " + e.message)
+                    "Error getting upcoming_viewings. Error message: " + e.args[0])
             return
         for viewing in viewings:
             upcoming_viewings.append(viewing.text.strip())
@@ -151,7 +151,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting facilities. Error message: " + e.message)
+                    "Error getting facilities. Error message: " + e.args[0])
             return
 
         for li in list_items:
@@ -170,7 +170,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting overviews. Error message: " + e.message)
+                    "Error getting overviews. Error message: " + e.args[0])
             return
 
         for li in list_items:
@@ -189,7 +189,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting features. Error message: " + e.message)
+                    "Error getting features. Error message: " + e.args[0])
             return
 
         for li in list_items:
@@ -213,7 +213,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting formalised_address. Error message: " + e.message)
+                    "Error getting formalised_address. Error message: " + e.args[0])
             return
         s = t.split('-')
         a = s[0].strip()
@@ -237,7 +237,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting address_line_1. Error message: " + e.message)
+                    "Error getting address_line_1. Error message: " + e.args[0])
             return
 
         return address[0].strip()
@@ -259,7 +259,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting county. Error message: " + e.message)
+                    "Error getting county. Error message: " + e.args[0])
             return
 
     @property
@@ -274,7 +274,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting images. Error message: " + e.message)
+                    "Error getting images. Error message: " + e.args[0])
             return
         images = []
         if uls is None:
@@ -296,7 +296,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting hires_image. Error message: " + e.message)
+                    "Error getting hires_image. Error message: " + e.args[0])
             return
         hires_images = []
         if uls is None:
@@ -323,7 +323,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting agent. Error message: " + e.message)
+                    "Error getting agent. Error message: " + e.args[0])
             return
 
     @property
@@ -342,7 +342,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting agent_url. Error message: " + e.message)
+                    "Error getting agent_url. Error message: " + e.args[0])
             return
 
     @property
@@ -358,7 +358,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting contact_number. Error message: " + e.message)
+                    "Error getting contact_number. Error message: " + e.args[0])
             return 'N/A'
 
     @property
@@ -376,7 +376,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting daft_link. Error message: " + e.message)
+                    "Error getting daft_link. Error message: " + e.args[0])
             return
 
     @property
@@ -394,7 +394,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting shortcode. Error message: " + e.message)
+                    "Error getting shortcode. Error message: " + e.args[0])
             return 'N/A'
 
     @property
@@ -412,7 +412,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting date_insert_update. Error message: " + e.message)
+                    "Error getting date_insert_update. Error message: " + e.args[0])
             return 'N/A'
 
     @property
@@ -430,7 +430,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting views. Error message: " + e.message)
+                    "Error getting views. Error message: " + e.args[0])
             return 'N/A'
 
     @property
@@ -453,7 +453,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting dwelling_type. Error message: " + e.message)
+                    "Error getting dwelling_type. Error message: " + e.args[0])
             return
 
     @property
@@ -477,7 +477,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting posted_since. Error message: " + e.message)
+                    "Error getting posted_since. Error message: " + e.args[0])
             return
 
     @property
@@ -505,7 +505,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting bedrooms. Error message: " + e.message)
+                    "Error getting bedrooms. Error message: " + e.args[0])
             return 'N/A'
 
     @property
@@ -534,7 +534,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting bathrooms. Error message: " + e.message)
+                    "Error getting bathrooms. Error message: " + e.args[0])
             return 'N/A'
 
     @property
@@ -554,7 +554,7 @@ class Listing(object):
             return None
         except Exception as e:
             if self._debug:
-                logging.error(e.message)
+                logging.error(e.args[0])
             print(e)
             return 'N/A'
 
@@ -578,7 +578,7 @@ class Listing(object):
             return routes
         except Exception as e:
             if self._debug:
-                logging.error(e.message)
+                logging.error(e.args[0])
             return 'N/A'
 
     @property
@@ -599,7 +599,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting latitude. Error message: " + e.message)
+                    "Error getting latitude. Error message: " + e.args[0])
             return None
 
     @property
@@ -620,7 +620,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting longitude. Error message: " + e.message)
+                    "Error getting longitude. Error message: " + e.args[0])
             return None
 
     @property
@@ -645,7 +645,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting the Ber Code. Error message: " + e.message)
+                    "Error getting the Ber Code. Error message: " + e.args[0])
             return None
 
     @property
@@ -665,7 +665,7 @@ class Listing(object):
         except Exception as e:
             if self._debug:
                 logging.error(
-                    "Error getting commercial_area_size. Error message: " + e.message)
+                    "Error getting commercial_area_size. Error message: " + e.args[0])
             return 'N/A'
 
     def contact_advertiser(self, name, email, contact_number, message):

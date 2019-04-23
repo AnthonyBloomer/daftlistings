@@ -370,7 +370,7 @@ class Daft(object):
     def set_xml_url(self, xml_url):
         """
         Set the url from xml to loop
-        :param set_xml_url: String with url
+        :param xml_url: String with url
         """
         self._xml_url = xml_url
 
@@ -391,8 +391,8 @@ class Daft(object):
                 if self._min_price or self._max_price:
                     self._query_params += self._price
 
-                url = self._base + str(
-                    self._listing_type) + self._university + self._student_accommodation_type + '?' + self._query_params
+                url = self._base + str(self._listing_type) + self._university + str(
+                    self._student_accommodation_type) + '?' + self._query_params
                 return url
 
             # If the county is not set then we'll look at properties throughout Ireland.
@@ -414,7 +414,8 @@ class Daft(object):
             if self._min_price or self._max_price and isinstance(self._listing_type, RentType):
                 self._query_params += str(QueryParam.IGNORED_AGENTS)
 
-            self._result_url  = self._base + self._county + str(self._listing_type) + str(self._commercial_property_type) + str(
+            self._result_url = self._base + self._county + str(self._listing_type) + str(
+                self._commercial_property_type) + str(
                 self._area) + '?offset=' + str(self._offset) + self._query_params
 
     def get_url(self):
@@ -431,7 +432,7 @@ class Daft(object):
         url = self.get_url()
         soup = request.get(url)
         divs = soup.find_all("div", {"class": "box"})
-        [listings.append(Listing(div, self._debug)) for div in divs]
+        [listings.append(Listing(div, debug=self._debug)) for div in divs]
         return listings
 
     def read_xml(self, xml_url=None):
