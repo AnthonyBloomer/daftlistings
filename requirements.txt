@@ -2,6 +2,7 @@ beautifulsoup4==4.7.1
 bs4==0.0.1
 certifi==2019.3.9
 chardet==3.0.4
+enum34==1.1.6
 html2text==2018.1.9
 idna==2.8
 requests==2.21.0
