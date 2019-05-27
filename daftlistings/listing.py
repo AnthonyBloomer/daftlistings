@@ -692,7 +692,8 @@ class Listing(object):
             'contact_number': contact_number,
             'type': ad_search_type,
             'agent_id': agent_id,
-            'id': ad_id
+            'id': ad_id,
+            'self_copy': 1
         })
 
         if self._debug:
