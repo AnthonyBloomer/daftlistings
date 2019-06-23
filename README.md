@@ -1,10 +1,13 @@
 # Daftlistings
 
-A library that enables programmatic interaction with [Daft.ie](https://daft.ie)
+[![Build Status](https://travis-ci.org/AnthonyBloomer/daftlistings.svg?branch=dev)](https://travis-ci.org/AnthonyBloomer/daftlistings)
+[![codecov](https://codecov.io/gh/AnthonyBloomer/daftlistings/branch/master/graph/badge.svg)](https://codecov.io/gh/AnthonyBloomer/daftlistings)
+
+A library that enables programmatic interaction with [Daft.ie](https://daft.ie). Daft.ie has nationwide coverage and contains about 80% of the total available properties in Ireland.
 
 ## Installation
 
-daftlistings is available on the Python Package Index (PyPI). You can install daftlistings using pip.
+Daftlistings is available on the [Python Package Index (PyPI)](https://pypi.org/project/daftlistings/). You can install daftlistings using pip.
 
 ``` bash
 virtualenv env
@@ -18,7 +21,22 @@ To install the development version, run:
 pip install https://github.com/AnthonyBloomer/daftlistings/archive/dev.zip
 ```
 
-## Examples
+## Usage
+
+``` python
+from daftlistings import Daft
+
+daft = Daft()
+listings = daft.search()
+
+for listing in listings:
+    print(listing.formalised_address)
+    print(listing.daft_link)
+    print(listing.price)
+```
+
+
+### Examples
 
 Get apartments to let in Dublin City that are between €1000 and €1500 and contact the advertiser of each listing.
 
@@ -122,6 +140,8 @@ for listing in listings:
     print(listing.daft_link)
 
 ```
+
+For more examples, check the [Examples folder](https://github.com/AnthonyBloomer/daftlistings/tree/dev/examples)
 
 ## Tests
 

@@ -1,14 +1,18 @@
 Daftlistings
 ============
 
-Python library that enables Programmatic interaction with
-`Daft.ie <https://daft.ie>`__
+|Build Status| |codecov|
+
+A library that enables programmatic interaction with
+`Daft.ie <https://daft.ie>`__. Daft.ie has nationwide coverage and
+contains about 80% of the total available properties in Ireland.
 
 Installation
 ------------
 
-daftlistings is available on the Python Package Index (PyPI). You can
-install daftlistings using pip.
+Daftlistings is available on the `Python Package Index
+(PyPI) <https://pypi.org/project/daftlistings/>`__. You can install
+daftlistings using pip.
 
 .. code:: bash
 
@@ -22,8 +26,23 @@ To install the development version, run:
 
    pip install https://github.com/AnthonyBloomer/daftlistings/archive/dev.zip
 
+Usage
+-----
+
+.. code:: python
+
+   from daftlistings import Daft
+
+   daft = Daft()
+   listings = daft.search()
+
+   for listing in listings:
+       print(listing.formalised_address)
+       print(listing.daft_link)
+       print(listing.price)
+
 Examples
---------
+~~~~~~~~
 
 Get apartments to let in Dublin City that are between €1000 and €1500
 and contact the advertiser of each listing.
@@ -129,26 +148,8 @@ month
        print(listing.formalised_address)
        print(listing.daft_link)
 
-Documentation
--------------
-
-The documentation has been created using
-`mkdocs <http://www.mkdocs.org/>`__ and the `mkdocs material
-theme <https://squidfunk.github.io/mkdocs-material/>`__. To update the
-documentation, clone the repository and edit the markdown files in the
-docs/ directory.
-
-To view your changes, run:
-
-.. code:: bash
-
-   mkdocs serve
-
-To build and publish the documentation, run:
-
-.. code:: bash
-
-   sh deploy_docs.sh "Updating documentation"
+For more examples, check the `Examples
+folder <https://github.com/AnthonyBloomer/daftlistings/tree/dev/examples>`__
 
 Tests
 -----
@@ -167,3 +168,8 @@ Contributing
 -  Create a new branch for what you’re going to work on.
 -  Push to your origin repository.
 -  Create a new pull request in GitHub.
+
+.. |Build Status| image:: https://travis-ci.org/AnthonyBloomer/daftlistings.svg?branch=dev
+   :target: https://travis-ci.org/AnthonyBloomer/daftlistings
+.. |codecov| image:: https://codecov.io/gh/AnthonyBloomer/daftlistings/branch/master/graph/badge.svg
+   :target: https://codecov.io/gh/AnthonyBloomer/daftlistings

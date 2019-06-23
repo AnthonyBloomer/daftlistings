@@ -1,8 +1,9 @@
 from .request import Request
-from .logger import Logger
 import logging
 import base64
+import logging
 import re
+
 import html2text
 
 
@@ -10,10 +11,9 @@ class Listing(object):
     def __init__(self,
                  data_from_search=None,
                  url=None,
-                 debug=False,
-                 log_level=logging.ERROR):
+                 debug=False):
 
-        if(isinstance(data_from_search, str)):
+        if isinstance(data_from_search, str):
             from bs4 import BeautifulSoup
             soup = BeautifulSoup(data_from_search)
             data_from_search = soup.div
@@ -23,14 +23,13 @@ class Listing(object):
         self._debug = debug
         self._ad_page_content_data = None
         self._template_big_image = False
-        self._logger = Logger(log_level)
 
     @property
     def _ad_page_content(self):
-        if(self._ad_page_content_data is not None):
+        if self._ad_page_content_data is not None:
             return self._ad_page_content_data
 
-        if(self._url):
+        if self._url:
             self._ad_page_content_data = Request(
                 debug=self._debug).get(self._url)
         else:
@@ -49,14 +48,17 @@ class Listing(object):
             except:
                 pass
             if self._debug:
-                self._logger.error(
-                    "Error getting id. Error message: " + e.message)
+                logging.error(
+                    "Error getting id. Error message: " + e.args[0])
             return
 
     @property
     def description(self):
         try:
-            description_div = str(self._ad_page_content.find('div', {'id': 'description'}))
+            description_div = str(
+                self._ad_page_content.find('div', {'id': 'description'})
+            )
+
             pos_token = description_div.find('<!-- dont_cut_below_here -->')
             if pos_token == -1:
                 return None
@@ -69,8 +71,8 @@ class Listing(object):
             except:
                 pass
             if self._debug:
-                self._logger.error(
-                    "Error getting description. Error message: " + e.message)
+                logging.error(
+                    "Error getting description. Error message: " + e.args[0])
             return
 
     @property
@@ -79,8 +81,7 @@ class Listing(object):
             return self._ad_page_content.find('input', {'id': 'agent_id'})['value']
         except Exception as e:
             if self._debug:
-                self._logger.error(self._logger.error(
-                    "Error getting agent_id. Error message: " + e.message))
+                logging.error("Error getting agent_id. Error message: " + e.args[0])
             return
 
     @property
@@ -89,8 +90,8 @@ class Listing(object):
             return self._ad_page_content.find('input', {'id': 'ad_search_type'})['value']
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting search_type. Error message: " + e.message)
+                logging.error(
+                    "Error getting search_type. Error message: " + e.args[0])
             return
 
     @property
@@ -100,7 +101,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 return self._data_from_search.find('strong', {'class': 'price'}).text
             else:
                 return self._ad_page_content.find('div', {'id': 'smi-price-string'}).text
@@ -111,8 +112,8 @@ class Listing(object):
             except Exception as e:
                 pass
             if self._debug:
-                self._logger.error(
-                    "Error getting price. Error message: " + e.message)
+                logging.error(
+                    "Error getting price. Error message: " + e.args[0])
             return
 
     @property
@@ -122,14 +123,14 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 return self._data_from_search.find('div', {'class': 'price-changes-sr'}).text
             else:
                 return self._ad_page_content.find('div', {'class': 'price-changes-sr'}).text
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting price_change. Error message: " + e.message)
+                logging.error(
+                    "Error getting price_change. Error message: " + e.args[0])
             return
 
     @property
@@ -140,15 +141,15 @@ class Listing(object):
         """
         upcoming_viewings = []
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 viewings = self._data_from_search.find_all(
                     'div', {'class': 'smi-onview-text'})
             else:
                 viewings = []
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting upcoming_viewings. Error message: " + e.message)
+                logging.error(
+                    "Error getting upcoming_viewings. Error message: " + e.args[0])
             return
         for viewing in viewings:
             upcoming_viewings.append(viewing.text.strip())
@@ -168,8 +169,8 @@ class Listing(object):
                 list_items = self._ad_page_content.select(".PropertyFacilities__facilitiesList  li")
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting facilities. Error message: " + e.message)
+                logging.error(
+                    "Error getting facilities. Error message: " + e.args[0])
             return
 
         for li in list_items:
@@ -190,8 +191,8 @@ class Listing(object):
                 list_items = self._ad_page_content.select(".PropertyOverview__overviewList  li")
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting overviews. Error message: " + e.message)
+                logging.error(
+                    "Error getting overviews. Error message: " + e.args[0])
             return
 
         for li in list_items:
@@ -212,8 +213,8 @@ class Listing(object):
                 list_items = self._ad_page_content.select(".PropertyFeatures__featuresList li")
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting features. Error message: " + e.message)
+                logging.error(
+                    "Error getting features. Error message: " + e.args[0])
             return
 
         for li in list_items:
@@ -227,7 +228,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 t = self._data_from_search.find('a').contents[0]
             else:
                 t = self._ad_page_content.find(
@@ -240,10 +241,10 @@ class Listing(object):
                 t = self._ad_page_content.find(
                     'h1', {'class': 'PropertyMainInformation__address'}).text.strip()
             except Exception as e:
-                if self._debug:
-                    self._logger.error(
-                        "Error getting formalised_address. Error message: " + e.message)
-                return
+	            if self._debug:
+	                logging.error(
+	                    "Error getting formalised_address. Error message: " + e.args[0])
+	            return
         s = t.split('-')
         a = s[0].strip()
         if 'SALE AGREED' in a:
@@ -265,8 +266,8 @@ class Listing(object):
             address = formalised_address.split(',')
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting address_line_1. Error message: " + e.message)
+                logging.error(
+                    "Error getting address_line_1. Error message: " + e.args[0])
             return
 
         return address[0].strip()
@@ -287,8 +288,8 @@ class Listing(object):
             return address[-1].strip()
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting county. Error message: " + e.message)
+                logging.error(
+                    "Error getting county. Error message: " + e.args[0])
             return
 
     @property
@@ -307,8 +308,8 @@ class Listing(object):
                 "ul")
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting images. Error message: " + e.message)
+                logging.error(
+                    "Error getting images. Error message: " + e.args[0])
             return
         images = []
         if uls is None:
@@ -329,8 +330,8 @@ class Listing(object):
             uls = self._ad_page_content.find("div", {"id": "pbxl_carousel"})
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting hires_image. Error message: " + e.message)
+                logging.error(
+                    "Error getting hires_image. Error message: " + e.args[0])
             return
         hires_images = []
         if uls is None:
@@ -348,7 +349,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 agent = self._data_from_search.find(
                     'ul', {'class': 'links'}).text
                 return agent.split(':')[1].strip()
@@ -356,8 +357,8 @@ class Listing(object):
                 return self._ad_page_content.find('a', {'id': 'smi-link-branded'}).text.strip()
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting agent. Error message: " + e.message)
+                logging.error(
+                    "Error getting agent. Error message: " + e.args[0])
             return
 
     @property
@@ -367,7 +368,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 agent = self._data_from_search.find('ul', {'class': 'links'})
                 links = agent.find_all('a')
                 return links[1]['href']
@@ -375,8 +376,8 @@ class Listing(object):
                 return self._ad_page_content.find('a', {'id': 'smi-link-branded'})['href']
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting agent_url. Error message: " + e.message)
+                logging.error(
+                    "Error getting agent_url. Error message: " + e.args[0])
             return
 
     @property
@@ -394,8 +395,8 @@ class Listing(object):
                 return number.attrs['data-p']
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting contact_number. Error message: " + e.message)
+                logging.error(
+                    "Error getting contact_number. Error message: " + e.args[0])
             return 'N/A'
 
     @property
@@ -405,15 +406,15 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 link = self._data_from_search.find('a', href=True)
                 return 'http://www.daft.ie' + link['href']
             else:
                 return self._ad_page_content.find('link', {'rel': 'canonical'})['href']
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting daft_link. Error message: " + e.message)
+                logging.error(
+                    "Error getting daft_link. Error message: " + e.args[0])
             return
 
     @property
@@ -430,8 +431,8 @@ class Listing(object):
             return div.contents[index]['href']
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting shortcode. Error message: " + e.message)
+                logging.error(
+                    "Error getting shortcode. Error message: " + e.args[0])
             return 'N/A'
 
     @property
@@ -448,8 +449,8 @@ class Listing(object):
             return re.search("([0-9]{1,2}/[0-9]{1,2}/[0-9]{4})", str(div.contents[index]))[0]
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting date_insert_update. Error message: " + e.message)
+                logging.error(
+                    "Error getting date_insert_update. Error message: " + e.args[0])
             return 'N/A'
 
     @property
@@ -466,8 +467,8 @@ class Listing(object):
             return int(''.join(list(filter(str.isdigit, div.contents[index]))))
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting views. Error message: " + e.message)
+                logging.error(
+                    "Error getting views. Error message: " + e.args[0])
             return 'N/A'
 
     @property
@@ -477,7 +478,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 info = self._data_from_search.find(
                     'ul', {"class": "info"}).text
                 s = info.split('|')
@@ -489,8 +490,8 @@ class Listing(object):
 
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting dwelling_type. Error message: " + e.message)
+                logging.error(
+                    "Error getting dwelling_type. Error message: " + e.args[0])
             return
 
     @property
@@ -500,7 +501,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 info = self._data_from_search.find(
                     'div', {"class": "date_entered"}).text
                 s = info.split(':')
@@ -513,8 +514,8 @@ class Listing(object):
                 return re.search("([0-9]{1,2}/[0-9]{1,2}/[0-9]{4})", str(div.contents[index]))[0]
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting posted_since. Error message: " + e.message)
+                logging.error(
+                    "Error getting posted_since. Error message: " + e.args[0])
             return
 
     @property
@@ -524,7 +525,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 info = self._data_from_search.find(
                     'ul', {"class": "info"}).text
                 s = info.split('|')
@@ -543,8 +544,8 @@ class Listing(object):
                 return
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting bedrooms. Error message: " + e.message)
+                logging.error(
+                    "Error getting bedrooms. Error message: " + e.args[0])
             return 'N/A'
 
     @property
@@ -554,7 +555,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 info = self._data_from_search.find(
                     'ul', {"class": "info"}).text
                 s = info.split('|')
@@ -574,8 +575,8 @@ class Listing(object):
 
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting bathrooms. Error message: " + e.message)
+                logging.error(
+                    "Error getting bathrooms. Error message: " + e.args[0])
             return 'N/A'
 
     @property
@@ -588,14 +589,14 @@ class Listing(object):
             infos = self._ad_page_content.find_all(
                 'div', {"class": "map_info_box"})
             for info in infos:
-                if('Distance to City Centre' in info.text):
+                if 'Distance to City Centre' in info.text:
                     distance_list = re.findall(
                         'Distance to City Centre: (.*) km', info.text)
                     return distance_list[0]
             return None
         except Exception as e:
             if self._debug:
-                self._logger.error(e.message)
+                logging.error(e.args[0])
             print(e)
             return 'N/A'
 
@@ -619,7 +620,7 @@ class Listing(object):
             return routes
         except Exception as e:
             if self._debug:
-                self._logger.error(e.message)
+                logging.error(e.args[0])
             return 'N/A'
 
     @property
@@ -631,16 +632,16 @@ class Listing(object):
         try:
             scripts = self._ad_page_content.find_all('script')
             for script in scripts:
-                if('latitude' in script.text):
+                if 'latitude' in script.text:
                     find_list = re.findall(
                         r'"latitude":"([\-]?[0-9.]*[0-9]+)"', script.text)
-                    if(len(find_list) >= 1):
+                    if len(find_list) >= 1:
                         return find_list[0]
             return None
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting latitude. Error message: " + e.message)
+                logging.error(
+                    "Error getting latitude. Error message: " + e.args[0])
             return None
 
     @property
@@ -652,16 +653,16 @@ class Listing(object):
         try:
             scripts = self._ad_page_content.find_all('script')
             for script in scripts:
-                if('longitude' in script.text):
+                if 'longitude' in script.text:
                     find_list = re.findall(
                         r'"longitude":"([\-]?[0-9.]*[0-9]+)"', script.text)
-                    if(len(find_list) >= 1):
+                    if len(find_list) >= 1:
                         return find_list[0]
             return None
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting longitude. Error message: " + e.message)
+                logging.error(
+                    "Error getting longitude. Error message: " + e.args[0])
             return None
 
     @property
@@ -675,18 +676,18 @@ class Listing(object):
                 'span', {'class': 'ber-hover'}
             ).find('img')['alt']
 
-            if('exempt' in alt_text):
+            if ('exempt' in alt_text):
                 return 'exempt'
             else:
                 alt_arr = alt_text.split()
-                if('ber' in alt_arr[0].lower()):
+                if 'ber' in alt_arr[0].lower():
                     return alt_arr[1].lower()
                 else:
                     return None
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting the Ber Code. Error message: " + e.message)
+                logging.error(
+                    "Error getting the Ber Code. Error message: " + e.args[0])
             return None
 
     @property
@@ -696,7 +697,7 @@ class Listing(object):
         :return:
         """
         try:
-            if(self._data_from_search):
+            if self._data_from_search:
                 info = self._data_from_search.find(
                     'ul', {"class": "info"}).text
                 s = info.split('|')
@@ -705,8 +706,8 @@ class Listing(object):
                 return
         except Exception as e:
             if self._debug:
-                self._logger.error(
-                    "Error getting commercial_area_size. Error message: " + e.message)
+                logging.error(
+                    "Error getting commercial_area_size. Error message: " + e.args[0])
             return 'N/A'
 
     @property
@@ -763,15 +764,16 @@ class Listing(object):
             'contact_number': contact_number,
             'type': ad_search_type,
             'agent_id': agent_id,
-            'id': ad_id
+            'id': ad_id,
+            'self_copy': 1
         })
 
         if self._debug:
-            self._logger.info("Status code: %d" % response.status_code)
-            self._logger.info("Response: %s" % response.content)
+            logging.info("Status code: %d" % response.status_code)
+            logging.info("Response: %s" % response.content)
         if response.status_code != 200:
-            self._logger.error("Status code: %d" % response.status_code)
-            self._logger.error("Response: %s" % response.content)
+            logging.error("Status code: %d" % response.status_code)
+            logging.error("Response: %s" % response.content)
         return response.status_code == 200
 
     def as_dict(self):

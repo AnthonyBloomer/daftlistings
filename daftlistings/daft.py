@@ -1,13 +1,11 @@
-from .listing import Listing
 from .enums import *
-from .request import Request
 from .exceptions import DaftException
-from .logger import Logger
-import logging
+from .listing import Listing
+from .request import Request
 
 
 class Daft(object):
-    def __init__(self, xml_url=None, debug=False, log_level=logging.ERROR):
+    def __init__(self, xml_url=None, debug=False):
         self._base = 'http://www.daft.ie/'
         self._debug = debug
         self._xml_url = xml_url
@@ -32,7 +30,6 @@ class Daft(object):
         self._commercial_max_size = None
         self._university = None
         self._result_url = None
-        self.logger = Logger(log_level)
 
     def set_result_url(self, result_url):
         """
@@ -349,6 +346,14 @@ class Daft(object):
         """
         self._query_params += str(QueryParam.ROUTE_ID) + str(public_transport_route)
 
+    def set_pets_allowed(self, pets_allowed):
+        """
+        If set to True, we'll scrape listings that allow pets.
+        :param pets_allowed:
+        :return:
+        """
+        self._query_params += str(QueryParam.PETS_ALLOWED)
+
     def set_property_type(self, property_types):
         """
         Set the property type for rents.
@@ -365,61 +370,63 @@ class Daft(object):
     def set_xml_url(self, xml_url):
         """
         Set the url from xml to loop
-        :param set_xml_url: String with url
+        :param xml_url: String with url
         """
         self._xml_url = xml_url
 
-    def get_url(self):
-
+    def set_url(self):
         if self._result_url:
             if self._offset:
                 self._result_url += '&offset=' + str(self._offset)
-            return self._result_url
-
-        if self._sort_by:
-            if self._sort_order:
-                self._query_params += str(QueryParam.SORT_ORDER) + str(self._sort_order)
-                self._query_params += str(QueryParam.SORT_BY) + str(self._sort_by)
-            else:
-                self._query_params += str(QueryParam.SORT_ORDER) + str(SortOrder.DESCENDING)
-                self._query_params += str(QueryParam.SORT_BY) + self._sort_by
-
-        if self._university and isinstance(self._listing_type, RentType):
-            if self._min_price or self._max_price:
-                self._query_params += self._price
-
-            url = self._base + str(
-                self._listing_type) + self._university + self._student_accommodation_type + '?' + self._query_params
-            return url
-
-        # If the county is not set then we'll look at properties throughout Ireland.
-        if self._county is None:
-            self._county = 'ireland'
-
-        if self._area is None:
-            self._area = ''
-
-        if self._sale_agreed:
-            if self._min_price or self._max_price:
-                self._query_params += self._price + str(QueryParam.SALE_AGREED_WITH_PRICE)
-            else:
-                self._query_params += str(QueryParam.SALE_AGREED)
         else:
-            if self._min_price or self._max_price:
-                self._query_params += self._price
+            if self._sort_by:
+                if self._sort_order:
+                    self._query_params += str(QueryParam.SORT_ORDER) + str(self._sort_order)
+                    self._query_params += str(QueryParam.SORT_BY) + str(self._sort_by)
+                else:
+                    self._query_params += str(QueryParam.SORT_ORDER) + str(SortOrder.DESCENDING)
+                    self._query_params += str(QueryParam.SORT_BY) + self._sort_by
 
-        if self._min_price or self._max_price and isinstance(self._listing_type, RentType):
-            self._query_params += str(QueryParam.IGNORED_AGENTS)
+            if self._university and isinstance(self._listing_type, RentType):
+                if self._min_price or self._max_price:
+                    self._query_params += self._price
 
-        url = self._base + self._county + str(self._listing_type) + str(self._commercial_property_type) + str(
-            self._area) + '?offset=' + str(self._offset) + self._query_params
-        return url
+                url = self._base + str(self._listing_type) + self._university + str(
+                    self._student_accommodation_type) + '?' + self._query_params
+                return url
+
+            # If the county is not set then we'll look at properties throughout Ireland.
+            if self._county is None:
+                self._county = 'ireland'
+
+            if self._area is None:
+                self._area = ''
+
+            if self._sale_agreed:
+                if self._min_price or self._max_price:
+                    self._query_params += self._price + str(QueryParam.SALE_AGREED_WITH_PRICE)
+                else:
+                    self._query_params += str(QueryParam.SALE_AGREED)
+            else:
+                if self._min_price or self._max_price:
+                    self._query_params += self._price
+
+            if self._min_price or self._max_price and isinstance(self._listing_type, RentType):
+                self._query_params += str(QueryParam.IGNORED_AGENTS)
+
+            self._result_url = self._base + self._county + str(self._listing_type) + str(
+                self._commercial_property_type) + str(
+                self._area) + '?offset=' + str(self._offset) + self._query_params
+
+    def get_url(self):
+        return self._result_url
 
     def search(self):
         """
         The search function returns an array of Listing objects.
         :return: Listing object
         """
+        self.set_url()
         listings = []
         request = Request(debug=self._debug)
         url = self.get_url()
@@ -432,7 +439,7 @@ class Daft(object):
         return listings
 
     def read_xml(self, xml_url=None):
-        if(xml_url):
+        if xml_url:
             self._xml_url = xml_url
         listings = []
         request = Request(debug=self._debug)
