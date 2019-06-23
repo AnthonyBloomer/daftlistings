@@ -425,6 +425,9 @@ class Daft(object):
         url = self.get_url()
         soup = request.get(url)
         divs = soup.find_all("div", {"class": "box"})
+        if(len(divs) == 0):
+            divs = soup.find_all("div", {"class": "PropertyCardContainer__container"})
+            
         [listings.append(Listing(div, self._debug)) for div in divs]
         return listings
 

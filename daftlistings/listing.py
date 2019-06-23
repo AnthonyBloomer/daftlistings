@@ -22,6 +22,7 @@ class Listing(object):
         self._url = url
         self._debug = debug
         self._ad_page_content_data = None
+        self._template_big_image = False
         self._logger = Logger(log_level)
 
     @property
@@ -55,15 +56,18 @@ class Listing(object):
     @property
     def description(self):
         try:
-            description_div = str(
-                self._ad_page_content.find('div', {'id': 'description'})
-            )
-
+            description_div = str(self._ad_page_content.find('div', {'id': 'description'}))
             pos_token = description_div.find('<!-- dont_cut_below_here -->')
             if pos_token == -1:
                 return None
             return html2text.html2text(description_div[0:pos_token])
         except Exception as e:
+            try:
+                # If the new template, currently in sales houses
+                description_div = self._ad_page_content.find('p', {'class': 'PropertyDescription__propertyDescription'}).text
+                return html2text.html2text(description_div)
+            except:
+                pass
             if self._debug:
                 self._logger.error(
                     "Error getting description. Error message: " + e.message)
@@ -101,6 +105,11 @@ class Listing(object):
             else:
                 return self._ad_page_content.find('div', {'id': 'smi-price-string'}).text
         except Exception as e:
+            try:
+                # If the new template, currently in sales houses
+                return self._ad_page_content.find('strong', {'class': 'PropertyInformationCommonStyles__costAmountCopy'}).text
+            except Exception as e:
+                pass
             if self._debug:
                 self._logger.error(
                     "Error getting price. Error message: " + e.message)
@@ -154,6 +163,9 @@ class Listing(object):
         facilities = []
         try:
             list_items = self._ad_page_content.select("#facilities li")
+            # If the new template, currently in sales houses
+            if(len(list_items) == 0):
+                list_items = self._ad_page_content.select(".PropertyFacilities__facilitiesList  li")
         except Exception as e:
             if self._debug:
                 self._logger.error(
@@ -173,6 +185,9 @@ class Listing(object):
         overviews = []
         try:
             list_items = self._ad_page_content.select("#overview li")
+            # If the new template, currently in sales houses
+            if(len(list_items) == 0):
+                list_items = self._ad_page_content.select(".PropertyOverview__overviewList  li")
         except Exception as e:
             if self._debug:
                 self._logger.error(
@@ -192,6 +207,9 @@ class Listing(object):
         features = []
         try:
             list_items = self._ad_page_content.select("#features li")
+            # If the new template, currently in sales houses
+            if(len(list_items) == 0):
+                list_items = self._ad_page_content.select(".PropertyFeatures__featuresList li")
         except Exception as e:
             if self._debug:
                 self._logger.error(
@@ -217,10 +235,15 @@ class Listing(object):
                     'h1').text.strip()
 
         except Exception as e:
-            if self._debug:
-                self._logger.error(
-                    "Error getting formalised_address. Error message: " + e.message)
-            return
+            try:
+                # If the new template, currently in sales houses
+                t = self._ad_page_content.find(
+                    'h1', {'class': 'PropertyMainInformation__address'}).text.strip()
+            except Exception as e:
+                if self._debug:
+                    self._logger.error(
+                        "Error getting formalised_address. Error message: " + e.message)
+                return
         s = t.split('-')
         a = s[0].strip()
         if 'SALE AGREED' in a:
@@ -277,6 +300,11 @@ class Listing(object):
         try:
             uls = self._ad_page_content.find(
                 "ul", {"class": "smi-gallery-list"})
+            # If the new template, currently in sales houses
+            if(uls is None):
+                uls = self._ad_page_content.find(
+                "div", {"id": "pbxl_carousel"}).find(
+                "ul")
         except Exception as e:
             if self._debug:
                 self._logger.error(
