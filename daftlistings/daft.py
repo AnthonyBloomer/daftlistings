@@ -432,7 +432,10 @@ class Daft(object):
         url = self.get_url()
         soup = request.get(url)
         divs = soup.find_all("div", {"class": "box"})
-        [listings.append(Listing(div, debug=self._debug)) for div in divs]
+        if(len(divs) == 0):
+            divs = soup.find_all("div", {"class": "PropertyCardContainer__container"})
+            
+        [listings.append(Listing(div, self._debug)) for div in divs]
         return listings
 
     def read_xml(self, xml_url=None):
@@ -442,5 +445,9 @@ class Daft(object):
         request = Request(debug=self._debug)
         soup = request.get(self._xml_url)
         divs = soup.find_all("item")
-        [listings.append(Listing(div.find('guid').text, self._debug)) for div in divs]
+        for div in divs:
+            listings.append(Listing(
+                url=div.find('guid').text,
+                debug=self._debug
+            ))
         return listings

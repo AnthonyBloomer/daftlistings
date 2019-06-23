@@ -1,10 +1,10 @@
+from .request import Request
+import logging
 import base64
 import logging
 import re
 
 import html2text
-
-from .request import Request
 
 
 class Listing(object):
@@ -22,6 +22,7 @@ class Listing(object):
         self._url = url
         self._debug = debug
         self._ad_page_content_data = None
+        self._template_big_image = False
 
     @property
     def _ad_page_content(self):
@@ -42,6 +43,10 @@ class Listing(object):
         try:
             return self._ad_page_content.find('input', {'id': 'ad_id'})['value']
         except Exception as e:
+            try:
+                return self._ad_page_content.find('li', {'id': 'saved-ad'})['data-adid']
+            except:
+                pass
             if self._debug:
                 logging.error(
                     "Error getting id. Error message: " + e.args[0])
@@ -59,6 +64,12 @@ class Listing(object):
                 return None
             return html2text.html2text(description_div[0:pos_token])
         except Exception as e:
+            try:
+                # If the new template, currently in sales houses
+                description_div = self._ad_page_content.find('p', {'class': 'PropertyDescription__propertyDescription'}).text
+                return html2text.html2text(description_div)
+            except:
+                pass
             if self._debug:
                 logging.error(
                     "Error getting description. Error message: " + e.args[0])
@@ -95,6 +106,11 @@ class Listing(object):
             else:
                 return self._ad_page_content.find('div', {'id': 'smi-price-string'}).text
         except Exception as e:
+            try:
+                # If the new template, currently in sales houses
+                return self._ad_page_content.find('strong', {'class': 'PropertyInformationCommonStyles__costAmountCopy'}).text
+            except Exception as e:
+                pass
             if self._debug:
                 logging.error(
                     "Error getting price. Error message: " + e.args[0])
@@ -148,6 +164,9 @@ class Listing(object):
         facilities = []
         try:
             list_items = self._ad_page_content.select("#facilities li")
+            # If the new template, currently in sales houses
+            if(len(list_items) == 0):
+                list_items = self._ad_page_content.select(".PropertyFacilities__facilitiesList  li")
         except Exception as e:
             if self._debug:
                 logging.error(
@@ -167,6 +186,9 @@ class Listing(object):
         overviews = []
         try:
             list_items = self._ad_page_content.select("#overview li")
+            # If the new template, currently in sales houses
+            if(len(list_items) == 0):
+                list_items = self._ad_page_content.select(".PropertyOverview__overviewList  li")
         except Exception as e:
             if self._debug:
                 logging.error(
@@ -186,6 +208,9 @@ class Listing(object):
         features = []
         try:
             list_items = self._ad_page_content.select("#features li")
+            # If the new template, currently in sales houses
+            if(len(list_items) == 0):
+                list_items = self._ad_page_content.select(".PropertyFeatures__featuresList li")
         except Exception as e:
             if self._debug:
                 logging.error(
@@ -211,10 +236,15 @@ class Listing(object):
                     'h1').text.strip()
 
         except Exception as e:
-            if self._debug:
-                logging.error(
-                    "Error getting formalised_address. Error message: " + e.args[0])
-            return
+            try:
+                # If the new template, currently in sales houses
+                t = self._ad_page_content.find(
+                    'h1', {'class': 'PropertyMainInformation__address'}).text.strip()
+            except Exception as e:
+	            if self._debug:
+	                logging.error(
+	                    "Error getting formalised_address. Error message: " + e.args[0])
+	            return
         s = t.split('-')
         a = s[0].strip()
         if 'SALE AGREED' in a:
@@ -271,6 +301,11 @@ class Listing(object):
         try:
             uls = self._ad_page_content.find(
                 "ul", {"class": "smi-gallery-list"})
+            # If the new template, currently in sales houses
+            if(uls is None):
+                uls = self._ad_page_content.find(
+                "div", {"id": "pbxl_carousel"}).find(
+                "ul")
         except Exception as e:
             if self._debug:
                 logging.error(
@@ -354,7 +389,10 @@ class Listing(object):
         try:
             number = self._ad_page_content.find(
                 'button', {'class': 'phone-number'})
-            return (base64.b64decode(number.attrs['data-p'])).decode('ascii')
+            try:
+                return (base64.b64decode(number.attrs['data-p'])).decode('ascii')
+            except:
+                return number.attrs['data-p']
         except Exception as e:
             if self._debug:
                 logging.error(
@@ -499,8 +537,10 @@ class Listing(object):
                 spans = div.find_all('span', {'class': 'header_text'})
                 for span in spans:
                     # print(span.text)
-                    if 'bed' in span.text.lower():
-                        return int(''.join([n for n in span.text if n.isdigit()]))
+                    if('bed' in span.text.lower()):
+                        return int(re.findall(
+                        r'([\-]?[0-9.]*[0-9]+) bed', span.text.lower())[0])
+                        # return int(''.join([n for n in span.text if n.isdigit()]))
                 return
         except Exception as e:
             if self._debug:
@@ -527,8 +567,10 @@ class Listing(object):
                 spans = div.find_all('span', {'class': 'header_text'})
                 for span in spans:
                     # print(span.text)
-                    if 'bath' in span.text.lower():
-                        return int(''.join([n for n in span.text if n.isdigit()]))
+                    if('bath' in span.text.lower()):
+                        return int(re.findall(
+                        r'([\-]?[0-9.]*[0-9]+) bath', span.text.lower())[0])
+                        # return int(''.join([n for n in span.text if n.isdigit()]))
                 return
 
         except Exception as e:
@@ -668,6 +710,36 @@ class Listing(object):
                     "Error getting commercial_area_size. Error message: " + e.args[0])
             return 'N/A'
 
+    @property
+    def advertiser_name(self):
+        """
+        This method returns the area size. This method should only be called when retrieving commercial type listings.
+        :return:
+        """
+        try:
+            return self._ad_page_content.find('div', {'id': 'smi-negotiator-photo'}
+            ).find('h2').text
+        except Exception as e:
+            if self._debug:
+                self._logger.error(
+                    "Error getting commercial_area_size. Error message: " + e.message)
+            return 'N/A'
+
+    @property
+    def contact_info(self):
+        """
+        This method returns the area size. This method should only be called when retrieving commercial type listings.
+        :return:
+        """
+        try:
+            return self._ad_page_content.find('div', {'class': 'smi-contact-numbers'}
+            ).find('div', {'class': 'phone-info'}).text.strip()
+        except Exception as e:
+            if self._debug:
+                self._logger.error(
+                    "Error getting commercial_area_size. Error message: " + e.message)
+            return 'N/A'
+
     def contact_advertiser(self, name, email, contact_number, message):
         """
         This method allows you to contact the advertiser of a listing.
@@ -726,6 +798,8 @@ class Listing(object):
             'agent': self.agent,
             'agent_url': self.agent_url,
             'contact_number': self.contact_number,
+            'contact_info': self.contact_info,
+            'advertiser_name': self.advertiser_name,
             'daft_link': self.daft_link,
             'shortcode': self.shortcode,
             'date_insert_update': self.date_insert_update,
