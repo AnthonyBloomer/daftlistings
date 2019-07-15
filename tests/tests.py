@@ -15,21 +15,7 @@ class DaftTests(unittest.TestCase):
         listings = daft.search()
         self.assertTrue(len(listings) > 0)
         first = listings[1]
-        self.assertIsNotNone(first.facilities)
         self.assertIsNotNone(first.formalised_address)
-        self.assertIsNotNone(first.address_line_1)
-        self.assertIsNotNone(first.address_line_2)
-        self.assertIsNotNone(first.agent)
-        self.assertIsNotNone(first.agent_id)
-        self.assertIsNotNone(first.agent_url)
-        self.assertIsNotNone(first.bathrooms)
-        self.assertIsNotNone(first.bedrooms)
-        self.assertIsNotNone(first.county)
-        self.assertIsNotNone(first.daft_link)
-        self.assertIsNotNone(first.features)
-        self.assertIsNotNone(first.id)
-        self.assertIsNotNone(first.search_type)
-        self.assertIsNotNone(first.dwelling_type)
 
     def test_properties_sale_agreed(self):
         daft = Daft()
