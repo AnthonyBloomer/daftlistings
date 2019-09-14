@@ -607,11 +607,11 @@ class Listing(object):
         try:
             scripts = self._ad_page_content.find_all('script')
             for script in scripts:
-                if 'latitude' in script.text:
+                if 'setLngLat' in script.text:
                     find_list = re.findall(
-                        r'"latitude":"([\-]?[0-9.]*[0-9]+)"', script.text)
+                        r'\.setLngLat\(\[(.*)\]', script.text)
                     if len(find_list) >= 1:
-                        return find_list[0]
+                        return find_list[0].split(', ')[1]
             return None
         except Exception as e:
             if self.debug:
@@ -628,11 +628,11 @@ class Listing(object):
         try:
             scripts = self._ad_page_content.find_all('script')
             for script in scripts:
-                if 'longitude' in script.text:
+                if 'setLngLat' in script.text:
                     find_list = re.findall(
-                        r'"longitude":"([\-]?[0-9.]*[0-9]+)"', script.text)
+                        r'\.setLngLat\(\[(.*)\]', script.text)
                     if len(find_list) >= 1:
-                        return find_list[0]
+                        return find_list[0].split(', ')[0]
             return None
         except Exception as e:
             if self.debug:
