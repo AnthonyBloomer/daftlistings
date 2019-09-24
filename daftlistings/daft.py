@@ -445,7 +445,8 @@ class Daft(object):
             [listings.append(PropertyForSale(div, self._debug)) for div in divs]
         else:
             [listings.append(PropertyForRent(div, self._debug)) for div in divs]
-        self._search_count = soup.find('strong', text=re.compile("Found [0-9]* properties")).text.split(' ')[1]
+        self._search_count = soup.find('strong', text=re.compile("Found [0-9]* properties"))
+        self._search_count = 0 if not self._search_count else self._search_count.text.split(' ')[1]
         return listings
 
     def read_xml(self, xml_url=None):
