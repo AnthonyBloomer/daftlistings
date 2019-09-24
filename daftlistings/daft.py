@@ -4,6 +4,7 @@ from .listing import Listing
 from .request import Request
 from .property_for_sale import PropertyForSale
 from .property_for_rent import PropertyForRent
+import re
 
 
 class Daft(object):
@@ -32,6 +33,7 @@ class Daft(object):
         self._commercial_max_size = None
         self._university = None
         self._result_url = None
+        self._search_count = 0
 
     def set_result_url(self, result_url):
         """
@@ -423,6 +425,10 @@ class Daft(object):
     def get_url(self):
         return self._result_url
 
+    @property
+    def search_count(self):
+        return self._search_count
+
     def search(self):
         """
         The search function returns an array of Listing objects.
@@ -434,13 +440,12 @@ class Daft(object):
         url = self.get_url()
         soup = request.get(url)
         divs = soup.find_all("div", {"class": "box"})
-        print("Found %s items" % len(divs))
         if len(divs) == 0:
             divs = soup.find_all("div", {"class": "PropertyCardContainer__container"})
             [listings.append(PropertyForSale(div, self._debug)) for div in divs]
         else:
             [listings.append(PropertyForRent(div, self._debug)) for div in divs]
-
+        self._search_count = soup.find('strong', text=re.compile("Found [0-9]* properties")).text.split(' ')[1]
         return listings
 
     def read_xml(self, xml_url=None):
