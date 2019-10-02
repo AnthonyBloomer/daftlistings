@@ -450,6 +450,8 @@ class Daft(object):
         self._search_count = soup.find('strong', text=re.compile("Found [0-9]* properties"))
         self._search_count = 0 if not self._search_count else self._search_count.text.split(' ')[1]
 
+        print("Fetched %s listings." % len(listings))
+
         if not fetch_all:
             return listings
 
