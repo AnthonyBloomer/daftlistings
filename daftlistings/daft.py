@@ -431,12 +431,13 @@ class Daft(object):
     def search_count(self):
         return int(self._search_count)
 
-    def search(self, fetch_all=False):
+    def search(self, fetch_all=True):
         """
         The search function returns an array of Listing objects.
         :return: Listing object
         """
         self.set_url()
+        print(self.get_url())
         listings = []
         request = Request(debug=self._debug)
         url = self.get_url()
@@ -447,17 +448,16 @@ class Daft(object):
             [listings.append(PropertyForSale(div, self._debug)) for div in divs]
         else:
             [listings.append(PropertyForRent(div, self._debug)) for div in divs]
-        self._search_count = soup.find('strong', text=re.compile("Found [0-9]* properties"))
-        self._search_count = 0 if not self._search_count else self._search_count.text.split(' ')[1]
-
-        print("Fetched %s listings." % len(listings))
+        self._search_count = soup.find('strong', text=re.compile("Found [0-9][0-9,.]* properties"))
+        self._search_count = 0 if not self._search_count else self._search_count.text.split(' ')[1].replace(',', '')
 
         if not fetch_all:
+            print("Fetched %s listings." % len(listings))
             return listings
 
         results_per_page = 20
         total_pages = math.ceil(self.search_count / results_per_page)
-        self.set_offset(self._offset + results_per_page)
+        self.set_offset(int(self._offset) + results_per_page)
         current_page = 1
 
         while current_page <= total_pages:

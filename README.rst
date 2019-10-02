@@ -148,6 +148,15 @@ month
        print(listing.formalised_address)
        print(listing.daft_link)
 
+By default, the Daft ``search`` function iterates over each page of
+results and appends each Listing object to the array that is returned.
+If you wish to disable this feature, you can set ``fetch_all`` to
+``False``:
+
+.. code:: python
+
+   daft.search(fetch_all=False)
+
 For more examples, check the `Examples
 folder <https://github.com/AnthonyBloomer/daftlistings/tree/dev/examples>`__
 
