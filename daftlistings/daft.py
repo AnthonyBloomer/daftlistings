@@ -1,10 +1,12 @@
+import math
+import re
+
 from .enums import *
 from .exceptions import DaftException
 from .listing import Listing
-from .request import Request
-from .property_for_sale import PropertyForSale
 from .property_for_rent import PropertyForRent
-import re
+from .property_for_sale import PropertyForSale
+from .request import Request
 
 
 class Daft(object):
@@ -427,9 +429,9 @@ class Daft(object):
 
     @property
     def search_count(self):
-        return self._search_count
+        return int(self._search_count)
 
-    def search(self):
+    def search(self, fetch_all=False):
         """
         The search function returns an array of Listing objects.
         :return: Listing object
@@ -447,6 +449,30 @@ class Daft(object):
             [listings.append(PropertyForRent(div, self._debug)) for div in divs]
         self._search_count = soup.find('strong', text=re.compile("Found [0-9]* properties"))
         self._search_count = 0 if not self._search_count else self._search_count.text.split(' ')[1]
+
+        if not fetch_all:
+            return listings
+
+        results_per_page = 20
+        total_pages = math.ceil(self.search_count / results_per_page)
+        self.set_offset(self._offset + results_per_page)
+        current_page = 1
+
+        while current_page <= total_pages:
+            print("Fetching page %s of %s " % (current_page, total_pages))
+            self.set_url()
+            soup = request.get(self.get_url())
+            divs = soup.find_all("div", {"class": "box"})
+            if len(divs) == 0:
+                divs = soup.find_all("div", {"class": "PropertyCardContainer__container"})
+                [listings.append(PropertyForSale(div, self._debug)) for div in divs]
+            else:
+                [listings.append(PropertyForRent(div, self._debug)) for div in divs]
+            self.set_offset(int(self._offset) + results_per_page)
+            current_page += 1
+
+        print("Fetched %s listings." % len(listings))
+
         return listings
 
     def read_xml(self, xml_url=None):
