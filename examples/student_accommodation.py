@@ -1,7 +1,14 @@
 # Find student accommodation near National College of Ireland that is between 500 and 700 per month
 # and provides internet facilities.
 
-from daftlistings import Daft, SortOrder, SortType, RentType, University, StudentAccommodationType
+from daftlistings import (
+    Daft,
+    SortOrder,
+    SortType,
+    RentType,
+    University,
+    StudentAccommodationType,
+)
 
 offset = 0
 

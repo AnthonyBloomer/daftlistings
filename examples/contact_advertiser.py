@@ -1,4 +1,4 @@
-# Get apartments to let in Dublin City between 1000 and 1500 and contact each advertiser. 
+# Get apartments to let in Dublin City between 1000 and 1500 and contact each advertiser.
 
 from daftlistings import Daft, RentType
 
@@ -18,7 +18,7 @@ if len(listings) > 0:
         name="Jane Doe",
         contact_number="019202222",
         email="jane@example.com",
-        message="Hi, I seen your listing on daft.ie and I would like to schedule a viewing."
+        message="Hi, I seen your listing on daft.ie and I would like to schedule a viewing.",
     )
 
     if contact:

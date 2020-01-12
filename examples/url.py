@@ -7,4 +7,4 @@ listings = daft.search()
 for listing in listings:
     print(listing.formalised_address)
     print(listing.price)
-    print(' ')
+    print(" ")

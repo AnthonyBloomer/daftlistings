@@ -3,9 +3,9 @@
 from daftlistings import Daft, RentType, SortOrder, SortType
 import pprint
 
-daft = Daft(debug=True)
+daft = Daft()
 
-daft.set_county('Dublin')
+daft.set_county("Dublin")
 daft.set_listing_type(RentType.APARTMENTS)
 daft.set_sort_order(SortOrder.ASCENDING)
 daft.set_sort_by(SortType.PRICE)

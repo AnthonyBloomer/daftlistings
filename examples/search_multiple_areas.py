@@ -2,12 +2,9 @@ from daftlistings import Daft, RentType, Gender, SortOrder, SortType
 
 daft = Daft()
 
-areas = [
-    'IFSC',
-    'Blackrock'
-]
+areas = ["IFSC", "Blackrock"]
 
-daft.set_county('Dublin City')
+daft.set_county("Dublin City")
 daft.set_area(areas)
 daft.set_listing_type(RentType.ROOMS_TO_SHARE)
 daft.set_with_photos(True)

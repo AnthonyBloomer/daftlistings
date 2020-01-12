@@ -19,14 +19,14 @@ for listing in listings:
 
     facilities = listing.facilities
     if facilities is not None:
-        print('Facilities: ')
+        print("Facilities: ")
 
         for facility in facilities:
             print(facility)
 
     features = listing.features
     if features is not None:
-        print('Features: ')
+        print("Features: ")
         for feature in features:
             print(feature)
 

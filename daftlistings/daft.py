@@ -11,7 +11,7 @@ from .request import Request
 
 class Daft(object):
     def __init__(self, xml_url=None, debug=False):
-        self._base = 'http://www.daft.ie/'
+        self._base = "http://www.daft.ie/"
         self._debug = debug
         self._xml_url = xml_url
         self._sale_agreed = False
@@ -50,7 +50,11 @@ class Daft(object):
         Set the address.
         :param address:
         """
-        self._query_params += str(QueryParam.ADVANCED) + str(QueryParam.ADDRESS) + address.replace(" ", "+").lower()
+        self._query_params += (
+            str(QueryParam.ADVANCED)
+            + str(QueryParam.ADDRESS)
+            + address.replace(" ", "+").lower()
+        )
 
     def set_min_lease(self, min_lease):
         """
@@ -80,7 +84,7 @@ class Daft(object):
         :param availability:
         """
         if availability >= 5:
-            availability = '5%2B'
+            availability = "5%2B"
         self._query_params += str(QueryParam.AVALIABILITY) + str(availability)
 
     def set_verbose(self, verbose):
@@ -131,7 +135,7 @@ class Daft(object):
         Pass an array to filter the result by keywords.
         :param keywords
         """
-        self._query_params += str(QueryParam.KEYWORDS) + '+'.join(keywords)
+        self._query_params += str(QueryParam.KEYWORDS) + "+".join(keywords)
 
     def set_furnished(self, furnished):
         """
@@ -148,8 +152,11 @@ class Daft(object):
         :param area:
         :return:
         """
-        self._area = area.replace(" ", "-").lower() if isinstance(area, str) else ','.join(
-            map(lambda x: x.lower().replace(' ', '-'), area))
+        self._area = (
+            area.replace(" ", "-").lower()
+            if isinstance(area, str)
+            else ",".join(map(lambda x: x.lower().replace(" ", "-"), area))
+        )
 
     def set_county(self, county):
         """
@@ -216,8 +223,12 @@ class Daft(object):
         :return:
         """
 
-        if not isinstance(listing_type, SaleType) and not isinstance(listing_type, RentType):
-            raise DaftException("listing_type should be an instance of SaleType or RentType.")
+        if not isinstance(listing_type, SaleType) and not isinstance(
+            listing_type, RentType
+        ):
+            raise DaftException(
+                "listing_type should be an instance of SaleType or RentType."
+            )
 
         self._listing_type = listing_type
 
@@ -285,7 +296,9 @@ class Daft(object):
         """
 
         if not isinstance(commercial_property_type, CommercialType):
-            raise DaftException("commercial_property_type should be an instance of CommercialType.")
+            raise DaftException(
+                "commercial_property_type should be an instance of CommercialType."
+            )
 
         self._commercial_property_type = str(commercial_property_type)
 
@@ -327,7 +340,9 @@ class Daft(object):
         :param student_accommodation_type: StudentAccomodationType
         """
         if not isinstance(student_accommodation_type, StudentAccommodationType):
-            raise DaftException("student_accommodation_type should be an instance of StudentAccommodationType.")
+            raise DaftException(
+                "student_accommodation_type should be an instance of StudentAccommodationType."
+            )
 
         self._student_accommodation_type = str(student_accommodation_type)
 
@@ -365,10 +380,12 @@ class Daft(object):
         Set the property type for rents.
         :param property_types: Array of Enum PropertyType
         """
-        query_add = ''
+        query_add = ""
         for property_type in property_types:
             if not isinstance(property_type, PropertyType):
-                raise DaftException("property_types should be an instance of PropertyType.")
+                raise DaftException(
+                    "property_types should be an instance of PropertyType."
+                )
             query_add += str(property_type)
 
         self._query_params += query_add
@@ -383,46 +400,69 @@ class Daft(object):
     def set_url(self):
         if self._result_url:
             if self._offset:
-                self._result_url += '&offset=' + str(self._offset)
+                self._result_url += "&offset=" + str(self._offset)
         else:
             if self._sort_by:
                 if self._sort_order:
-                    self._query_params += str(QueryParam.SORT_ORDER) + str(self._sort_order)
+                    self._query_params += str(QueryParam.SORT_ORDER) + str(
+                        self._sort_order
+                    )
                     self._query_params += str(QueryParam.SORT_BY) + str(self._sort_by)
                 else:
-                    self._query_params += str(QueryParam.SORT_ORDER) + str(SortOrder.DESCENDING)
+                    self._query_params += str(QueryParam.SORT_ORDER) + str(
+                        SortOrder.DESCENDING
+                    )
                     self._query_params += str(QueryParam.SORT_BY) + self._sort_by
 
             if self._university and isinstance(self._listing_type, RentType):
                 if self._min_price or self._max_price:
                     self._query_params += self._price
 
-                url = self._base + str(self._listing_type) + self._university + str(
-                    self._student_accommodation_type) + '?' + self._query_params
+                url = (
+                    self._base
+                    + str(self._listing_type)
+                    + self._university
+                    + str(self._student_accommodation_type)
+                    + "?"
+                    + self._query_params
+                )
                 return url
 
             # If the county is not set then we'll look at properties throughout Ireland.
             if self._county is None:
-                self._county = 'ireland'
+                self._county = "ireland"
 
             if self._area is None:
-                self._area = ''
+                self._area = ""
 
             if self._sale_agreed:
                 if self._min_price or self._max_price:
-                    self._query_params += self._price + str(QueryParam.SALE_AGREED_WITH_PRICE)
+                    self._query_params += self._price + str(
+                        QueryParam.SALE_AGREED_WITH_PRICE
+                    )
                 else:
                     self._query_params += str(QueryParam.SALE_AGREED)
             else:
                 if self._min_price or self._max_price:
                     self._query_params += self._price
 
-            if self._min_price or self._max_price and isinstance(self._listing_type, RentType):
+            if (
+                self._min_price
+                or self._max_price
+                and isinstance(self._listing_type, RentType)
+            ):
                 self._query_params += str(QueryParam.IGNORED_AGENTS)
 
-            self._result_url = self._base + self._county + str(self._listing_type) + str(
-                self._commercial_property_type) + str(
-                self._area) + '?offset=' + str(self._offset) + self._query_params
+            self._result_url = (
+                self._base
+                + self._county
+                + str(self._listing_type)
+                + str(self._commercial_property_type)
+                + str(self._area)
+                + "?offset="
+                + str(self._offset)
+                + self._query_params
+            )
 
     def get_url(self):
         return self._result_url
@@ -448,8 +488,14 @@ class Daft(object):
             [listings.append(PropertyForSale(div, self._debug)) for div in divs]
         else:
             [listings.append(PropertyForRent(div, self._debug)) for div in divs]
-        self._search_count = soup.find('strong', text=re.compile("Found [0-9][0-9,.]* properties"))
-        self._search_count = 0 if not self._search_count else self._search_count.text.split(' ')[1].replace(',', '')
+        self._search_count = soup.find(
+            "strong", text=re.compile("Found [0-9][0-9,.]* properties")
+        )
+        self._search_count = (
+            0
+            if not self._search_count
+            else self._search_count.text.split(" ")[1].replace(",", "")
+        )
 
         if not fetch_all:
             print("Fetched %s listings." % len(listings))
@@ -466,7 +512,9 @@ class Daft(object):
             soup = request.get(self.get_url())
             divs = soup.find_all("div", {"class": "box"})
             if len(divs) == 0:
-                divs = soup.find_all("div", {"class": "PropertyCardContainer__container"})
+                divs = soup.find_all(
+                    "div", {"class": "PropertyCardContainer__container"}
+                )
                 [listings.append(PropertyForSale(div, self._debug)) for div in divs]
             else:
                 [listings.append(PropertyForRent(div, self._debug)) for div in divs]
@@ -485,8 +533,5 @@ class Daft(object):
         soup = request.get(self._xml_url)
         divs = soup.find_all("item")
         for div in divs:
-            listings.append(Listing(
-                url=div.find('guid').text,
-                debug=self._debug
-            ))
+            listings.append(Listing(url=div.find("guid").text, debug=self._debug))
         return listings
