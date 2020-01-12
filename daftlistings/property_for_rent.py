@@ -19,11 +19,11 @@ class PropertyForRent(Listing):
 
         if "week" or "month" in price:
 
-            price = price[0]
-            price = price[1:]
-            price = price.replace(",", "")
-            price = float(price) * 4.345 if "week" in price else int(price)
-            return price
+            x = price[0]
+            x = x[1:]
+            x = x.replace(",", "")
+            x = float(x) * 4.345 if "week" in price else int(x)
+            return x
 
         return price
 
