@@ -1,9 +1,10 @@
-from .request import Request
 import base64
 import logging
 import re
 
 import html2text
+
+from .request import Request
 
 
 class Listing(object):
@@ -104,13 +105,17 @@ class Listing(object):
             price = self.data_from_search.find('strong', {'class': 'price'}).text
         else:
             price = self._ad_page_content.find('div', {'id': 'smi-price-string'}).text
-        price = price.split()
-        price = price[0]
 
         price = price[1:]
         price = price.replace(',', '')
 
-        return int(price)
+        if 'week' or 'month' in price:
+            price = price.split()
+            price = price[0]
+            price = float(price) * 4.345 if 'week' in price else int(price)
+            return price
+
+        return price
 
     @property
     def price_change(self):
