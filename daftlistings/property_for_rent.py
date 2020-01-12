@@ -12,12 +12,16 @@ class PropertyForRent(Listing):
         else:
             price = self._ad_page_content.find("div", {"id": "smi-price-string"}).text
 
-        price = price[1:]
-        price = price.replace(",", "")
+        price = price.split()
+
+        if "From" in price:
+            price = price[1:]
 
         if "week" or "month" in price:
-            price = price.split()
+
             price = price[0]
+            price = price[1:]
+            price = price.replace(",", "")
             price = float(price) * 4.345 if "week" in price else int(price)
             return price
 
