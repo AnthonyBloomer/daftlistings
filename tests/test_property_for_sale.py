@@ -1,7 +1,6 @@
-import time
 import unittest
 
-from daftlistings import Daft, SaleType, SortOrder, SortType, CommercialType
+from daftlistings import Daft, SaleType, SortType, CommercialType
 
 
 class PropertyForSaleTests(unittest.TestCase):
@@ -138,46 +137,6 @@ class PropertyForSaleTests(unittest.TestCase):
         price = listing.price
         self.assertTrue(len(listings) > 0)
         self.assertTrue(int(price) <= 175000)
-
-    def test_sort_by_date_descending(self):
-        daft = Daft()
-        daft.set_county("Dublin City")
-        daft.set_area("Dublin 15")
-        daft.set_listing_type(SaleType.PROPERTIES)
-        daft.set_sort_order(SortOrder.DESCENDING)
-        daft.set_sort_by(SortType.DATE)
-        daft.set_min_price(150000)
-        daft.set_max_price(175000)
-        listings = daft.search(fetch_all=False)
-
-        self.assertTrue(len(listings) > 0)
-
-        first = listings[0].posted_since.split()
-        last = listings[-1].posted_since.split()
-
-        first_date = time.strptime(first[0], "%d/%m/%Y")
-        last_date = time.strptime(last[0], "%d/%m/%Y")
-        self.assertTrue(first_date > last_date)
-
-    def test_sort_by_date_ascending(self):
-        daft = Daft()
-        daft.set_county("Dublin City")
-        daft.set_area("Dublin 15")
-        daft.set_listing_type(SaleType.PROPERTIES)
-        daft.set_sort_order(SortOrder.ASCENDING)
-        daft.set_sort_by(SortType.DATE)
-        daft.set_min_price(150000)
-        daft.set_max_price(175000)
-        listings = daft.search(fetch_all=False)
-
-        self.assertTrue(len(listings) > 0)
-
-        first = listings[0].posted_since.split()
-        last = listings[-1].posted_since.split()
-
-        first_date = time.strptime(first[0], "%d/%m/%Y")
-        last_date = time.strptime(last[0], "%d/%m/%Y")
-        self.assertTrue(first_date < last_date)
 
     def test_properties_with_max_beds(self):
         daft = Daft()

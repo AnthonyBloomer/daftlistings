@@ -431,44 +431,6 @@ class Listing(object):
             return
 
     @property
-    def bedrooms(self):
-        """
-        This method gets the number of bedrooms.
-        :return:
-        """
-
-        try:
-            info = self.data_from_search.find("ul", {"class": "info"}).text
-
-            s = info.split("|")
-            nb = s[1].strip()
-            return int(nb.split()[0])
-        except:
-            bathrooms = self.data_from_search.find_all(
-                "div", {"class": "QuickPropertyDetails__iconContainer"}
-            )[0]
-            return bathrooms.find("img")["alt"][-1]
-
-    @property
-    def bathrooms(self):
-        """
-        This method gets the number of bathrooms.
-        :return:
-        """
-
-        try:
-            info = self.data_from_search.find("ul", {"class": "info"}).text
-
-            s = info.split("|")
-            nb = s[2].strip()
-            return int(nb.split()[0])
-        except:
-            bathrooms = self.data_from_search.find_all(
-                "div", {"class": "QuickPropertyDetails__iconContainer"}
-            )[1]
-            return bathrooms.find("img")["alt"][-1]
-
-    @property
     def city_center_distance(self):
         """
         This method gets the distance to city center, in km.

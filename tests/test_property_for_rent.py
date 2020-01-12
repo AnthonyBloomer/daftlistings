@@ -90,18 +90,6 @@ class PropertyForRentTests(unittest.TestCase):
 
         self.assertTrue(has_raised_exception)
 
-    def test_student_accommodation(self):
-        daft = Daft()
-        daft.set_listing_type(RentType.STUDENT_ACCOMMODATION)
-        daft.set_university(University.TCD)
-        daft.set_student_accommodation_type(StudentAccommodationType.APARTMENTS)
-        daft.set_min_price(800)
-        daft.set_max_price(1500)
-        daft.set_sort_by(SortType.PRICE)
-        daft.set_sort_order(SortOrder.ASCENDING)
-        listings = daft.search(fetch_all=False)
-        self.assertTrue(len(listings) > 0)
-
     def test_room_to_share(self):
         daft = Daft()
         daft.set_county("Dublin")

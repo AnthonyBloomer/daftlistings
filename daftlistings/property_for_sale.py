@@ -41,3 +41,24 @@ class PropertyForSale(Listing):
         price = price.split()
         price = price[0]
         return int(price)
+
+    @property
+    def bedrooms(self):
+        bedrooms = self.data_from_search.find_all(
+            "div", {"class": "QuickPropertyDetails__iconContainer"}
+        )[0]
+        try:
+            return int(bedrooms.find("span").text)
+        except AttributeError:
+            return bedrooms.find("img")["alt"][-1]
+
+    @property
+    def bathrooms(self):
+        bathrooms = self.data_from_search.find_all(
+            "div", {"class": "QuickPropertyDetails__iconContainer"}
+        )[1]
+
+        try:
+            return int(bathrooms.find("span").text)
+        except AttributeError:
+            return bathrooms.find("img")["alt"][-1]

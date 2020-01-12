@@ -42,3 +42,23 @@ class PropertyForRent(Listing):
             a = a[3:]
             a = " ".join([str(x) for x in a])
         return a.lower().title().strip()
+
+    @property
+    def bedrooms(self):
+        info = self.data_from_search.find("ul", {"class": "info"}).text
+        s = info.split("|")
+        try:
+            nb = s[1].strip()
+            return int(nb.split()[0])
+        except IndexError:
+            return "N/A"
+
+    @property
+    def bathrooms(self):
+        info = self.data_from_search.find("ul", {"class": "info"}).text
+        s = info.split("|")
+        try:
+            nb = s[2].strip()
+            return int(nb.split()[0])
+        except IndexError:
+            return "N/A"
