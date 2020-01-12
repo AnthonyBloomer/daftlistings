@@ -28,6 +28,11 @@ class PropertyForSaleTests(unittest.TestCase):
         self.assertIsNotNone(first.search_type)
         self.assertIsNotNone(first.shortcode)
         self.assertIsNotNone(first.views)
+        self.assertIsNotNone(first.url)
+        self.assertIsNotNone(first.features)
+        self.assertIsNotNone(first.advertiser_name)
+        self.assertIsNotNone(first.date_insert_update)
+        self.assertIsNotNone(first.hires_images)
 
     def test_properties_sale_agreed(self):
         daft = Daft()

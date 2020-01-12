@@ -36,6 +36,16 @@ class PropertyForRentTests(unittest.TestCase):
         self.assertIsNotNone(apartment.search_type)
         self.assertIsNotNone(apartment.shortcode)
         self.assertIsNotNone(apartment.views)
+        self.assertIsNotNone(apartment.url)
+        self.assertIsNotNone(apartment.features)
+        self.assertIsNotNone(apartment.description)
+        self.assertIsNotNone(apartment.advertiser_name)
+        self.assertIsNotNone(apartment.agent)
+        self.assertIsNotNone(apartment.agent_url)
+        self.assertIsNotNone(apartment.ber_code)
+        self.assertIsNotNone(apartment.city_center_distance)
+        self.assertIsNotNone(apartment.date_insert_update)
+        self.assertIsNotNone(apartment.hires_images)
 
     def test_apartments_to_let_with_price(self):
         daft = Daft()

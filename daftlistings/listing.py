@@ -7,7 +7,7 @@ import html2text
 from .request import Request
 
 
-class Listing(object):
+class Listing:
     def __init__(self, data_from_search=None, url=None, debug=False):
 
         if isinstance(data_from_search, str):
@@ -203,32 +203,6 @@ class Listing(object):
         for li in list_items:
             features.append(li.text)
         return features
-
-    @property
-    def images(self):
-        """
-        This method returns the listing image.
-        :return:
-        """
-        try:
-            uls = self._ad_page_content.find("ul", {"class": "smi-gallery-list"})
-            # If the new template, currently in sales houses
-            if uls is None:
-                uls = self._ad_page_content.find("div", {"id": "pbxl_carousel"}).find(
-                    "ul"
-                )
-        except Exception as e:
-            if self.debug:
-                logging.error("Error getting images. Error message: " + e.args[0])
-            return
-        images = []
-        if uls is None:
-            return
-        for li in uls.find_all("li"):
-            if li.find("img")["src"]:
-                images.append(li.find("img")["src"])
-
-        return images
 
     @property
     def hires_images(self):

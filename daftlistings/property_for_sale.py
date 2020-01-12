@@ -62,3 +62,15 @@ class PropertyForSale(Listing):
             return int(bathrooms.find("span").text)
         except AttributeError:
             return bathrooms.find("img")["alt"][-1]
+
+    @property
+    def images(self):
+        uls = self._ad_page_content.find("div", {"id": "pbxl_carousel"}).find("ul")
+        images = []
+        if uls is None:
+            return
+        for li in uls.find_all("li"):
+            if li.find("img")["src"]:
+                images.append(li.find("img")["src"])
+
+        return images

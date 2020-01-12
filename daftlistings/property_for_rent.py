@@ -18,7 +18,6 @@ class PropertyForRent(Listing):
             price = price[1:]
 
         if "week" or "month" in price:
-
             x = price[0]
             x = x[1:]
             x = x.replace(",", "")
@@ -66,3 +65,15 @@ class PropertyForRent(Listing):
             return int(nb.split()[0])
         except IndexError:
             return "N/A"
+
+    @property
+    def images(self):
+        uls = self._ad_page_content.find("ul", {"class": "smi-gallery-list"})
+        images = []
+        if uls is None:
+            return
+        for li in uls.find_all("li"):
+            if li.find("img")["src"]:
+                images.append(li.find("img")["src"])
+
+        return images

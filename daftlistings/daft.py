@@ -9,7 +9,7 @@ from .property_for_sale import PropertyForSale
 from .request import Request
 
 
-class Daft(object):
+class Daft:
     def __init__(self, xml_url=None, debug=False):
         self._base = "http://www.daft.ie/"
         self._debug = debug
