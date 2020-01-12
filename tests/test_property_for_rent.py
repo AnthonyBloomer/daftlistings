@@ -16,11 +16,16 @@ class PropertyForRentTests(unittest.TestCase):
         daft.set_listing_type(RentType.APARTMENTS)
         daft.set_area_type(AreaType.ENROUTE)
         daft.set_public_transport_route(TransportRoute.BUS_LINE_15)
-        daft.set_gender(Gender.MALE)
+        daft.set_min_lease(6)
+        daft.set_max_lease(12)
+        daft.set_gender(Gender.EITHER)
+        daft.set_couples_accepted(True)
         listings = daft.search(fetch_all=False)
-        self.assertTrue(len(listings) > 0)
+        search_count = daft.search_count
+        self.assertGreater(search_count, 0)
+        self.assertGreater(len(listings), 0)
         apartment = listings[0]
-        self.assertIsNotNone(apartment.agent_id)
+
         self.assertIsNotNone(apartment.commercial_area_size)
         self.assertIsNotNone(apartment.contact_number)
         self.assertIsNotNone(apartment.daft_link)
@@ -36,7 +41,6 @@ class PropertyForRentTests(unittest.TestCase):
         self.assertIsNotNone(apartment.search_type)
         self.assertIsNotNone(apartment.shortcode)
         self.assertIsNotNone(apartment.views)
-        self.assertIsNotNone(apartment.url)
         self.assertIsNotNone(apartment.features)
         self.assertIsNotNone(apartment.description)
         self.assertIsNotNone(apartment.advertiser_name)
@@ -46,6 +50,12 @@ class PropertyForRentTests(unittest.TestCase):
         self.assertIsNotNone(apartment.city_center_distance)
         self.assertIsNotNone(apartment.date_insert_update)
         self.assertIsNotNone(apartment.hires_images)
+
+    def test_result_url(self):
+        daft = Daft()
+        daft.set_result_url("https://www.daft.ie/dublin/apartments-for-rent?")
+        listings = daft.search(fetch_all=False)
+        self.assertGreater(len(listings), 0)
 
     def test_apartments_to_let_with_price(self):
         daft = Daft()
@@ -99,8 +109,9 @@ class PropertyForRentTests(unittest.TestCase):
     def test_room_to_share(self):
         daft = Daft()
         daft.set_county("Dublin")
-        daft.set_area("Castleknock")
         daft.set_listing_type(RentType.ROOMS_TO_SHARE)
+        daft.set_with_photos(True)
+        daft.set_ensuite_only(True)
         daft.set_furnished(True)
         daft.set_min_price(500)
         daft.set_max_price(1000)

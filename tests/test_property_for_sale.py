@@ -1,6 +1,6 @@
 import unittest
 
-from daftlistings import Daft, SaleType, SortType, CommercialType
+from daftlistings import Daft, SaleType, SortType, CommercialType, PropertyType
 
 
 class PropertyForSaleTests(unittest.TestCase):
@@ -10,6 +10,7 @@ class PropertyForSaleTests(unittest.TestCase):
         daft.set_area("Dublin 15")
         daft.set_added_since(14)
         daft.set_listing_type(SaleType.PROPERTIES)
+        daft.set_property_type([PropertyType.HOUSE])
         listings = daft.search(fetch_all=False)
         self.assertTrue(len(listings) > 0)
         first = listings[1]
@@ -28,11 +29,11 @@ class PropertyForSaleTests(unittest.TestCase):
         self.assertIsNotNone(first.search_type)
         self.assertIsNotNone(first.shortcode)
         self.assertIsNotNone(first.views)
-        self.assertIsNotNone(first.url)
         self.assertIsNotNone(first.features)
         self.assertIsNotNone(first.advertiser_name)
         self.assertIsNotNone(first.date_insert_update)
         self.assertIsNotNone(first.hires_images)
+        self.assertIsNotNone(first.images)
 
     def test_properties_sale_agreed(self):
         daft = Daft()

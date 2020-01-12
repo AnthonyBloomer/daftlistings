@@ -10,9 +10,8 @@ from .request import Request
 
 
 class Daft:
-    def __init__(self, xml_url=None, debug=False):
+    def __init__(self, xml_url=None):
         self._base = "http://www.daft.ie/"
-        self._debug = debug
         self._xml_url = xml_url
         self._sale_agreed = False
         self._open_viewing = False
@@ -86,13 +85,6 @@ class Daft:
         if availability >= 5:
             availability = "5%2B"
         self._query_params += str(QueryParam.AVALIABILITY) + str(availability)
-
-    def set_verbose(self, verbose):
-        """
-        Set to True to print the HTTP requests.
-        :param verbose
-        """
-        self._debug = verbose
 
     def set_couples_accepted(self, couples_accepted):
         """
@@ -479,15 +471,15 @@ class Daft:
         self.set_url()
         print(self.get_url())
         listings = []
-        request = Request(debug=self._debug)
+        request = Request()
         url = self.get_url()
         soup = request.get(url)
         divs = soup.find_all("div", {"class": "box"})
         if len(divs) == 0:
             divs = soup.find_all("div", {"class": "PropertyCardContainer__container"})
-            [listings.append(PropertyForSale(div, self._debug)) for div in divs]
+            [listings.append(PropertyForSale(div)) for div in divs]
         else:
-            [listings.append(PropertyForRent(div, self._debug)) for div in divs]
+            [listings.append(PropertyForRent(div)) for div in divs]
         self._search_count = soup.find(
             "strong", text=re.compile("Found [0-9][0-9,.]* properties")
         )
@@ -515,9 +507,9 @@ class Daft:
                 divs = soup.find_all(
                     "div", {"class": "PropertyCardContainer__container"}
                 )
-                [listings.append(PropertyForSale(div, self._debug)) for div in divs]
+                [listings.append(PropertyForSale(div)) for div in divs]
             else:
-                [listings.append(PropertyForRent(div, self._debug)) for div in divs]
+                [listings.append(PropertyForRent(div)) for div in divs]
             self.set_offset(int(self._offset) + results_per_page)
             current_page += 1
 
@@ -529,9 +521,9 @@ class Daft:
         if xml_url:
             self._xml_url = xml_url
         listings = []
-        request = Request(debug=self._debug)
+        request = Request()
         soup = request.get(self._xml_url)
         divs = soup.find_all("item")
         for div in divs:
-            listings.append(Listing(url=div.find("guid").text, debug=self._debug))
+            listings.append(Listing(url=div.find("guid").text))
         return listings
