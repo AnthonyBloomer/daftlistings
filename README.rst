@@ -41,6 +41,15 @@ Usage
        print(listing.daft_link)
        print(listing.price)
 
+By default, the Daft ``search`` function iterates over each page of
+results and appends each Listing object to the array that is returned.
+If you wish to disable this feature, you can set ``fetch_all`` to
+``False``:
+
+.. code:: python
+
+   daft.search(fetch_all=False)
+
 Examples
 ~~~~~~~~
 
@@ -110,20 +119,14 @@ Parse listing data from a given search result url.
 
    from daftlistings import Daft
 
-   offset = 0
+   daft = Daft()
+   daft.set_result_url("https://www.daft.ie/dublin/apartments-for-rent?")
+   listings = daft.search()
 
-   while 1:
-       daft = Daft()
-       daft.set_result_url("https://www.daft.ie/dublin-city/new-homes-for-sale/?ad_type=new_development")
-       daft.set_offset(offset)
-       listings = daft.search()
-       if not listings:
-           break
-       for listing in listings:
-           print(listing.formalised_address)
-           print(listing.price)
-           print(' ')
-       offset += 10
+   for listing in listings:
+       print(listing.formalised_address)
+       print(listing.price)
+       print(' ')
 
 Find student accommodation near UCD that is between 850 and 1000 per
 month
@@ -147,15 +150,6 @@ month
        print(listing.price)
        print(listing.formalised_address)
        print(listing.daft_link)
-
-By default, the Daft ``search`` function iterates over each page of
-results and appends each Listing object to the array that is returned.
-If you wish to disable this feature, you can set ``fetch_all`` to
-``False``:
-
-.. code:: python
-
-   daft.search(fetch_all=False)
 
 For more examples, check the `Examples
 folder <https://github.com/AnthonyBloomer/daftlistings/tree/dev/examples>`__
