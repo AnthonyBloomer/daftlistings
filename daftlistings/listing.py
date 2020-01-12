@@ -100,22 +100,17 @@ class Listing(object):
         This method returns the price.
         :return:
         """
-        try:
-            if self.data_from_search:
-                return self.data_from_search.find('strong', {'class': 'price'}).text
-            else:
-                return self._ad_page_content.find('div', {'id': 'smi-price-string'}).text
-        except Exception as e:
-            try:
-                # If the new template, currently in sales houses
-                return self._ad_page_content.find('strong',
-                                                  {'class': 'PropertyInformationCommonStyles__costAmountCopy'}).text
-            except Exception as e:
-                pass
-            if self.debug:
-                logging.error(
-                    "Error getting price. Error message: " + e.args[0])
-            return
+        if self.data_from_search:
+            price = self.data_from_search.find('strong', {'class': 'price'}).text
+        else:
+            price = self._ad_page_content.find('div', {'id': 'smi-price-string'}).text
+        price = price.split()
+        price = price[0]
+
+        price = price[1:]
+        price = price.replace(',', '')
+
+        return int(price)
 
     @property
     def price_change(self):
@@ -228,26 +223,15 @@ class Listing(object):
         :return:
         """
 
-        try:
-            if self.data_from_search:
-                t = self.data_from_search.find('a', {'class': 'PropertyInformationCommonStyles__addressCopy--link'})
-                return t.text
-            else:
-                t = self._ad_page_content.find(
-                    'div', {'class': 'smi-object-header'}).find(
-                    'h1').text.strip()
+        if self.data_from_search:
+            t = self.data_from_search.find('div', {'class': 'search_result_title_box'})
+            address = t.find('a').text
+        else:
+            address = self._ad_page_content.find(
+                'div', {'class': 'smi-object-header'}).find(
+                'h1').text.strip()
 
-        except Exception as e:
-            try:
-                # If the new template, currently in sales houses
-                t = self._ad_page_content.find(
-                    'h1', {'class': 'PropertyMainInformation__address'}).text.strip()
-            except Exception as e:
-                if self.debug:
-                    logging.error(
-                        "Error getting formalised_address. Error message: " + e.args[0])
-                return
-        s = t.split('-')
+        s = address.split('-')
         a = s[0].strip()
         if 'SALE AGREED' in a:
             a = a.split()
