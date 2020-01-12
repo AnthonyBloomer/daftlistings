@@ -3,10 +3,6 @@ import unittest
 from daftlistings import (
     Daft,
     RentType,
-    SortOrder,
-    SortType,
-    University,
-    StudentAccommodationType,
     RoomType,
     AreaType,
     TransportRoute,
