@@ -1,4 +1,4 @@
-# Example to print a Listing object as dict.
+# Example to print a Listing object as a dictionary.
 
 from daftlistings import Daft, RentType, SortOrder, SortType
 import pprint

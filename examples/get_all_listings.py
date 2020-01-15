@@ -4,7 +4,12 @@ from daftlistings import Daft, SaleType
 
 daft = Daft()
 daft.set_listing_type(SaleType.PROPERTIES)
+daft.set_area("Dublin 15")
 
 listings = daft.search()
 
-print(listings[0].as_dict())
+for listing in listings:
+    print(listing.formalised_address)
+    print(listing.daft_link)
+    print(listing.price)
+    print(" ")

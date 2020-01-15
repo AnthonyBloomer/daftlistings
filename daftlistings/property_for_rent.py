@@ -12,19 +12,10 @@ class PropertyForRent(Listing):
         else:
             price = self._ad_page_content.find("div", {"id": "smi-price-string"}).text
 
-        price = price.split()
-
-        if "From" in price:
-            price = price[1:]
-
-        if "week" or "month" in price:
-            x = price[0]
-            x = x[1:]
-            x = x.replace(",", "")
-            x = float(x) * 4.345 if "week" in price else int(x)
-            return x
-
-        return price
+        price_arr = price.split()
+        d = int("".join([str(s) for s in price if s.isdigit()]))
+        d = d * 4.345 if "week" in price_arr else d
+        return float(d)
 
     @property
     def formalised_address(self):

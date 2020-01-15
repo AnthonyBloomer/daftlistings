@@ -35,12 +35,7 @@ class PropertyForSale(Listing):
             price = self._ad_page_content.find(
                 "strong", {"class": "PropertyInformationCommonStyles__costAmountCopy"}
             ).text
-
-        price = price[1:]
-        price = price.replace(",", "")
-        price = price.split()
-        price = price[0]
-        return int(price)
+        return int("".join([str(s) for s in price if s.isdigit()]))
 
     @property
     def bedrooms(self):
@@ -50,7 +45,7 @@ class PropertyForSale(Listing):
         try:
             return int(bedrooms.find("span").text)
         except AttributeError:
-            return bedrooms.find("img")["alt"][-1]
+            return int(bedrooms.find("img")["alt"][-1])
 
     @property
     def bathrooms(self):
@@ -61,7 +56,7 @@ class PropertyForSale(Listing):
         try:
             return int(bathrooms.find("span").text)
         except AttributeError:
-            return bathrooms.find("img")["alt"][-1]
+            return int(bathrooms.find("img")["alt"][-1])
 
     @property
     def images(self):
