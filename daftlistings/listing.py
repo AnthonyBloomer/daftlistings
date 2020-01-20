@@ -60,15 +60,16 @@ class Listing:
                 return None
             return html2text.html2text(description_div[0:pos_token])
         except Exception as e:
+            logging.error("Error getting description. Error message: " + e.args[0])
             try:
                 # If the new template, currently in sales houses
                 description_div = self._ad_page_content.find(
                     "p", {"class": "PropertyDescription__propertyDescription"}
                 ).text
                 return html2text.html2text(description_div)
-            except:
+            except Exception as e:
+                logging.error("Error getting description. Error message: " + e.args[0])
                 pass
-            logging.error("Error getting description. Error message: " + e.args[0])
 
     @property
     def agent_id(self):
@@ -263,7 +264,8 @@ class Listing:
             number = self._ad_page_content.find("button", {"class": "phone-number"})
             try:
                 return (base64.b64decode(number.attrs["data-p"])).decode("ascii")
-            except:
+            except Exception as e:
+                logging.error("Error getting contact_number. Error message: " + e.args[0])
                 return number.attrs["data-p"]
         except Exception as e:
             logging.error("Error getting contact_number. Error message: " + e.args[0])
