@@ -410,7 +410,7 @@ class Daft:
                 if self._min_price or self._max_price:
                     self._query_params += self._price
 
-                url = (
+                self._result_url = (
                     self._base
                     + str(self._listing_type)
                     + self._university
@@ -418,7 +418,7 @@ class Daft:
                     + "?"
                     + self._query_params
                 )
-                return url
+                return
 
             # If the county is not set then we'll look at properties throughout Ireland.
             if self._county is None:
