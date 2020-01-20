@@ -525,5 +525,5 @@ class Daft:
         soup = request.get(self._xml_url)
         divs = soup.find_all("item")
         for div in divs:
-            listings.append(Listing(url=div.find("guid").text))
+            listings.append(PropertyForRent(url=div.find("guid").text))
         return listings

@@ -122,6 +122,16 @@ class PropertyForRentTests(unittest.TestCase):
 
         self.assertTrue(has_raised_exception)
 
+    def test_read_xml(self):
+        daft = Daft()
+        daft.set_xml_url("http://daft.ie/rss.daft?uid=1685053&id=1106718&xk=858943")
+        listings = daft.read_xml()
+        self.assertGreater(len(listings), 0)
+        first = listings[0]
+        self.assertIsNotNone(first.formalised_address)
+        self.assertIsNotNone(first.price)
+        self.assertIsNotNone(first.daft_link)
+
     def test_room_to_share(self):
         daft = Daft()
         daft.set_county("Dublin")
