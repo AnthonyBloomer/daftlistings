@@ -7,6 +7,9 @@ from daftlistings import (
     AreaType,
     TransportRoute,
     Gender,
+    SortOrder,
+    StudentAccommodationType,
+    University,
 )
 
 
@@ -19,6 +22,7 @@ class PropertyForRentTests(unittest.TestCase):
         daft.set_min_lease(6)
         daft.set_max_lease(12)
         daft.set_offset(3)
+        daft.set_sort_order(SortOrder.DESCENDING)
         daft.set_gender(Gender.EITHER)
         daft.set_availability(12)
         daft.set_pets_allowed(True)
@@ -58,6 +62,14 @@ class PropertyForRentTests(unittest.TestCase):
     def test_result_url(self):
         daft = Daft()
         daft.set_result_url("https://www.daft.ie/dublin/apartments-for-rent?")
+        listings = daft.search(fetch_all=False)
+        self.assertGreater(len(listings), 0)
+
+    def test_student_accommodation(self):
+        daft = Daft()
+        daft.set_listing_type(RentType.STUDENT_ACCOMMODATION)
+        daft.set_university(University.NCI)
+        daft.set_student_accommodation_type(StudentAccommodationType.ROOMS_TO_SHARE)
         listings = daft.search(fetch_all=False)
         self.assertGreater(len(listings), 0)
 
