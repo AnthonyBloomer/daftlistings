@@ -1,6 +1,6 @@
 import unittest
 
-from daftlistings import Daft, SaleType, SortType, CommercialType, PropertyType
+from daftlistings import Daft, SaleType, SortType, CommercialType, PropertyType, HouseType
 
 
 class PropertyForSaleTests(unittest.TestCase):
@@ -43,6 +43,13 @@ class PropertyForSaleTests(unittest.TestCase):
         daft.set_sale_agreed(True)
         listings = daft.search(fetch_all=False)
         self.assertTrue(len(listings) > 0)
+
+    def test_properties_sale_by_house_type(self):
+        daft = Daft()
+        daft.set_listing_type(SaleType.HOUSES)
+        daft.set_house_type(HouseType.DETACHED)
+        listings = daft.search(fetch_all=False)
+        self.assertIsNotNone(listings)
 
     def test_properties_sale_agreed_with_price(self):
         daft = Daft()

@@ -3,7 +3,6 @@ import re
 
 from .enums import *
 from .exceptions import DaftException
-from .listing import Listing
 from .property_for_rent import PropertyForRent
 from .property_for_sale import PropertyForSale
 from .request import Request
@@ -69,6 +68,16 @@ class Daft:
         :param added: int
         """
         self._query_params += str(QueryParam.DAYS_OLD) + str(added)
+
+    def set_house_type(self, house_type):
+        """
+        The house type.
+        :param house_type: HouseType
+        :return:
+        """
+        if not isinstance(house_type, HouseType):
+            raise DaftException("house_type should be an instance of HouseType.")
+        self._query_params += str(house_type)
 
     def set_max_lease(self, max_lease):
         """

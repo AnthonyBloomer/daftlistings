@@ -14,6 +14,20 @@ class PropertyType(Enum):
         return "<SaleType: %s>" % self
 
 
+class HouseType(Enum):
+    DETACHED = "s%5Bhouse_type%5D=detached"
+    SEMI_DETACHED = "&s%5Bhouse_type%5D=semi-detached"
+    TERRACED = "&s%5Bhouse_type%5D=terraced"
+    END_OF_TERRACE = "&s%5Bhouse_type%5D=end-of-terrace"
+    TOWNHOUSE = "&s%5Bhouse_type%5D=townhouse"
+
+    def __str__(self):
+        return self._value_
+
+    def __repr__(self):
+        return "<HouseType: %s>" % self
+
+
 class SaleType(Enum):
     HOUSES = "/houses-for-sale/"
     PROPERTIES = "/property-for-sale/"

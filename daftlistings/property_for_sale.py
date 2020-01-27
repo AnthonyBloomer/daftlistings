@@ -1,3 +1,5 @@
+import logging
+
 from daftlistings.listing import Listing
 
 
@@ -27,15 +29,18 @@ class PropertyForSale(Listing):
 
     @property
     def price(self):
-        if self.data_from_search:
-            price = self.data_from_search.find(
-                "strong", {"class": "PropertyInformationCommonStyles__costAmountCopy"}
-            ).text
-        else:
-            price = self._ad_page_content.find(
-                "strong", {"class": "PropertyInformationCommonStyles__costAmountCopy"}
-            ).text
-        return int("".join([str(s) for s in price if s.isdigit()]))
+        try:
+            if self.data_from_search:
+                price = self.data_from_search.find(
+                    "strong", {"class": "PropertyInformationCommonStyles__costAmountCopy"}
+                ).text
+            else:
+                price = self._ad_page_content.find(
+                    "strong", {"class": "PropertyInformationCommonStyles__costAmountCopy"}
+                ).text
+            return int("".join([str(s) for s in price if s.isdigit()]))
+        except Exception as e:
+            logging.error("Error getting price. Error message: " + e.args[0])
 
     @property
     def bedrooms(self):
