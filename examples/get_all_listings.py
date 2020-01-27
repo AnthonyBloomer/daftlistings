@@ -1,10 +1,9 @@
-# Retrieve all properties for sale in Dublin 15. This example loops through each page of listings and prints the result.
+# Retrieve all properties for sale in Ireland. This example loops through each page of listings and prints the result.
 
 from daftlistings import Daft, SaleType
 
 daft = Daft()
 daft.set_listing_type(SaleType.PROPERTIES)
-daft.set_area("Dublin 15")
 
 listings = daft.search()
 

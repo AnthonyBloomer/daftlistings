@@ -9,7 +9,6 @@ daft.set_area(areas)
 daft.set_listing_type(RentType.ROOMS_TO_SHARE)
 daft.set_with_photos(True)
 daft.set_gender(Gender.MALE)
-daft.set_verbose(True)
 daft.set_sort_order(SortOrder.ASCENDING)
 daft.set_sort_by(SortType.PRICE)
 

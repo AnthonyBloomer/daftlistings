@@ -11,10 +11,8 @@ daft.set_max_price(1500)
 
 listings = daft.search()
 
-if len(listings) > 0:
-    first = listings[0]
-
-    contact = first.contact_advertiser(
+for listing in listings:
+    contact = listing.contact_advertiser(
         name="Jane Doe",
         contact_number="019202222",
         email="jane@example.com",

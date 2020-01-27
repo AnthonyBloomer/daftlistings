@@ -4,7 +4,6 @@ daft = Daft()
 
 daft.set_address("phoenix park")
 daft.set_listing_type(RentType.APARTMENTS)
-daft.set_verbose(True)
 
 listings = daft.search()
 

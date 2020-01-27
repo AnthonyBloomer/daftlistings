@@ -8,7 +8,6 @@ daft.set_county("Dublin City")
 daft.set_area_type(AreaType.TRANSPORT_ROUTE)
 daft.set_listing_type(RentType.APARTMENTS)
 daft.set_public_transport_route(TransportRoute.DART)
-daft.set_verbose(True)
 
 listings = daft.search()
 
