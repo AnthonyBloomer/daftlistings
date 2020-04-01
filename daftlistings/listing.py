@@ -520,6 +520,25 @@ class Listing:
                 "Error getting commercial_area_size. Error message: " + e.args[0]
             )
             return "N/A"
+        
+    @property
+    def price_change_history(self):
+        price_changes = []
+        try:
+            prices = self._ad_page_content.find_all("div",
+                                                    {"class": "PropertyPriceHistory__propertyPriceEntryContainer"})
+            for price in prices:
+                date = price.find("div", {"class": "PropertyPriceHistory__propertyPriceDate"})
+                price_at_date = price.find("div", {"class": "PropertyPriceHistory__propertyPrice"})
+                price_changes.append({
+                    "date": date.text.strip(),
+                    "price": price_at_date.text.strip()
+                })
+
+        except Exception as e:
+            logging.error("Error getting price_change. Error message: " + e.args[0])
+            return []
+        return price_changes
 
     @property
     def contact_info(self):
