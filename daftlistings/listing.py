@@ -265,7 +265,9 @@ class Listing:
             try:
                 return (base64.b64decode(number.attrs["data-p"])).decode("ascii")
             except Exception as e:
-                logging.error("Error getting contact_number. Error message: " + e.args[0])
+                logging.error(
+                    "Error getting contact_number. Error message: " + e.args[0]
+                )
                 return number.attrs["data-p"]
         except Exception as e:
             logging.error("Error getting contact_number. Error message: " + e.args[0])
@@ -340,25 +342,23 @@ class Listing:
             return "N/A"
 
     @property
-    def dwelling_type(self):
+    def property_type(self):
         """
-        This method returns the dwelling type.
+        This method returns the property type.
         :return:
         """
         try:
             if self.data_from_search:
-                info = self.data_from_search.find("ul", {"class": "info"}).text
-                s = info.split("|")
-                return s[0].strip()
+                info = self.data_from_search.find(
+                    "div", {"class": "QuickPropertyDetails__propertyType"}
+                ).text.strip()
             else:
-                return (
-                    self._ad_page_content.find("div", {"id": "smi-summary-items"})
-                    .find("span", {"class": "header_text"})
-                    .text
-                )
+                return self._ad_page_content.find(
+                    "div", {"class": "QuickPropertyDetails__propertyType"}
+                ).text.strip()
 
         except Exception as e:
-            logging.error("Error getting dwelling_type. Error message: " + e.args[0])
+            logging.error("Error getting property type. Error message: " + e.args[0])
             return
 
     @property
@@ -520,20 +520,24 @@ class Listing:
                 "Error getting commercial_area_size. Error message: " + e.args[0]
             )
             return "N/A"
-        
+
     @property
     def price_change_history(self):
         price_changes = []
         try:
-            prices = self._ad_page_content.find_all("div",
-                                                    {"class": "PropertyPriceHistory__propertyPriceEntryContainer"})
+            prices = self._ad_page_content.find_all(
+                "div", {"class": "PropertyPriceHistory__propertyPriceEntryContainer"}
+            )
             for price in prices:
-                date = price.find("div", {"class": "PropertyPriceHistory__propertyPriceDate"})
-                price_at_date = price.find("div", {"class": "PropertyPriceHistory__propertyPrice"})
-                price_changes.append({
-                    "date": date.text.strip(),
-                    "price": price_at_date.text.strip()
-                })
+                date = price.find(
+                    "div", {"class": "PropertyPriceHistory__propertyPriceDate"}
+                )
+                price_at_date = price.find(
+                    "div", {"class": "PropertyPriceHistory__propertyPrice"}
+                )
+                price_changes.append(
+                    {"date": date.text.strip(), "price": price_at_date.text.strip()}
+                )
 
         except Exception as e:
             logging.error("Error getting price_change. Error message: " + e.args[0])
@@ -617,7 +621,7 @@ class Listing:
             "date_insert_update": self.date_insert_update,
             "views": self.views,
             "description": self.description,
-            "dwelling_type": self.dwelling_type,
+            "dwelling_type": self.property_type,
             "posted_since": self.posted_since,
             "num_bedrooms": self.bedrooms,
             "num_bathrooms": self.bathrooms,

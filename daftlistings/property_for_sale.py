@@ -32,11 +32,13 @@ class PropertyForSale(Listing):
         try:
             if self.data_from_search:
                 price = self.data_from_search.find(
-                    "strong", {"class": "PropertyInformationCommonStyles__costAmountCopy"}
+                    "strong",
+                    {"class": "PropertyInformationCommonStyles__costAmountCopy"},
                 ).text
             else:
                 price = self._ad_page_content.find(
-                    "strong", {"class": "PropertyInformationCommonStyles__costAmountCopy"}
+                    "strong",
+                    {"class": "PropertyInformationCommonStyles__costAmountCopy"},
                 ).text
             return int("".join([str(s) for s in price if s.isdigit()]))
         except Exception as e:

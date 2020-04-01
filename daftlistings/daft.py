@@ -5,6 +5,7 @@ from .enums import *
 from .exceptions import DaftException
 from .property_for_rent import PropertyForRent
 from .property_for_sale import PropertyForSale
+from .listing import Listing
 from .request import Request
 
 
@@ -534,5 +535,5 @@ class Daft:
         soup = request.get(self._xml_url)
         divs = soup.find_all("item")
         for div in divs:
-            listings.append(PropertyForRent(url=div.find("guid").text))
+            listings.append(PropertyForSale(url=div.find("guid").text))
         return listings
