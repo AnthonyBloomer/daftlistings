@@ -5,7 +5,6 @@ from .enums import *
 from .exceptions import DaftException
 from .property_for_rent import PropertyForRent
 from .property_for_sale import PropertyForSale
-from .listing import Listing
 from .request import Request
 
 
@@ -517,9 +516,10 @@ class Daft:
                 divs = soup.find_all(
                     "div", {"class": "PropertyCardContainer__container"}
                 )
-                [listings.append(PropertyForSale(div)) for div in divs]
-            else:
-                [listings.append(PropertyForRent(div)) for div in divs]
+                if isinstance(self._listing_type, PropertyForRent):
+                    [listings.append(PropertyForRent(div)) for div in divs]
+                else:
+                    [listings.append(PropertyForSale(div)) for div in divs]
             self.set_offset(int(self._offset) + results_per_page)
             current_page += 1
 

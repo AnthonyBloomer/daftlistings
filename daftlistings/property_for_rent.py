@@ -7,11 +7,9 @@ class PropertyForRent(Listing):
 
     @property
     def price(self):
-        if self.data_from_search:
-            price = self.data_from_search.find("strong", {"class": "price"}).text
-        else:
-            price = self._ad_page_content.find("div", {"id": "smi-price-string"}).text
-
+        price = self._ad_page_content.find("div", {"id": "smi-price-string"}).text
+        if not price:
+            price = self._ad_page_content.find("div", {"id": "PropertyInformationCommonStyles__costAmountCopy"}).text
         price_arr = price.split()
         d = int("".join([str(s) for s in price if s.isdigit()]))
         d = d * 4.345 if "week" in price_arr else d
