@@ -633,5 +633,16 @@ class Listing:
             "commercial_area_size": self.commercial_area_size,
         }
 
+    def as_dict_for_mapping(self):
+        return {
+            "price": self.price,
+            "formalised_address": self.formalised_address,
+            "daft_link": self.daft_link,
+            "num_bedrooms": self.bedrooms,
+            "num_bathrooms": self.bathrooms,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
+        }
+
     def __repr__(self):
         return "Listing (%s)" % self.formalised_address
