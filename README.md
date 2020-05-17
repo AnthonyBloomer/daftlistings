@@ -189,6 +189,53 @@ print("Done, please checkout the html file")
 
 For more examples, check the [Examples folder](https://github.com/AnthonyBloomer/daftlistings/tree/dev/examples)
 
+### Parallel as_dict()
+
+lisitng.as_dict() is relatively slow for large volume of listings. Below is an exmple script using threading and joblib library technique to speedup this process
+
+``` python
+from daftlistings import Daft, RentType
+from joblib import Parallel, delayed
+import time
+
+def translate_listing_to_json(listing):
+    try:
+        if listing.search_type != 'rental':
+            return None
+        return listing.as_dict_for_mapping()
+    except:
+        return None
+
+daft = Daft()
+daft.set_county("Dublin City")
+daft.set_listing_type(RentType.ANY)
+daft.set_max_price(2000)
+daft.set_min_beds(2)
+daft.set_max_beds(2)
+
+listings = daft.search()
+properties = []
+print("Translating {} listing object into json, it will take a few minutes".format(str(len(listings))))
+print("Igonre the error message")
+
+# time the translation
+start = time.time()
+properties = Parallel(n_jobs=6, prefer="threads")(delayed(translate_listing_to_json)(listing) for listing in listings)
+properties = [p for p in properties if p is not None] # remove the None
+end = time.time()
+print("Time for json translations {}s".format(end-start))
+
+```
+
+Table of perfomance speedup for 501 listings
+Threads | Time (s) | Speedup
+------------ | ------------- | -------------
+1 | 178 | 1.0
+2 | 101 | 1.8
+3 | 72  | 2.5
+4 | 61  | 2.9
+6 | 54  | 3.3
+
 ## Tests
 
 The Python unittest module contains its own test discovery function, which you can run from the command line:
