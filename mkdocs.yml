@@ -1,0 +1,25 @@
+site_name: daftlistings
+theme:
+  name: 'material'
+  site_author: Anthony Bloomer
+  site_description: daftlistings enables programmatic interaction with Daft.ie
+  repo_url: https://github.com/anthonybloomer/daftlistings
+  palette:
+      primary: 'blue grey'
+      accent: 'grey'
+  font:
+      text: 'Ubuntu'
+      code: 'Ubuntu Mono'
+google_analytics:
+  - UA-106487079-1
+  - auto
+pages:
+  - Overview : 'index.md'
+  - Examples : 'examples.md'
+  - API Documentation:
+    - 'Daft': 'daft.md'
+    - 'Enums': 'enums.md'
+    - 'Exceptions': 'exception.md'
+    - 'Listing': 'listing.md'
+    - 'Person': 'person.md'
+    - 'Teamup': 'teamup.md'
