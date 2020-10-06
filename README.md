@@ -163,7 +163,7 @@ daft.set_max_beds(2)
 listings = daft.search()
 properties = []
 print("Translating {} listing object into json, it will take a few minutes".format(str(len(listings))))
-print("Igonre the error message")
+print("Ignore the error message")
 for listing in listings:
     try:
         if listing.search_type != 'rental':
@@ -216,7 +216,7 @@ daft.set_max_beds(2)
 listings = daft.search()
 properties = []
 print("Translating {} listing object into json, it will take a few minutes".format(str(len(listings))))
-print("Igonre the error message")
+print("Ignore the error message")
 
 # time the translation
 start = time.time()
