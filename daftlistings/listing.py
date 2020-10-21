@@ -636,6 +636,8 @@ class Listing:
             _latitude, _longitude = location[0], location[1]
             dλ = radians(float(self.longitude)) - radians(float(_longitude))
             φ1, φ2 = radians(float(self.latitude)), radians(float(_latitude))
+        else:
+            raise TypeError("Argument should be Listing or a coordinate [latitude, longitude] pair.")
 
         dσ = 2 * asin(
             sqrt(
