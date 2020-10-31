@@ -171,7 +171,7 @@ Save the map in a html file.
    listings = daft.search()
    properties = []
    print("Translating {} listing object into json, it will take a few minutes".format(str(len(listings))))
-   print("Igonre the error message")
+   print("Ignore the error message")
    for listing in listings:
       try:
          if listing.search_type != 'rental':
