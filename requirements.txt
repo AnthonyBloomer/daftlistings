@@ -7,5 +7,5 @@ html2text==2018.1.9
 idna==2.8
 requests==2.21.0
 soupsieve==1.9.1
-urllib3==1.24.2
+urllib3==1.25.9
 folium==0.8.3
