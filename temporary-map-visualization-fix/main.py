@@ -8,19 +8,21 @@ from listing import Listing
 def main():
     parameters = {"sort": "priceAsc",
                   "rentalPrice_from": "300",
-                  "rentalPrice_to": "600",
+                  "rentalPrice_to": "1500",
                   "from": "0",
-                  "pageSize": "20"}
-    page = requests.get(
-        "https://www.daft.ie/property-for-rent/ireland", params=parameters)
+                  "pageSize": "20",
+                  "radius": "20000"}
+    url = "https://www.daft.ie/property-for-rent/leopardstown-dublin"
+    page = requests.get(url, params=parameters)
     soup = BeautifulSoup(page.content, 'html.parser')
     listing_json = []
     number_of_pages = page_num(soup)
+    print("pages:", number_of_pages)
     # search the first page
     search_page(soup, listing_json)
     # search the rest pages
     for _ in range(number_of_pages - 1):
-        soup = next_page(parameters)
+        soup = next_page(parameters, url)
         search_page(soup, listing_json)
 
     # write the results into a txt file
@@ -35,13 +37,12 @@ def page_num(soup):
     return pages
 
 
-def next_page(parameters):
+def next_page(parameters, url):
     """ return the soup of next page"""
     # increment the from by pageSize
     from_num = int(parameters["from"]) + int(parameters["pageSize"])
     parameters["from"] = str(from_num)
-    page = requests.get(
-        "https://www.daft.ie/property-for-rent/ireland", params=parameters)
+    page = requests.get(url, params=parameters)
     soup = BeautifulSoup(page.content, 'html.parser')
     return soup
 
@@ -56,12 +57,13 @@ def search_page(soup, listing_json):
         listing_urls.append(url)
 
     for listing_url in listing_urls:
+        
         try:
             append_listing_json(listing_json, listing_url)
-        except:
+        except Exception as e:
+            print(e)
             continue
-
-
+        
 def append_listing_json(listing_json, listing_url):
     listing = Listing(listing_url)
     print(repr(listing))
