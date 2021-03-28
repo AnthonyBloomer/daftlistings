@@ -14,7 +14,10 @@ class Listing:
   @property
   def price(self):
     """ return the montly rent in euros """
-    str_array = self.pageProps["listing"]["price"].lower().split()
+    price_str = self.pageProps["listing"]["price"]
+    postionOfEuroSign = price_str.find("€")
+    price_str = price_str[postionOfEuroSign:].replace(",", "")
+    str_array = price_str.lower().split()
     price_num = int(str_array[0][1:])
     if "week" == str_array[-1]:
         price_num = int(price_num * 30 / 7)
@@ -30,11 +33,17 @@ class Listing:
 
   @property
   def numBedrooms(self):
-    return self.pageProps["listing"]["numBedrooms"]
+    try:
+      return self.pageProps["listing"]["numBedrooms"]
+    except:
+      return "1+ Bed"
 
   @property
   def numBathrooms(self):
-    return self.pageProps["listing"]["numBathrooms"]
+    try:
+      return self.pageProps["listing"]["numBathrooms"]
+    except:
+      return "1+ Bath"
 
   @property
   def canonicalUrl(self):
