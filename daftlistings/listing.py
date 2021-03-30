@@ -62,3 +62,7 @@ class Listing:
     @property
     def publish_date(self):
         return datetime.fromtimestamp(self._result["publishDate"] / 1000)
+
+    @property
+    def shortcode(self):
+        return self._result["daftShortcode"]
