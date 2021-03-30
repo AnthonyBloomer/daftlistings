@@ -3,9 +3,9 @@ import requests
 from typing import Union
 from difflib import SequenceMatcher
 
-from enums import *
-from listing import Listing
-from location import Location
+from .enums import *
+from .listing import Listing
+from .location import Location
 
 
 class Daft:
@@ -25,7 +25,7 @@ class Daft:
         self._ranges = list()
         self._geoFilter = dict()
         self._paging = self._PAGE_0
-    
+
     def _set_range_to(self, name: str, to: str):
         if self._ranges:
             for r in self._ranges:
@@ -45,7 +45,7 @@ class Daft:
         self._ranges.append({"name": name,
                              "from": _from,
                              "to": str(10e8)})
-    
+
     def _add_filter(self, name: str, value: str):
         if self._filters:
             for f in self._filters:
@@ -60,17 +60,17 @@ class Daft:
         if self._geoFilter:
             ids = self._geoFilter["storedShapeIds"]
             if id not in ids:
-               self._geoFilter["storedShapeIds"].append(id)
+                self._geoFilter["storedShapeIds"].append(id)
             return
         self._geoFilter = {"storedShapeIds": [id],
-                           "geoSearchType":"STORED_SHAPES"}
-    
+                           "geoSearchType": "STORED_SHAPES"}
+
     def set_search_type(self, search_type: SearchType):
         self._section = search_type.value
 
     def set_property_type(self, property_type: PropertyType):
         self._add_filter("propertyType", property_type.value)
-    
+
     def set_min_beds(self, min_beds: int):
         self._set_range_from("numBeds", str(min_beds))
 
@@ -93,22 +93,22 @@ class Daft:
 
     def set_min_lease(self, min_lease: int):
         # Measured in months
-        self._set_range_from("leaseLength". str(min_lease))
+        self._set_range_from("leaseLength".str(min_lease))
 
     def set_max_lease(self, max_lease: int):
         # Measured in months
         self._set_range_to("leaseLength", str(max_lease))
-    
+
     def set_min_floor_size(self, min_floor_size: int):
         self._set_range_from("floorSize", str(min_floor_size))
 
     def set_max_floor_size(self, max_floor_size: int):
         self._set_range_to("floorSize", str(max_floor_size))
-    
+
     def set_added_since(self, added_since: AddedSince):
         self._set_range_from("firstPublishDate", added_since.value)
         self._set_range_to("firstPublishDate", "")
-    
+
     def set_min_ber(self, ber: Ber):
         self._set_range_from("ber", str(Ber.value))
 
@@ -136,7 +136,7 @@ class Daft:
             if sm.ratio() > best_score:
                 best_score, best_match = sm.ratio(), loc
         return best_match
-            
+
     def _make_payload(self) -> dict:
         payload = dict()
         if self._section:
@@ -150,18 +150,18 @@ class Daft:
         payload["paging"] = self._paging
         return payload
 
-    def search(self) -> list[Location]:
-        _payload = self._make_payload() 
+    def search(self) -> list[Listing]:
+        _payload = self._make_payload()
         r = requests.post(self._ENDPOINT,
                           headers=self._HEADER,
                           json=_payload)
         listings = r.json()["listings"]
-        results_count = r.json()["paging"]["totalResults"] 
+        results_count = r.json()["paging"]["totalResults"]
         print(f"Got {results_count} results.")
 
         if results_count > self._PAGE_SZ:
             _from = self._PAGE_SZ
-            while(_from < results_count):
+            while _from < results_count:
                 _payload["paging"]["from"] = _from
                 r = requests.post(self._ENDPOINT,
                                   headers=self._HEADER,
@@ -169,3 +169,4 @@ class Daft:
                 listings = listings + r.json()["listings"]
                 _from = _from + self._PAGE_SZ
         return [Listing(l) for l in listings]
+
