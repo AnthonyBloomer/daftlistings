@@ -1,5 +1,9 @@
 # Daftlistings
 
+
+[![Build Status](https://travis-ci.org/AnthonyBloomer/daftlistings.svg?branch=dev)](https://travis-ci.org/AnthonyBloomer/daftlistings)
+[![codecov](https://codecov.io/gh/AnthonyBloomer/daftlistings/branch/master/graph/badge.svg)](https://codecov.io/gh/AnthonyBloomer/daftlistings)
+
 A library that enables programmatic interaction with [Daft.ie](https://daft.ie). Daft.ie has nationwide coverage and contains about 80% of the total available properties in Ireland.
 
 
