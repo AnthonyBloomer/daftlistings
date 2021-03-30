@@ -1,4 +1,6 @@
+from datetime import datetime
 from urllib.parse import urljoin
+
 
 class Listing:
     _BASEURL = "http://www.daft.ie"
@@ -40,3 +42,23 @@ class Listing:
     @property
     def longitude(self):
         return self._result["point"]["coordinates"][0]
+
+    @property
+    def title(self):
+        return self._result["title"]
+
+    @property
+    def abbreviated_price(self):
+        return self._result["abbreviatedPrice"]
+
+    @property
+    def bathrooms(self):
+        return self._result["numBathrooms"]
+
+    @property
+    def bedrooms(self):
+        return self._result["numBedrooms"]
+
+    @property
+    def publish_date(self):
+        return datetime.fromtimestamp(self._result["publishDate"] / 1000)
