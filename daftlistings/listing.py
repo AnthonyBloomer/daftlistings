@@ -52,3 +52,45 @@ class Listing:
     @property
     def shortcode(self):
         return self._result["daftShortcode"]
+
+    @property
+    def sections(self):
+        return self._result["sections"]
+
+    @property
+    def sale_type(self):
+        return self._result['saleType']
+
+    @property
+    def images(self):
+        return self._result["media"]["images"]
+
+    @property
+    def brochure(self):
+        if self.has_brochure:
+            return self._result["media"]["brochure"]
+        else:
+            return None
+
+    @property
+    def total_images(self):
+        return self._result["media"]["totalImages"]
+
+    @property
+    def has_video(self):
+        return self._result["media"]["hasVideo"]
+
+    @property
+    def has_virtual_tour(self):
+        return self._result["media"]["hasVirtualTour"]
+
+    @property
+    def has_brochure(self):
+        return self._result["media"]["hasBrochure"]
+
+    @property
+    def ber(self):
+        return self._result["ber"]["rating"]
+
+    def as_dict(self):
+        return self._result
