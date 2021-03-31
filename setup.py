@@ -8,7 +8,7 @@ from setuptools import setup, Command
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-with open("README.rst", "rb") as f:
+with open("README.md", "rb") as f:
     long_descr = f.read().decode("utf-8")
 
 
