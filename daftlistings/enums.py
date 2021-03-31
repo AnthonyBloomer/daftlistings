@@ -52,7 +52,6 @@ class MiscFilter(enum.Enum):
     KITCHEN_AREA = "kitchen-area"
     MEETING_ROOMS = "meeting-rooms"
     RECEPTION = "reception"
-    PARKING = "parking"
     PHONE_LINES = "phone-lines"
     TOILETS = "toilets"
 
