@@ -23,30 +23,6 @@ To install the development version, run:
 pip install https://github.com/AnthonyBloomer/daftlistings/archive/dev.zip
 ```
 
-## Temporary map visualization function fix
-
-There was a major daft website update which breaks this repo. There is a minimal working subset in temporary-map-visualization-fix folder
-
-``` bash
-cd temporary-map-visualization-fix
-```
-
-Inspect main.py and tweak the searching parameters.
-You can deduct the parameters from https://www.daft.ie/property-for-sale/dublin-city?numBeds_from=2&numBeds_to=5. such as {"numBeds_from": "5"}
-Add the desired parameters to line 9 in temporary-map-visualization-fix/main.py
-
-``` bash
-python main.py
-```
-
-The searched results will be wrote to temporary-map-visualization-fix/result.txt
-
-``` bash
-python map.py
-```
-
-Run map.py to visualize the results.
-
 ## Usage
 
 ``` python
@@ -56,10 +32,87 @@ daft = Daft()
 listings = daft.search()
 
 for listing in listings:
-    print(listing.formalised_address)
+    print(listing.title)
+    print(listing.abbreviated_price)
     print(listing.daft_link)
-    print(listing.price)
+    # ...
 ```
+
+## Examples
+
+Search for apartments for rent in Dublin.
+
+```python
+from daftlistings import Daft, Location, SearchType, PropertyType
+
+daft = Daft()
+daft.set_location(Location.DUBLIN)
+daft.set_search_type(SearchType.RESIDENTIAL_RENT)
+daft.set_property_type(PropertyType.APARTMENT)
+
+listings = daft.search()
+
+for listing in listings:
+    print(listing.title)
+    print(listing.abbreviated_price)
+    print(listing.daft_link)
+```
+
+Search for houses for sale in Dublin between 400 and 500k.
+
+```python
+from daftlistings import Daft, Location, SearchType, PropertyType
+
+daft = Daft()
+daft.set_location(Location.DUBLIN)
+daft.set_search_type(SearchType.RESIDENTIAL_SALE)
+daft.set_property_type(PropertyType.HOUSE)
+daft.set_min_price(400000)
+daft.set_min_price(500000)
+
+listings = daft.search()
+
+for listing in listings:
+    print(listing.title)
+    print(listing.abbreviated_price)
+    print(listing.daft_link)
+```
+
+Search for student accomodation near Dundalk IT.
+
+```python
+from daftlistings import Daft, Location, SearchType
+
+daft = Daft()
+daft.set_location(Location.DUNDALK_INSTITUTE_OF_TECHNOLOGY_LOUTH)
+daft.set_search_type(SearchType.STUDENT_ACCOMMODATION)
+
+listings = daft.search()
+
+for listing in listings:
+    print(listing.title)
+    print(listing.abbreviated_price)
+    print(listing.daft_link)
+```
+
+Search for commercial listings.
+
+```python
+from daftlistings import Daft, SearchType
+
+daft = Daft()
+daft.set_search_type(SearchType.COMMERCIAL_SALE)
+
+listings = daft.search()
+
+for listing in listings:
+    print(listing.title)
+    print(listing.abbreviated_price)
+    print(listing.daft_link)
+    print()
+```
+
+
 
 ## Contributing
 
