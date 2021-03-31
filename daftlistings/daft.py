@@ -66,9 +66,13 @@ class Daft:
                            "geoSearchType": "STORED_SHAPES"}
 
     def set_search_type(self, search_type: SearchType):
+        if not isinstance(search_type, SearchType):
+            raise TypeError("Argument must be enums.SearchType.")
         self._section = search_type.value
 
     def set_property_type(self, property_type: PropertyType):
+        if not isinstance(property_type, PropertyType):
+            raise TypeError("Argument must be enums.PropertyType.")
         self._add_filter("propertyType", property_type.value)
 
     def set_min_beds(self, min_beds: int):
@@ -106,14 +110,20 @@ class Daft:
         self._set_range_to("floorSize", str(max_floor_size))
 
     def set_added_since(self, added_since: AddedSince):
+        if not isinstance(added_since, AddedSince):
+            raise TypeError("Argument must be enums.AddedSince.")
         self._set_range_from("firstPublishDate", added_since.value)
         self._set_range_to("firstPublishDate", "")
 
     def set_min_ber(self, ber: Ber):
-        self._set_range_from("ber", str(Ber.value))
+        if not isinstance(ber, Ber):
+            raise TypeError("Argument must be enums.Ber.")
+        self._set_range_from("ber", str(ber.value))
 
     def set_max_ber(self, ber: Ber):
-        self._set_range_to("ber", str(Ber.value))
+        if not isinstance(ber, Ber):
+            raise TypeError("Argument must be enums.Ber.")
+        self._set_range_to("ber", str(ber.value))
 
     def set_location(self, location: Union[Location, str]):
         if isinstance(location, Location):
@@ -122,7 +132,7 @@ class Daft:
             best_match = self._get_best_match(location)
             self._add_geo_filter(best_match.value["id"])
         else:
-            pass
+            raise TypeError("Argument must be location.Location or string.")
 
     @staticmethod
     def _get_best_match(location: str) -> Location:
