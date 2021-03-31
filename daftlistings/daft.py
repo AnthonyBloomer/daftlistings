@@ -93,7 +93,7 @@ class Daft:
 
     def set_min_lease(self, min_lease: int):
         # Measured in months
-        self._set_range_from("leaseLength".str(min_lease))
+        self._set_range_from("leaseLength", str(min_lease))
 
     def set_max_lease(self, max_lease: int):
         # Measured in months
