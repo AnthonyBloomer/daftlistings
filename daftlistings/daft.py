@@ -1,6 +1,7 @@
 import re
 import requests
-from typing import Union
+from typing import Union, Optional
+from math import ceil
 from difflib import SequenceMatcher
 
 from .enums import *
@@ -160,7 +161,7 @@ class Daft:
         payload["paging"] = self._paging
         return payload
 
-    def search(self) -> list[Listing]:
+    def search(self, max_pages: Optional[int] = None) -> list[Listing]:
         _payload = self._make_payload()
         r = requests.post(self._ENDPOINT,
                           headers=self._HEADER,
@@ -169,14 +170,14 @@ class Daft:
         results_count = r.json()["paging"]["totalResults"]
         print(f"Got {results_count} results.")
 
-        if results_count > self._PAGE_SZ:
-            _from = self._PAGE_SZ
-            while _from < results_count:
-                _payload["paging"]["from"] = _from
-                r = requests.post(self._ENDPOINT,
-                                  headers=self._HEADER,
-                                  json=_payload)
-                listings = listings + r.json()["listings"]
-                _from = _from + self._PAGE_SZ
+        total_pages = ceil(results_count / self._PAGE_SZ)
+        limit = min(max_pages, total_pages) if max_pages else total_pages
+
+        for page in range(1, limit):
+            _payload["paging"]["from"] = page * self._PAGE_SZ
+            r = requests.post(self._ENDPOINT,
+                              headers=self._HEADER,
+                              json=_payload)
+            listings = listings + r.json()["listings"]
         return [Listing(l) for l in listings]
 
