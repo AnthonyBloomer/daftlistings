@@ -13,22 +13,8 @@ class Listing:
         return self._result["id"]
 
     @property
-    def description(self):
-        pass
-
-    @property
     def agent_id(self):
         return self._result["seller"]["sellerId"]
-
-    @property
-    def search_type(self):
-        pass
-
-    @property
-    def price_change(self):
-        pass
-
-    # ...
 
     @property
     def daft_link(self):
