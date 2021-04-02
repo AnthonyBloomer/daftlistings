@@ -1,6 +1,12 @@
 import enum
 
 
+class SortType(enum.Enum):
+    PUBLISH_DATE_DESC = "publishDateDesc"
+    PRICE_ASC = "priceAsc"
+    PRICE_DESC = "priceDesc"
+
+
 class SearchType(enum.Enum):
     RESIDENTIAL_SALE = "residential-for-sale"
     RESIDENTIAL_RENT = "residential-to-rent"
