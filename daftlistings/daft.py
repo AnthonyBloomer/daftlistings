@@ -25,6 +25,7 @@ class Daft:
         self._andFilters = list()
         self._ranges = list()
         self._geoFilter = dict()
+        self._sort_filter = dict()
         self._paging = self._PAGE_0
 
     def _set_range_to(self, name: str, to: str):
@@ -56,6 +57,9 @@ class Daft:
                     return
         self._filters.append({"name": name,
                               "values": [value]})
+
+    def _add_sort_filter(self, sort_filter: str):
+        self._sort_filter = sort_filter
 
     def _add_geo_filter(self, id: str):
         if self._geoFilter:
@@ -149,6 +153,12 @@ class Daft:
         else:
             raise TypeError("Argument must be location.Location or string.")
 
+    def set_sort_type(self, sort_type: SortType):
+        if isinstance(sort_type, SortType):
+            self._add_sort_filter(sort_type.value)
+        else:
+            raise TypeError("Argument must be of type SortType")
+
     @staticmethod
     def _get_best_match(location: str) -> Location:
         regex = re.compile(r"(?ui)\W")  # Remove non-alphanumeric
@@ -172,6 +182,8 @@ class Daft:
             payload["ranges"] = self._ranges
         if self._geoFilter:
             payload["geoFilter"] = self._geoFilter
+        if self._sort_filter:
+            payload["sort"] = self._sort_filter
         payload["paging"] = self._paging
         return payload
 
