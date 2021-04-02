@@ -89,12 +89,26 @@ class Daft:
         self._set_range_to("numBaths", str(max_baths))
 
     def set_min_price(self, min_price: int):
-        self._set_range_from("rentalPrice", str(min_price))
-        self._set_range_from("salePrice", str(min_price))
+        if not self._section:
+            raise ValueError("Must set search_type before price.")
+        if self._section in (SearchType.RESIDENTIAL_RENT.value,
+                             SearchType.COMMERCIAL_RENT.value,
+                             SearchType.SHARING.value,
+                             SearchType.STUDENT_ACCOMMODATION.value):
+            self._set_range_from("rentalPrice", str(min_price))
+        else:
+            self._set_range_from("salePrice", str(min_price))
 
     def set_max_price(self, max_price: int):
-        self._set_range_to("rentalPrice", str(max_price))
-        self._set_range_to("salePrice", str(max_price))
+        if not self._section:
+            raise ValueError("Must set search_type before price.")
+        if self._section in (SearchType.RESIDENTIAL_RENT.value,
+                             SearchType.COMMERCIAL_RENT.value,
+                             SearchType.SHARING.value,
+                             SearchType.STUDENT_ACCOMMODATION.value):
+            self._set_range_to("rentalPrice", str(max_price))
+        else:
+            self._set_range_to("salePrice", str(max_price))
 
     def set_min_lease(self, min_lease: int):
         # Measured in months
