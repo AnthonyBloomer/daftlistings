@@ -3,7 +3,7 @@ import enum
 
 class SearchType(enum.Enum):
     RESIDENTIAL_SALE = "residential-for-sale"
-    RESIDENTIAL_RENT = "residential-for-rent"
+    RESIDENTIAL_RENT = "residential-to-rent"
     COMMERCIAL_SALE = "commercial-for-sale"
     COMMERCIAL_RENT = "commercial-for-rent"
     SHARING = "sharing"
