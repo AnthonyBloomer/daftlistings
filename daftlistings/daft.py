@@ -155,7 +155,7 @@ class Daft:
         if self._filters:
             payload["filters"] = self._filters
         if self._ranges:
-            payload["range"] = self._ranges
+            payload["ranges"] = self._ranges
         if self._geoFilter:
             payload["geoFilter"] = self._geoFilter
         payload["paging"] = self._paging
