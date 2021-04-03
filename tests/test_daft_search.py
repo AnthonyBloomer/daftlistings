@@ -56,7 +56,8 @@ class DaftTest(unittest.TestCase):
         mock_post.assert_called_with(url, headers=headers, json=payload)
 
     def test_listing(self):
-        data = json.loads(open("tests/fixtures/response.json").read())
+        with open("tests/fixtures/response.json") as response_data:
+            data = json.loads(response_data.read())
 
         listing = Listing(data["listings"][0])
 
@@ -84,6 +85,10 @@ class DaftTest(unittest.TestCase):
         )
         self.assertEqual(listing.shortcode, "9162025")
         self.assertEqual(listing.total_images, 26)
+        self.assertEqual(listing.agent_name, "Eoin Grant")
+        self.assertEqual(listing.agent_branch, "Kennedy Wilson")
+        self.assertEqual(listing.agent_seller_type, "BRANDED_AGENT")
+        self.assertEqual(listing.category, "Rent")
 
     def test_any_to_rent(self):
         daft = Daft()
