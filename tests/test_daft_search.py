@@ -10,6 +10,7 @@ from daftlistings import (
     Listing,
     AddedSince,
     MiscFilter,
+    PropertyType,
 )
 
 
