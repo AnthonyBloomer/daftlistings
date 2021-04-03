@@ -38,6 +38,12 @@ for listing in listings:
     # ...
 ```
 
+By default, the Daft search function iterates over each page of results and appends each Listing object to the array that is returned. If you wish to limit the number of results that are returned you can use the `max_pages` argument.
+
+```python
+daft.search(max_pages=1)
+```
+
 ## Examples
 
 Search for apartments for rent in Dublin.
