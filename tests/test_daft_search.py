@@ -112,3 +112,15 @@ class DaftTest(unittest.TestCase):
         daft.set_location(Location.DUBLIN)
         listings = daft.search(max_pages=1)
         self.assertTrue(len(listings) > 0)
+
+    def test_distance(self):
+        daft = Daft()
+        daft.set_location("Dublin City")
+        daft.set_search_type(SearchType.RESIDENTIAL_RENT)
+        daft.set_min_price(1)
+        daft.set_max_price(100000)
+        listings = daft.search(max_pages=1)
+        first, second = listings[0], listings[1]
+        coord = [53.3429, -6.2674]
+        self.assertGreater(first.distance_to(coord), 0)
+        self.assertGreater(first.distance_to(second), 0)
