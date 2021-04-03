@@ -1,6 +1,6 @@
 import re
 import requests
-from typing import Union, Optional
+from typing import Union, Optional, List, Dict
 from math import ceil
 from difflib import SequenceMatcher
 
@@ -172,7 +172,7 @@ class Daft:
                 best_score, best_match = sm.ratio(), loc
         return best_match
 
-    def _make_payload(self) -> dict:
+    def _make_payload(self) -> Dict:
         payload = dict()
         if self._section:
             payload["section"] = self._section
@@ -187,7 +187,7 @@ class Daft:
         payload["paging"] = self._paging
         return payload
 
-    def search(self, max_pages: Optional[int] = None) -> list[Listing]:
+    def search(self, max_pages: Optional[int] = None) -> List[Listing]:
         _payload = self._make_payload()
         r = requests.post(self._ENDPOINT,
                           headers=self._HEADER,
