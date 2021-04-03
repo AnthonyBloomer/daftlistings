@@ -1,6 +1,6 @@
 from datetime import datetime
 from urllib.parse import urljoin
-
+from math import radians, sin, cos, asin, sqrt
 
 class Listing:
     _BASEURL = "http://www.daft.ie"
@@ -95,3 +95,33 @@ class Listing:
 
     def as_dict(self):
         return self._result
+
+    def distance_to(self, location):
+        """
+        This method gives the distance in km as the crow flies from the listing
+        to the given location.
+        :param location: Listing or a coordinate [latitude, longitude] pair.
+        :return: float: distance to location in km.
+        """
+        _earth_radius_km = 6371
+
+        if self.latitude is None or self.longitude is None:
+            raise ValueError("Self missing location data.")
+        if isinstance(location, Listing):
+            if location.latitude is None or location.longitude is None:
+                raise ValueError("Argument missing location data.")
+            dλ = radians(float(self.longitude)) - radians(float(location.longitude))
+            φ1, φ2 = radians(float(self.latitude)), radians(float(location.latitude))
+        elif isinstance(location, list):
+            _latitude, _longitude = location[0], location[1]
+            dλ = radians(float(self.longitude)) - radians(float(_longitude))
+            φ1, φ2 = radians(float(self.latitude)), radians(float(_latitude))
+        else:
+            raise TypeError("Argument should be Listing or a coordinate [latitude, longitude] pair.")
+
+        dσ = 2 * asin(
+            sqrt(
+                sin((φ1 - φ2) / 2) * sin((φ1 - φ2) / 2) + cos(φ1) * cos(φ2) * sin(dλ / 2) * sin(dλ / 2)
+            )
+        )
+        return _earth_radius_km * dσ
