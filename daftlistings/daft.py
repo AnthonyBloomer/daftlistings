@@ -80,6 +80,11 @@ class Daft:
             raise TypeError("Argument must be enums.PropertyType.")
         self._add_filter("propertyType", property_type.value)
 
+    def set_filter(self, misc_filter: MiscFilter):
+        if not isinstance(misc_filter, MiscFilter):
+            raise TypeError("Argument must be enums.MiscFilter.")
+        self._add_filter("facilities", misc_filter.value)
+
     def set_min_beds(self, min_beds: int):
         self._set_range_from("numBeds", str(min_beds))
 
