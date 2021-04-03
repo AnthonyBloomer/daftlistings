@@ -1,8 +1,7 @@
+import json
 from unittest.mock import patch
 import unittest
-from daftlistings import (
-    Daft, Location, SearchType, SortType, Ber, PropertyType
-)
+from daftlistings import Daft, Location, SearchType, SortType, Ber, Listing, PropertyType
 
 
 class DaftTest(unittest.TestCase):
@@ -45,6 +44,36 @@ class DaftTest(unittest.TestCase):
 
         mock_post.assert_called_with(url, headers=headers, json=payload)
 
+    def test_listing(self):
+        data = json.loads(open("tests/fixtures/response.json").read())
+
+        listing = Listing(data["listings"][0])
+
+        self.assertEqual(listing.id, 1443907)
+        self.assertEqual(listing.title, "Capital Dock Residence, Grand Canal, Dublin 2")
+        self.assertEqual(listing.agent_id, 9601)
+        self.assertEqual(listing.bedrooms, "2 & 3 bed")
+        self.assertEqual(listing.abbreviated_price, "€2,970+")
+        self.assertEqual(listing.has_brochure, False)
+        self.assertEqual(
+            listing.daft_link,
+            "http://www.daft.ie/for-rent/capital-dock-residence-grand-canal-dublin-2/1443907",
+        )
+        self.assertEqual(listing.publish_date, "2021-04-03 11:20:22")
+        self.assertEqual(listing.bathrooms, None)
+        self.assertIsNotNone(listing.images)
+        self.assertIsInstance(listing.images, list)
+        self.assertEqual(listing.ber, "A2A3")
+        self.assertEqual(listing.has_video, True)
+        self.assertEqual(listing.has_virtual_tour, False)
+        self.assertEqual(listing.longitude, -6.231118982370589)
+        self.assertEqual(listing.latitude, 53.344905963613485)
+        self.assertEqual(
+            listing.sections, ["Property", "Private Rental Sector", "Apartments"]
+        )
+        self.assertEqual(listing.shortcode, "9162025")
+        self.assertEqual(listing.total_images, 26)
+
     def test_any_to_rent(self):
         daft = Daft()
         daft.set_search_type(SearchType.RESIDENTIAL_RENT)
@@ -65,12 +94,5 @@ class DaftTest(unittest.TestCase):
         daft.set_search_type(SearchType.RESIDENTIAL_RENT)
         daft.set_property_type(PropertyType.STUDIO_APARTMENT)
         daft.set_location(Location.DUBLIN)
-        listings = daft.search(max_pages=1)
-        self.assertTrue(len(listings) > 0)
-
-    def test_houses_to_rent(self):
-        daft = Daft()
-        daft.set_search_type(SearchType.RESIDENTIAL_RENT)
-        daft.set_property_type(PropertyType.HOUSE)
         listings = daft.search(max_pages=1)
         self.assertTrue(len(listings) > 0)
