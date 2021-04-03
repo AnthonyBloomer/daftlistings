@@ -1,0 +1,129 @@
+{
+  "listings": [
+    {
+      "listing": {
+        "id": 1443907,
+        "title": "Capital Dock Residence, Grand Canal, Dublin 2",
+        "seoTitle": "Capital Dock Residence, Grand Canal, Dublin 2",
+        "sections": [
+          "Property",
+          "Private Rental Sector",
+          "Apartments"
+        ],
+        "saleType": [
+          "To Let"
+        ],
+        "featuredLevel": "FEATURED",
+        "publishDate": 1617448822000,
+        "price": "From €2,970 per month",
+        "abbreviatedPrice": "€2,970+",
+        "numBedrooms": "2 & 3 bed",
+        "propertyType": "Apartments",
+        "daftShortcode": "9162025",
+        "seller": {
+          "sellerId": 9601,
+          "name": "Eoin Grant",
+          "phone": "01 9073777",
+          "profileImage": "https://photos.cdn.dsch.ie/OTBiODM0NzlkOGVjZTI5YWExNGUzNjU1Y2YxZjMyYzO2DxGX7FvOQSNowc_5CF3AaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1L2YvYy9mYzE5OThjYjUxOGRkZDEwYzA5MjFmZmQ5MzE1ZDZiNi5qcGd8fHx8fHwxMDB4MTAwfHx8fA==",
+          "branch": "Kennedy Wilson",
+          "standardLogo": "https://photos.cdn.dsch.ie/OTg5ZWFlNDA5NGE1ZTkzNTRiODNjOGRlOGUyMmViYzRUjUGKEhEsOySno43QKj1iaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzkvOC85ODU1OWU4NGEzZTc0ZmEwOWI1MTJiMDRhODM0ODJkY19zdGFuZGFyZC5qcGd8fDgwfHx8fHx8fHw=",
+          "squareLogo": "https://photos.cdn.dsch.ie/NmY5MTZmYTQ3MGQzNWUzYjg5NjIyNWFhNmZiMDFkMzn_8NzyAUxknT0ajfc210HmaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzEvMS8xMTg1OGEzZGQ5OTkzOTQzZDViN2NlOTA4MWQxODBmNi5qcGd8fHwxMjB8fHx8fHx8",
+          "backgroundColour": "#054573",
+          "licenceNumber": "Exempt - Property Owner",
+          "sellerType": "BRANDED_AGENT",
+          "showContactForm": true
+        },
+        "media": {
+          "images": [
+            {
+              "size720x480": "https://photos.cdn.dsch.ie/Y2U0ODU1NzAzMDU1NTlmNDkwZmU1NmJjZjUxMGJmNGRFCbUGACNKMDIAVXythXh5aHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1L2EvZC9hZDYwMTEwYTBkMTlkMDM2NTFlNGVmZDEzZDc0YzM2Ny5qcGd8fHx8fHw3MjB4NDgwfHx8fA==",
+              "size600x600": "https://photos.cdn.dsch.ie/MTE4MGUxZDkwYjkxNjgzMmU1NDVmOGMxNDc0N2RlNmas7cIEq57koegfxST2uyjPaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1L2EvZC9hZDYwMTEwYTBkMTlkMDM2NTFlNGVmZDEzZDc0YzM2Ny5qcGd8fHw2MDB8fHx8fHx8",
+              "size400x300": "https://photos.cdn.dsch.ie/ZThjZmFhODBhZjRhODgzMmNkYzFiZGUyZmU1MGQ0NjnNc9jboWcC9usX7qAEUrbwaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1L2EvZC9hZDYwMTEwYTBkMTlkMDM2NTFlNGVmZDEzZDc0YzM2Ny5qcGd8fHx8fHw0MDB4MzAwfHx8fA==",
+              "size360x240": "https://photos.cdn.dsch.ie/ZGJiODU3MGJlZGY2NWQ3NzBjNzEzYmNlNGE2NzYxYjB9ITssoKbc9shUyPNPxRS3aHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1L2EvZC9hZDYwMTEwYTBkMTlkMDM2NTFlNGVmZDEzZDc0YzM2Ny5qcGd8fHx8fHwzNjB4MjQwfHx8fA==",
+              "size300x200": "https://photos.cdn.dsch.ie/MDU2MTNlODg3ZTBjY2VmNjBhMmYwMGE2NDUyNjQ0OWM27gJftORH5xHpOLLgKZe8aHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1L2EvZC9hZDYwMTEwYTBkMTlkMDM2NTFlNGVmZDEzZDc0YzM2Ny5qcGd8fHx8fHwzMDB4MjAwfHx8fA==",
+              "size320x280": "https://photos.cdn.dsch.ie/ZDg1MmFkYTRhZDlkZmNiMTkxN2Y5NjY1NjQ2NTY3MDlzzS9qwKfbOYOIFaN5MZ5EaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1L2EvZC9hZDYwMTEwYTBkMTlkMDM2NTFlNGVmZDEzZDc0YzM2Ny5qcGd8fHx8fHwzMjB4MjgwfHx8fA==",
+              "size72x52": "https://photos.cdn.dsch.ie/ZWMzYWI4MWJmZDBiNTMzZThhNGIxOTRiYzY0ODBhMzdtQeNdMz4ye-PxDpIRhKc0aHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1L2EvZC9hZDYwMTEwYTBkMTlkMDM2NTFlNGVmZDEzZDc0YzM2Ny5qcGd8fHx8fHw3Mng1Mnx8fHw=",
+              "size680x392": "https://photos.cdn.dsch.ie/Mzg5NTRiNDc1MzE0NTNiNWNiNzFkMGM4MmNkM2IzZTatCYl81p-4S6P8YIj_3VPMaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1L2EvZC9hZDYwMTEwYTBkMTlkMDM2NTFlNGVmZDEzZDc0YzM2Ny5qcGd8fHx8fHw2ODB4MzkyfHx8fA=="
+            },
+            {
+              "size720x480": "https://photos.cdn.dsch.ie/NjgxYTcyMzc3MzNlNjc1YTMxZjI0Njg0OGY2NzQ1ZWSfCzWizvJR7nm0a-z1xwGwaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzEvYi8xYmNmMjhjN2Q5MmE0YjY3ZTIyODMzZmU5NWNlOGQ0Zi5qcGd8fHx8fHw3MjB4NDgwfHx8fA==",
+              "size600x600": "https://photos.cdn.dsch.ie/M2FlYjg3YzBhNGM1MmZjZmZkZDkwMGU3ZGIxY2UyMzNKkQ0pJN-s96nok63wXANPaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzEvYi8xYmNmMjhjN2Q5MmE0YjY3ZTIyODMzZmU5NWNlOGQ0Zi5qcGd8fHw2MDB8fHx8fHx8",
+              "size400x300": "https://photos.cdn.dsch.ie/ZTU0YzBmOGExOGJmMTcwNTIxOGRjOTEwZmQ3ZWJjYjiuNRIntdrM_C0xJMDlM14OaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzEvYi8xYmNmMjhjN2Q5MmE0YjY3ZTIyODMzZmU5NWNlOGQ0Zi5qcGd8fHx8fHw0MDB4MzAwfHx8fA==",
+              "size360x240": "https://photos.cdn.dsch.ie/ZTBkOTJmY2E0ZDAxYTFmNWFlY2I0MDI4Zjg0ZDhmYWaeIKDL4WPL3nylYnOpFDd1aHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzEvYi8xYmNmMjhjN2Q5MmE0YjY3ZTIyODMzZmU5NWNlOGQ0Zi5qcGd8fHx8fHwzNjB4MjQwfHx8fA==",
+              "size300x200": "https://photos.cdn.dsch.ie/YzRkYjQ0MzI0YWQyMzYzYzgzOWNiYWFkYmFkNzc3ZDOjUzaUanK5KNsSRGqRrj4paHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzEvYi8xYmNmMjhjN2Q5MmE0YjY3ZTIyODMzZmU5NWNlOGQ0Zi5qcGd8fHx8fHwzMDB4MjAwfHx8fA==",
+              "size320x280": "https://photos.cdn.dsch.ie/MmQxYjJiZGY0M2IxMWM4N2ZmZDEwZWM0YWE3YjkwMWLz4rBy5hl1eooVMSQOMaO7aHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzEvYi8xYmNmMjhjN2Q5MmE0YjY3ZTIyODMzZmU5NWNlOGQ0Zi5qcGd8fHx8fHwzMjB4MjgwfHx8fA==",
+              "size72x52": "https://photos.cdn.dsch.ie/ZWEyNDQxZDBhZmI2YWE1YzZiOTA4NzA1YzZlYjY0OTQact4nk8BvAekKQUQFq75PaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzEvYi8xYmNmMjhjN2Q5MmE0YjY3ZTIyODMzZmU5NWNlOGQ0Zi5qcGd8fHx8fHw3Mng1Mnx8fHw=",
+              "size680x392": "https://photos.cdn.dsch.ie/ZTQzNjAwZmIxYTMzODU3YzU0NmE2YTc1MDc3YTExNjmK-MZk-APz9B8WQ2EfSpYKaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzEvYi8xYmNmMjhjN2Q5MmE0YjY3ZTIyODMzZmU5NWNlOGQ0Zi5qcGd8fHx8fHw2ODB4MzkyfHx8fA=="
+            },
+            {
+              "size720x480": "https://photos.cdn.dsch.ie/MTNiYjE0ZDdmOWQ0YjRhYmUxNmM1Yjc0YmZhZThhZTZB4yCpveTiTmDYSqierTMfaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1L2QvYi9kYmU0NzUxMDFjMzkyMWY5ZmU5YWJkODY5NDA5ZjFlZi5qcGd8fHx8fHw3MjB4NDgwfHx8fA==",
+              "size600x600": "https://photos.cdn.dsch.ie/OTcyNmFhMmU3NDNiMTgwY2RhNTkwMjVlMDhhYWRhODf5xY_DQiW2B-fd2xIemhspaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1L2QvYi9kYmU0NzUxMDFjMzkyMWY5ZmU5YWJkODY5NDA5ZjFlZi5qcGd8fHw2MDB8fHx8fHx8",
+              "size400x300": "https://photos.cdn.dsch.ie/OTNjNzk2MjU5YWQwMmZhZGFhNmE2ZDJlNTkzZDVmNGUV2_bsn2X4BfNrejue-e6_aHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1L2QvYi9kYmU0NzUxMDFjMzkyMWY5ZmU5YWJkODY5NDA5ZjFlZi5qcGd8fHx8fHw0MDB4MzAwfHx8fA==",
+              "size360x240": "https://photos.cdn.dsch.ie/ZDg0ZGFjMDViMTAyMTcxMWYwZjEyNjNmYTM5OWY3MDjnB7-54BAX3jr2crmvu2KhaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1L2QvYi9kYmU0NzUxMDFjMzkyMWY5ZmU5YWJkODY5NDA5ZjFlZi5qcGd8fHx8fHwzNjB4MjQwfHx8fA==",
+              "size300x200": "https://photos.cdn.dsch.ie/OTQyYTI2ZTY3ZWI1YzVjOGI2Mzg0NjI3YTc3ZmYwYzS4M7wfZHNjiD_-jMM21wKXaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1L2QvYi9kYmU0NzUxMDFjMzkyMWY5ZmU5YWJkODY5NDA5ZjFlZi5qcGd8fHx8fHwzMDB4MjAwfHx8fA==",
+              "size320x280": "https://photos.cdn.dsch.ie/NGQyOTk0NTU5NTYzZDk5NzRjNjA0Y2Q3NDdmODIyMGViMR79o788dkFes6IHxQvHaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1L2QvYi9kYmU0NzUxMDFjMzkyMWY5ZmU5YWJkODY5NDA5ZjFlZi5qcGd8fHx8fHwzMjB4MjgwfHx8fA==",
+              "size72x52": "https://photos.cdn.dsch.ie/NjYxMDYxODdkODY3YThiYmExOWU0ZTU4OGVmMTJjZWUTxxEJKpFtNf9St_sQqVPzaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1L2QvYi9kYmU0NzUxMDFjMzkyMWY5ZmU5YWJkODY5NDA5ZjFlZi5qcGd8fHx8fHw3Mng1Mnx8fHw=",
+              "size680x392": "https://photos.cdn.dsch.ie/ZjI4YjNhNzUyMWZlZDk1NzdhNDQ3ZWI5MDExNGE2MDQMX1SBlDgXsdCkBMqp_00zaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1L2QvYi9kYmU0NzUxMDFjMzkyMWY5ZmU5YWJkODY5NDA5ZjFlZi5qcGd8fHx8fHw2ODB4MzkyfHx8fA=="
+            },
+            {
+              "size720x480": "https://photos.cdn.dsch.ie/MWRhYjI0ODUwNzlhYzBkMWI4MDdkMTkxYTNiYzQ3Y2Z81rONsXs7cTUN8ScQaySKaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzQvOC80ODA0NTliNGZlZmU0ZmFiODJlNjM3MDI3MmNiMzllNy5qcGd8fHx8fHw3MjB4NDgwfHx8fA==",
+              "size600x600": "https://photos.cdn.dsch.ie/ZDY2OWI0MzJhM2NiNDQ2Y2VhMWY1ZWY4YTFjODUxZGPQfQMGvdAqn6NbphIXtPjMaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzQvOC80ODA0NTliNGZlZmU0ZmFiODJlNjM3MDI3MmNiMzllNy5qcGd8fHw2MDB8fHx8fHx8",
+              "size400x300": "https://photos.cdn.dsch.ie/YjAxZTM3OTBjNGM5Yzk2ZTkyOTIyZDczOTc0NWY0YThUDhP3Im79v-wGXeHfWNUgaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzQvOC80ODA0NTliNGZlZmU0ZmFiODJlNjM3MDI3MmNiMzllNy5qcGd8fHx8fHw0MDB4MzAwfHx8fA==",
+              "size360x240": "https://photos.cdn.dsch.ie/Y2Q3MWZlYzVhZjhhYzA5ODQ3MDRmZjNhNDZmYmFmMzkkDi7unlXhQULnB8jjjal5aHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzQvOC80ODA0NTliNGZlZmU0ZmFiODJlNjM3MDI3MmNiMzllNy5qcGd8fHx8fHwzNjB4MjQwfHx8fA==",
+              "size300x200": "https://photos.cdn.dsch.ie/ODQ2NTY4YzNhYjIwMGRkZDY4NDZhNWNmMDMyZTE4ZDcV4ud_4Iu0pIdy3IStGUKPaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzQvOC80ODA0NTliNGZlZmU0ZmFiODJlNjM3MDI3MmNiMzllNy5qcGd8fHx8fHwzMDB4MjAwfHx8fA==",
+              "size320x280": "https://photos.cdn.dsch.ie/MTE0ZDk2MTMwYTNjMTY1YTE5YWM2MmFjYWU1NGQ3ZDhUgFNGLvu_RPdX6AvIZww8aHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzQvOC80ODA0NTliNGZlZmU0ZmFiODJlNjM3MDI3MmNiMzllNy5qcGd8fHx8fHwzMjB4MjgwfHx8fA==",
+              "size72x52": "https://photos.cdn.dsch.ie/ZTM5MmE0ZTQ0OWYxOGZiZmM2Njk0ZGM3OGQyN2M0YzLXJpRo3lhU7kE2DLF1-QjnaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzQvOC80ODA0NTliNGZlZmU0ZmFiODJlNjM3MDI3MmNiMzllNy5qcGd8fHx8fHw3Mng1Mnx8fHw=",
+              "size680x392": "https://photos.cdn.dsch.ie/MDI1MjBlMmY4Y2U4NTY4MGFhMjBmZDMyZTQxNDU2ZTR2F911VL6dq2MzNieHx-kzaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzQvOC80ODA0NTliNGZlZmU0ZmFiODJlNjM3MDI3MmNiMzllNy5qcGd8fHx8fHw2ODB4MzkyfHx8fA=="
+            }
+          ],
+          "totalImages": 26,
+          "hasVideo": true,
+          "hasVirtualTour": false,
+          "hasBrochure": false
+        },
+        "ber": {
+          "rating": "A2A3"
+        },
+        "point": {
+          "type": "Point",
+          "coordinates": [
+            -6.231118982370589,
+            53.344905963613485
+          ]
+        },
+        "seoFriendlyPath": "/for-rent/capital-dock-residence-grand-canal-dublin-2/1443907",
+        "prs": {
+          "totalUnitTypes": 5,
+          "tagLine": "Waterfront living at its best",
+          "location": "Capital Dock Residence is part of a unique urban quarter that captures the culture, history and cosmopolitan pulse of Dublin. You can move freely on foot, by bike or by car and get to know the city at a pace that suits you.\r\n\r\nThe Georgian Quarter is accessible in 15 minutes, beginning with Merrion Square and St. Stephen’s Green. Neighbouring villages like Sandymount, three kilometres away, give you a stunning beach for morning jogs and a choice of great eateries.\r\n\r\nIf you like staying local, enjoy your morning espresso at The Art of Coffee, grab healthy food on the go with Freshii and find ingredients for dinner at Fresh The Good Food Market. Even catch up with friends over brunch or a late bite at BrewDog. Each amenity is on the grounds of Capital Dock.\r\n\r\nThree Locks Square is where you can socialise with neighbours at regular events. If you’re up for some water sports, try windsurfing or paddleboarding with Surfdock next door.",
+          "aboutDevelopment": "Founded in 1977, Kennedy Wilson is a global real estate investment company.  We own, operate and invest in real estate both on our own and through our investment management platform.  We focus on residential for rent, also called private rented sector (PRS) and office properties located in Ireland, the UK and Western US.  Kennedy Wilson is significantly invested in the Irish property market, operating and developing a portfolio of high-quality commercial assets and stylishly-finished apartments to rent in prime Dublin locations."
+        },
+        "pageBranding": {
+          "standardLogo": "https://photos.cdn.dsch.ie/OTg5ZWFlNDA5NGE1ZTkzNTRiODNjOGRlOGUyMmViYzRUjUGKEhEsOySno43QKj1iaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzkvOC85ODU1OWU4NGEzZTc0ZmEwOWI1MTJiMDRhODM0ODJkY19zdGFuZGFyZC5qcGd8fDgwfHx8fHx8fHw=",
+          "squareLogo": "https://photos.cdn.dsch.ie/NmY5MTZmYTQ3MGQzNWUzYjg5NjIyNWFhNmZiMDFkMzn_8NzyAUxknT0ajfc210HmaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzEvMS8xMTg1OGEzZGQ5OTkzOTQzZDViN2NlOTA4MWQxODBmNi5qcGd8fHwxMjB8fHx8fHx8",
+          "backgroundColour": "#054573",
+          "squareLogos": [
+            "https://photos.cdn.dsch.ie/NmY5MTZmYTQ3MGQzNWUzYjg5NjIyNWFhNmZiMDFkMzn_8NzyAUxknT0ajfc210HmaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzEvMS8xMTg1OGEzZGQ5OTkzOTQzZDViN2NlOTA4MWQxODBmNi5qcGd8fHwxMjB8fHx8fHx8"
+          ],
+          "rectangleLogo": "https://photos.cdn.dsch.ie/OTg5ZWFlNDA5NGE1ZTkzNTRiODNjOGRlOGUyMmViYzRUjUGKEhEsOySno43QKj1iaHR0cHM6Ly9zMy1ldS13ZXN0LTEuYW1hem9uYXdzLmNvbS9tZWRpYW1hc3Rlci1zM2V1LzkvOC85ODU1OWU4NGEzZTc0ZmEwOWI1MTJiMDRhODM0ODJkY19zdGFuZGFyZC5qcGd8fDgwfHx8fHx8fHw="
+        },
+        "category": "Rent",
+        "state": "PUBLISHED"
+      },
+      "savedAd": false
+    }
+  ],
+  "showcaseListings": [],
+  "paging": {
+    "totalPages": 39464,
+    "currentPage": 1,
+    "nextFrom": 1,
+    "previousFrom": 0,
+    "displayingFrom": 1,
+    "displayingTo": 1,
+    "totalResults": 39464,
+    "pageSize": 1
+  },
+  "mapView": false,
+  "savedSearch": false
+}
