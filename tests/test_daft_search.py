@@ -59,7 +59,7 @@ class DaftTest(unittest.TestCase):
             listing.daft_link,
             "http://www.daft.ie/for-rent/capital-dock-residence-grand-canal-dublin-2/1443907",
         )
-        self.assertEqual(listing.publish_date, "2021-04-03 12:20:22")
+        self.assertEqual(listing.publish_date, "2021-04-03 11:20:22")
         self.assertEqual(listing.bathrooms, None)
         self.assertIsNotNone(listing.images)
         self.assertIsInstance(listing.images, list)
