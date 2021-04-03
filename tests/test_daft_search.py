@@ -1,6 +1,8 @@
 from unittest.mock import patch
 import unittest
-from daftlistings import Daft, Location, SearchType, SortType, Ber
+from daftlistings import (
+    Daft, Location, SearchType, SortType, Ber, PropertyType
+)
 
 
 class DaftTest(unittest.TestCase):
