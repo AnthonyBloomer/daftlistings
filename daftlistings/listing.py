@@ -39,7 +39,8 @@ class Listing:
 
     @property
     def bathrooms(self):
-        return self._result["numBathrooms"]
+        if "numBathrooms" in self._result:
+            return self._result["numBathrooms"]
 
     @property
     def bedrooms(self):
@@ -47,7 +48,7 @@ class Listing:
 
     @property
     def publish_date(self):
-        return datetime.fromtimestamp(self._result["publishDate"] / 1000)
+        return str(datetime.utcfromtimestamp(self._result["publishDate"] / 1000))
 
     @property
     def shortcode(self):
