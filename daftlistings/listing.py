@@ -17,9 +17,20 @@ class Listing:
         return self._result["seller"]["sellerId"]
 
     @property
+    def agent_name(self):
+        return self._result["seller"]["name"]
+
+    @property
+    def agent_branch(self):
+        return self._result["seller"]["branch"]
+
+    @property
+    def agent_seller_type(self):
+        return self._result["seller"]["sellerType"]
+
+    @property
     def daft_link(self):
-        return urljoin(self._BASEURL,
-                       self._result["seoFriendlyPath"])
+        return urljoin(self._BASEURL, self._result["seoFriendlyPath"])
 
     @property
     def latitude(self):
@@ -60,7 +71,7 @@ class Listing:
 
     @property
     def sale_type(self):
-        return self._result['saleType']
+        return self._result["saleType"]
 
     @property
     def images(self):
@@ -92,6 +103,10 @@ class Listing:
     @property
     def ber(self):
         return self._result["ber"]["rating"]
+
+    @property
+    def category(self):
+        return self._result["category"]
 
     def as_dict(self):
         return self._result
