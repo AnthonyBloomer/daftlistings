@@ -1,6 +1,5 @@
 import pandas as pd
-from daftlistings import Daft, Location, SearchType, PropertyType, SortType
-from map_visualization import MapVisualization
+from daftlistings import Daft, Location, SearchType, PropertyType, SortType, MapVisualization
 
  
 daft = Daft()
