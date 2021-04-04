@@ -62,6 +62,36 @@ class MiscFilter(enum.Enum):
     TOILETS = "toilets"
 
 
+class Facility(enum.Enum):
+    ALARM = "alarm"
+    CENTRAL_HEATING_GAS = "gas-fired-central-heating"
+    CENTRAL_HEATING_OIL = "oil-fired-central-heating"
+    PARKING = "parking"
+    WHEELCHAIR_ACCESS = "wheelchair-access"
+    WIRED_FOR_CABLE_TELEVISION = "wired-for-cable-television"
+    CABLE_TELEVISION = "cable-television"
+    DISHWASHER = "dishwasher"
+    GARDEN_PATIO_BALCONY = "garden-patio-balcony"
+    CENTRAL_HEATING = "central-heating"
+    INTERNET = "internet"
+    MICROWAVE = "microwave"
+    PETS_ALLOWED = "pets-allowed"
+    SMOKING = "smoking"
+    SERVICED_PROPERTY = "serviced-property"
+    DRYER = "dryer"
+    WASHING_MACHINE = "washing-machine"
+    ENSUITE = "ensuite"
+    CAT_5_CABLING = "cat-5-cabling"
+    CAT_6_CABLING = "cat-6-data-cabling"
+    KITCHEN_AREA = "kitchen-area"
+    MEETING_ROOMS = "meeting-rooms"
+    RECEPTION = "reception"
+    PHONE_LINES = "phone-lines"
+    TOILETS = "toilets"
+
+
+
+
 class AddedSince(enum.Enum):
     DAYS_3 = "now-3d/d"
     DAYS_7 = "now-7d/d"
