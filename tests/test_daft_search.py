@@ -89,6 +89,7 @@ class DaftTest(unittest.TestCase):
         self.assertEqual(listing.agent_branch, "Kennedy Wilson")
         self.assertEqual(listing.agent_seller_type, "BRANDED_AGENT")
         self.assertEqual(listing.category, "Rent")
+        self.assertEqual(listing.monthly_price, 2970)
 
     def test_any_to_rent(self):
         daft = Daft()
