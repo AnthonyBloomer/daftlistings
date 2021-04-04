@@ -62,34 +62,42 @@ class MiscFilter(enum.Enum):
     TOILETS = "toilets"
 
 
-class Facility(enum.Enum):
-    ALARM = "alarm"
-    CENTRAL_HEATING_GAS = "gas-fired-central-heating"
-    CENTRAL_HEATING_OIL = "oil-fired-central-heating"
-    PARKING = "parking"
-    WHEELCHAIR_ACCESS = "wheelchair-access"
-    WIRED_FOR_CABLE_TELEVISION = "wired-for-cable-television"
-    CABLE_TELEVISION = "cable-television"
-    DISHWASHER = "dishwasher"
-    GARDEN_PATIO_BALCONY = "garden-patio-balcony"
-    CENTRAL_HEATING = "central-heating"
-    INTERNET = "internet"
-    MICROWAVE = "microwave"
-    PETS_ALLOWED = "pets-allowed"
-    SMOKING = "smoking"
-    SERVICED_PROPERTY = "serviced-property"
-    DRYER = "dryer"
-    WASHING_MACHINE = "washing-machine"
-    ENSUITE = "ensuite"
-    CAT_5_CABLING = "cat-5-cabling"
-    CAT_6_CABLING = "cat-6-data-cabling"
-    KITCHEN_AREA = "kitchen-area"
-    MEETING_ROOMS = "meeting-rooms"
-    RECEPTION = "reception"
-    PHONE_LINES = "phone-lines"
-    TOILETS = "toilets"
+class FacilityEnum(enum.Enum):
+    @property
+    def post_value(self):
+        return self.value[0]
+    
+    @property
+    def valid_types(self):
+        return self.value[1]
 
 
+class Facility(FacilityEnum):
+    ALARM = ("alarm", [SearchType.RESIDENTIAL_SALE, SearchType.RESIDENTIAL_RENT, SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
+    CENTRAL_HEATING_GAS = ("gas-fired-central-heating", [SearchType.RESIDENTIAL_SALE])
+    CENTRAL_HEATING_OIL = ("oil-fired-central-heating", [SearchType.RESIDENTIAL_SALE])
+    PARKING = ("parking", [SearchType.RESIDENTIAL_SALE, SearchType.RESIDENTIAL_RENT, SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
+    WHEELCHAIR_ACCESS = ("wheelchair-access", [SearchType.RESIDENTIAL_SALE, SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
+    WIRED_FOR_CABLE_TELEVISION = ("wired-for-cable-television", [SearchType.RESIDENTIAL_SALE])
+    CABLE_TELEVISION = ("cable-television", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])    
+    DISHWASHER = ("dishwasher", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
+    GARDEN_PATIO_BALCONY = ("garden-patio-balcony", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
+    CENTRAL_HEATING = ("central-heating", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
+    INTERNET = ("internet", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
+    MICROWAVE = ("microwave", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
+    PETS_ALLOWED = ("pets-allowed", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
+    SMOKING = ("smoking", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
+    SERVICED_PROPERTY = ("serviced-property", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
+    DRYER = ("dryer", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
+    WASHING_MACHINE = ("washing-machine", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
+    ENSUITE = ("ensuite", [SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
+    CAT_5_CABLING = ("cat-5-cabling", [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT])
+    CAT_6_CABLING = ("cat-6-data-cabling", [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT])
+    KITCHEN_AREA = ("kitchen-area", [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT])
+    MEETING_ROOMS = ("meeting-rooms", [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT])
+    RECEPTION = ("reception", [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT])
+    PHONE_LINES = ("phone-lines", [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT])
+    TOILETS = ("toilets", [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT])
 
 
 class AddedSince(enum.Enum):
