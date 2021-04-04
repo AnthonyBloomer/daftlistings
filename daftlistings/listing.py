@@ -124,6 +124,24 @@ class Listing:
 
     def as_dict(self):
         return self._result
+    
+    def as_dict_for_mapping(self):
+        mapping_dict = dict()
+        mapping_dict["monthly_price"] = self.monthly_price
+        mapping_dict["latitude"] = self.latitude
+        mapping_dict["longitude"] = self.longitude
+        try:
+            mapping_dict["bedrooms"] = self.bedrooms
+        except:
+            mapping_dict["bedrooms"] = "1+ bed"
+        try:
+            mapping_dict["bathrooms"] = self.bathrooms
+        except:
+            mapping_dict["bathrooms"] = "1+ bath"
+        if mapping_dict["bathrooms"] is None:
+            mapping_dict["bathrooms"] = "1+ bath"
+        mapping_dict["daft_link"] = self.daft_link
+        return mapping_dict
 
     def distance_to(self, location):
         """
