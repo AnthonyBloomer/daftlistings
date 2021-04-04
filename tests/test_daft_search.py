@@ -62,7 +62,8 @@ class DaftTest(unittest.TestCase):
         listing = Listing(data["listings"][0])
 
         self.assertEqual(listing.id, 1443907)
-        self.assertEqual(listing.title, "Capital Dock Residence, Grand Canal, Dublin 2")
+        self.assertEqual(
+            listing.title, "Capital Dock Residence, Grand Canal, Dublin 2")
         self.assertEqual(listing.agent_id, 9601)
         self.assertEqual(listing.bedrooms, "2 & 3 bed")
         self.assertEqual(listing.abbreviated_price, "€2,970+")
@@ -81,7 +82,8 @@ class DaftTest(unittest.TestCase):
         self.assertEqual(listing.longitude, -6.231118982370589)
         self.assertEqual(listing.latitude, 53.344905963613485)
         self.assertEqual(
-            listing.sections, ["Property", "Private Rental Sector", "Apartments"]
+            listing.sections, ["Property",
+                               "Private Rental Sector", "Apartments"]
         )
         self.assertEqual(listing.shortcode, "9162025")
         self.assertEqual(listing.total_images, 26)
@@ -90,6 +92,10 @@ class DaftTest(unittest.TestCase):
         self.assertEqual(listing.agent_seller_type, "BRANDED_AGENT")
         self.assertEqual(listing.category, "Rent")
         self.assertEqual(listing.monthly_price, 2970)
+
+        as_dict_for_mapping_example = {'monthly_price': 2970, 'latitude': 53.344905963613485, 'longitude': -6.231118982370589, 'bedrooms': '2 & 3 bed',
+                                       'bathrooms': '1+ bath', 'daft_link': 'http://www.daft.ie/for-rent/capital-dock-residence-grand-canal-dublin-2/1443907'}
+        self.assertEqual(listing.as_dict_for_mapping(), as_dict_for_mapping_example)
 
     def test_any_to_rent(self):
         daft = Daft()

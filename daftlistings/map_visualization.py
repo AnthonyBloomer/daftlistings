@@ -33,7 +33,7 @@ class MapVisualization:
 
     def generate_color_bins(self):
         """Generate color bins based on the price at 1%, 4%, 14% ... percentiles"""
-        prices = self.df.price
+        prices = self.df.monthly_price
         percentiles = [0.01, 0.04, 0.14, 0.30, 0.56, 0.70, 0.84, 1.00]
         return [prices.quantile(p) for p in percentiles]
 
@@ -57,8 +57,8 @@ class MapVisualization:
 
     def add_markers(self):
         for index, row in self.df.iterrows():
-            lat, lon, price = row["latitude"], row["longitude"], row["price"]
-            beds, baths = row["num_bedrooms"], row["num_bathrooms"]
+            lat, lon, price = row["latitude"], row["longitude"], row["monthly_price"]
+            beds, baths = row["bedrooms"], row["bathrooms"]
             popup_name = (
                 "<p>"
                 + "Bedrooms: "
@@ -80,7 +80,7 @@ class MapVisualization:
 
     def add_colorbar(self):
         """add a colorbar at the top right corner of the map"""
-        vmin, vmax = self.df["price"].quantile(0.005), self.df["price"].max()
+        vmin, vmax = self.df["monthly_price"].quantile(0.005), self.df["monthly_price"].max()
         # set vmin to price.min() will screw the colorbar scale
         colormap = cm.StepColormap(
             self.color_codes, index=self.index, vmin=vmin, vmax=vmax
