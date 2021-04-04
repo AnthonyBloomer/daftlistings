@@ -45,6 +45,17 @@ class Listing:
         return self._result["title"]
 
     @property
+    def monthly_price(self):
+        price_str = self._result["price"]
+        postionOfEuroSign = price_str.find("€")
+        price_str = price_str[postionOfEuroSign:].replace(",", "")
+        str_array = price_str.lower().split()
+        price_num = int(str_array[0][1:])
+        if "week" == str_array[-1]:
+            price_num = int(price_num * 30 / 7)
+        return price_num
+
+    @property
     def abbreviated_price(self):
         return self._result["abbreviatedPrice"]
 
