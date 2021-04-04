@@ -145,7 +145,7 @@ for listing in listings:
 ```
 Search rental properties in Dublin with monthly rent lower than 1500 euros and visualize it on a map
 
-```
+```python
 import pandas as pd
 from daftlistings import Daft, Location, SearchType, PropertyType, SortType, MapVisualization
 
