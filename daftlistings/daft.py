@@ -173,7 +173,7 @@ class Daft:
                 else:
                     search_type = [(name,member) for name, member in SearchType.__members__.items() if member.value == self._section][0]
                     compatible_facilities = [f.name for f in Facility if search_type[1] in f.valid_types]
-                    raise TypeError(f"Facility {facility.name} incompatible with SearchType {search_type[0]}\nThe following facilities are compatible with this SearchType:\n{compatible_facilities}")
+                    raise ValueError(f"Facility {facility.name} incompatible with SearchType {search_type[0]}\nThe following facilities are compatible with this SearchType:\n{compatible_facilities}")
             else:
                 raise TypeError("Argument must be of type Facility")
            
