@@ -10,17 +10,43 @@ from daftlistings import (
     Listing,
     AddedSince,
     PropertyType,
-    Facility
+    Facility,
 )
 
 
 class DaftTest(unittest.TestCase):
     @patch("requests.post")
-    def test_search(self, mock_post):
+    def test_search_basic(self, mock_post):
+        url = "https://search-gateway.dsch.ie/v1/listings"
+        payload = {
+            "paging": {"from": "0", "pagesize": "50"},
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "brand": "daft",
+            "platform": "web",
+        }
+
+        daft = Daft()
+        daft.search()
+        mock_post.assert_called_with(url, headers=headers, json=payload)
+
+    @patch("requests.post")
+    def test_search_properties_for_sale(self, mock_post):
         url = "https://search-gateway.dsch.ie/v1/listings"
         payload = {
             "section": "residential-for-sale",
-            "andFilters": [{"name":"facilities", "values": ["alarm"]}],
+            "andFilters": [
+                {
+                    "name": "facilities",
+                    "values": [
+                        "wired-for-cable-television",
+                        "alarm",
+                        "wheelchair-access",
+                        "gas-fired-central-heating",
+                    ],
+                }
+            ],
             "ranges": [
                 {"name": "salePrice", "from": "250000", "to": "300000"},
                 {"name": "numBeds", "from": "3", "to": "3"},
@@ -53,7 +79,60 @@ class DaftTest(unittest.TestCase):
         daft.set_max_floor_size(1000)
         daft.set_min_floor_size(1000)
         daft.set_added_since(AddedSince.DAYS_14)
+        daft.set_facility(Facility.WIRED_FOR_CABLE_TELEVISION)
         daft.set_facility(Facility.ALARM)
+        daft.set_facility(Facility.WHEELCHAIR_ACCESS)
+        daft.set_facility(Facility.CENTRAL_HEATING_GAS)
+        daft.search()
+
+        mock_post.assert_called_with(url, headers=headers, json=payload)
+
+    @patch("requests.post")
+    def test_search_properties_for_rent(self, mock_post):
+        url = "https://search-gateway.dsch.ie/v1/listings"
+        payload = {
+            "section": "residential-to-rent",
+            "andFilters": [
+                {
+                    "name": "facilities",
+                    "values": ["alarm", "parking", "cable-television"],
+                }
+            ],
+            "ranges": [
+                {"name": "rentalPrice", "from": "2000", "to": "2500"},
+                {"name": "numBeds", "from": "1", "to": "2"},
+                {"name": "ber", "from": "0", "to": "0"},
+                {"name": "floorSize", "from": "1000", "to": "1000"},
+                {"name": "firstPublishDate", "from": "now-14d/d", "to": ""},
+            ],
+            "geoFilter": {"storedShapeIds": ["3"], "geoSearchType": "STORED_SHAPES"},
+            "sort": "priceDesc",
+            "paging": {"from": "0", "pagesize": "50"},
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "brand": "daft",
+            "platform": "web",
+        }
+
+        daft = Daft()
+
+        daft.set_search_type(SearchType.RESIDENTIAL_RENT)
+        daft.set_location(Location.KILDARE)
+        daft.set_location("Kildare")
+        daft.set_sort_type(SortType.PRICE_DESC)
+        daft.set_max_price(2500)
+        daft.set_min_price(2000)
+        daft.set_min_beds(1)
+        daft.set_max_beds(2)
+        daft.set_min_ber(Ber.A1)
+        daft.set_max_ber(Ber.A1)
+        daft.set_max_floor_size(1000)
+        daft.set_min_floor_size(1000)
+        daft.set_added_since(AddedSince.DAYS_14)
+        daft.set_facility(Facility.ALARM)
+        daft.set_facility(Facility.PARKING)
+        daft.set_facility(Facility.CABLE_TELEVISION)
         daft.search()
 
         mock_post.assert_called_with(url, headers=headers, json=payload)
@@ -65,8 +144,7 @@ class DaftTest(unittest.TestCase):
         listing = Listing(data["listings"][0])
 
         self.assertEqual(listing.id, 1443907)
-        self.assertEqual(
-            listing.title, "Capital Dock Residence, Grand Canal, Dublin 2")
+        self.assertEqual(listing.title, "Capital Dock Residence, Grand Canal, Dublin 2")
         self.assertEqual(listing.agent_id, 9601)
         self.assertEqual(listing.bedrooms, "2 & 3 bed")
         self.assertEqual(listing.abbreviated_price, "€2,970+")
@@ -85,8 +163,7 @@ class DaftTest(unittest.TestCase):
         self.assertEqual(listing.longitude, -6.231118982370589)
         self.assertEqual(listing.latitude, 53.344905963613485)
         self.assertEqual(
-            listing.sections, ["Property",
-                               "Private Rental Sector", "Apartments"]
+            listing.sections, ["Property", "Private Rental Sector", "Apartments"]
         )
         self.assertEqual(listing.shortcode, "9162025")
         self.assertEqual(listing.total_images, 26)
@@ -96,8 +173,14 @@ class DaftTest(unittest.TestCase):
         self.assertEqual(listing.category, "Rent")
         self.assertEqual(listing.monthly_price, 2970)
 
-        as_dict_for_mapping_example = {'monthly_price': 2970, 'latitude': 53.344905963613485, 'longitude': -6.231118982370589, 'bedrooms': '2 & 3 bed',
-                                       'bathrooms': '1+ bath', 'daft_link': 'http://www.daft.ie/for-rent/capital-dock-residence-grand-canal-dublin-2/1443907'}
+        as_dict_for_mapping_example = {
+            "monthly_price": 2970,
+            "latitude": 53.344905963613485,
+            "longitude": -6.231118982370589,
+            "bedrooms": "2 & 3 bed",
+            "bathrooms": "1+ bath",
+            "daft_link": "http://www.daft.ie/for-rent/capital-dock-residence-grand-canal-dublin-2/1443907",
+        }
         self.assertEqual(listing.as_dict_for_mapping(), as_dict_for_mapping_example)
 
     def test_any_to_rent(self):

@@ -201,6 +201,14 @@ for listing in listings:
     print()
 ```
 
+## Running Tests
+
+The Python unittest module contains its own test discovery function, which you can run from the command line:
+
+```
+python -m unittest discover tests/
+```
+
 
 ## Contributing
 
@@ -208,3 +216,4 @@ for listing in listings:
   - Create a new branch for what you're going to work on.
   - Push to your origin repository.
   - Create a new pull request in GitHub.
+
