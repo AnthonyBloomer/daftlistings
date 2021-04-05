@@ -10,6 +10,7 @@ from daftlistings import (
     Listing,
     AddedSince,
     PropertyType,
+    Facility
 )
 
 
@@ -18,7 +19,8 @@ class DaftTest(unittest.TestCase):
     def test_search(self, mock_post):
         url = "https://search-gateway.dsch.ie/v1/listings"
         payload = {
-            "section": "new-homes",
+            "section": "residential-for-sale",
+            "andFilters": [{"name":"facilities", "values": ["alarm"]}],
             "ranges": [
                 {"name": "salePrice", "from": "250000", "to": "300000"},
                 {"name": "numBeds", "from": "3", "to": "3"},
@@ -38,7 +40,7 @@ class DaftTest(unittest.TestCase):
 
         daft = Daft()
 
-        daft.set_search_type(SearchType.NEW_HOMES)
+        daft.set_search_type(SearchType.RESIDENTIAL_SALE)
         daft.set_location(Location.KILDARE)
         daft.set_location("Kildare")
         daft.set_sort_type(SortType.PRICE_ASC)
@@ -51,6 +53,7 @@ class DaftTest(unittest.TestCase):
         daft.set_max_floor_size(1000)
         daft.set_min_floor_size(1000)
         daft.set_added_since(AddedSince.DAYS_14)
+        daft.set_facility(Facility.ALARM)
         daft.search()
 
         mock_post.assert_called_with(url, headers=headers, json=payload)
