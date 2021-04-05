@@ -164,19 +164,19 @@ class Daft:
             raise TypeError("Argument must be location.Location or string.")
 
     def set_facility(self, facility: Facility):
-        if isinstance(facility, Facility):
-            if self._section in [s.value for s in facility.valid_types]:
-                self._add_and_filter('facilities', facility.post_value)
-            else:
-                search_type = [(name,member) for name, member in SearchType.__members__.items() if member.value == self._section][0]
-                compatible_facilities = [f.name for f in Facility if search_type[1] in f.valid_types]
-                raise TypeError(f"Facility {facility.name} incompatible with SearchType {search_type[0]}\nThe following facilities are compatible with this SearchType:\n{compatible_facilities}")
+        if self._section == None:
+            raise ValueError('SearchType must be set before Facility')
         else:
-            raise TypeError("Argument must be of type Facility")
-
-
-
-
+            if isinstance(facility, Facility):
+                if self._section in [s.value for s in facility.valid_types]:
+                    self._add_and_filter('facilities', facility.value)
+                else:
+                    search_type = [(name,member) for name, member in SearchType.__members__.items() if member.value == self._section][0]
+                    compatible_facilities = [f.name for f in Facility if search_type[1] in f.valid_types]
+                    raise TypeError(f"Facility {facility.name} incompatible with SearchType {search_type[0]}\nThe following facilities are compatible with this SearchType:\n{compatible_facilities}")
+            else:
+                raise TypeError("Argument must be of type Facility")
+           
 
     def set_sort_type(self, sort_type: SortType):
         if isinstance(sort_type, SortType):

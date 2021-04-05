@@ -62,17 +62,15 @@ class MiscFilter(enum.Enum):
     TOILETS = "toilets"
 
 
-class FacilityEnum(enum.Enum):
-    @property
-    def post_value(self):
-        return self.value[0]
-    
-    @property
-    def valid_types(self):
-        return self.value[1]
+class Facility(enum.Enum):
+    def __new__(cls, *args, **kwargs):
+        obj = object.__new__(cls)
+        obj._value_ = args[0]
+        return obj
 
+    def __init__(self, _, valid_types):
+        self.valid_types = valid_types
 
-class Facility(FacilityEnum):
     ALARM = ("alarm", [SearchType.RESIDENTIAL_SALE, SearchType.RESIDENTIAL_RENT, SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
     CENTRAL_HEATING_GAS = ("gas-fired-central-heating", [SearchType.RESIDENTIAL_SALE])
     CENTRAL_HEATING_OIL = ("oil-fired-central-heating", [SearchType.RESIDENTIAL_SALE])
