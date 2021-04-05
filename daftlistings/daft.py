@@ -58,6 +58,16 @@ class Daft:
         self._filters.append({"name": name,
                               "values": [value]})
 
+    def _add_and_filter(self, name: str, value: str):
+        if self._andFilters:
+            for f in self._andFilters:
+                if f["name"] == name:
+                    if value not in f["values"]:
+                        f["values"].append(value)
+                    return
+        self._andFilters.append({"name": name,
+                              "values": [value]})
+
     def _add_sort_filter(self, sort_filter: str):
         self._sort_filter = sort_filter
 
@@ -153,6 +163,21 @@ class Daft:
         else:
             raise TypeError("Argument must be location.Location or string.")
 
+    def set_facility(self, facility: Facility):
+        if self._section == None:
+            raise ValueError('SearchType must be set before Facility')
+        else:
+            if isinstance(facility, Facility):
+                if self._section in [s.value for s in facility.valid_types]:
+                    self._add_and_filter('facilities', facility.value)
+                else:
+                    search_type = [(name,member) for name, member in SearchType.__members__.items() if member.value == self._section][0]
+                    compatible_facilities = [f.name for f in Facility if search_type[1] in f.valid_types]
+                    raise ValueError(f"Facility {facility.name} incompatible with SearchType {search_type[0]}\nThe following facilities are compatible with this SearchType:\n{compatible_facilities}")
+            else:
+                raise TypeError("Argument must be of type Facility")
+           
+
     def set_sort_type(self, sort_type: SortType):
         if isinstance(sort_type, SortType):
             self._add_sort_filter(sort_type.value)
@@ -178,6 +203,8 @@ class Daft:
             payload["section"] = self._section
         if self._filters:
             payload["filters"] = self._filters
+        if self._andFilters:
+            payload["andFilters"] = self._andFilters
         if self._ranges:
             payload["ranges"] = self._ranges
         if self._geoFilter:
