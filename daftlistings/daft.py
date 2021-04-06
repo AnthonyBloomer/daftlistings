@@ -21,6 +21,7 @@ class Daft:
     _PAGE_0 = {"from": "0", "pagesize": str(_PAGE_SZ)}
 
     def __init__(self):
+        self._section = None
         self._filters = list()
         self._andFilters = list()
         self._ranges = list()
