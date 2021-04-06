@@ -3,6 +3,7 @@ import requests
 from typing import Union, Optional, List, Dict
 from math import ceil
 from difflib import SequenceMatcher
+from copy import deepcopy
 
 from .enums import *
 from .listing import Listing
@@ -232,5 +233,19 @@ class Daft:
                               headers=self._HEADER,
                               json=_payload)
             listings = listings + r.json()["listings"]
-        return [Listing(l) for l in listings]
+
+
+        expanded_listings = []
+        for l in listings:
+            if 'prs' in l['listing'].keys():
+                subUnit_keys = ['id', 'price', 'numBedrooms', 'numBathrooms', 'daftShortcode', 'seoFriendlyPath', 'category', 'media', 'ber']
+                num_subUnits = len(l['listing']['prs']['subUnits'])
+                for i in range(num_subUnits):   
+                    for key in subUnit_keys:     
+                        l['listing'][key] = l['listing']['prs']['subUnits'][i][key]
+                    expanded_listings.append(deepcopy(l))
+            else:
+                expanded_listings.append(l)
+
+        return [Listing(l) for l in expanded_listings]
 
