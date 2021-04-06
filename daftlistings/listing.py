@@ -59,13 +59,8 @@ class Listing:
             return price_num
 
     @property
-    def abbreviated_price(self):
-        return self._result["abbreviatedPrice"]
-
-    @property
     def bathrooms(self):
-        if "numBathrooms" in self._result:
-            return self._result["numBathrooms"]
+        return self._result["numBathrooms"]
 
     @property
     def bedrooms(self):
