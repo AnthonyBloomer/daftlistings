@@ -21,7 +21,6 @@ class Daft:
     _PAGE_0 = {"from": "0", "pagesize": str(_PAGE_SZ)}
 
     def __init__(self):
-        self._section = None
         self._filters = list()
         self._andFilters = list()
         self._ranges = list()
@@ -222,7 +221,6 @@ class Daft:
                           json=_payload)
         listings = r.json()["listings"]
         results_count = r.json()["paging"]["totalResults"]
-        print(f"Got {results_count} results.")
 
         total_pages = ceil(results_count / self._PAGE_SZ)
         limit = min(max_pages, total_pages) if max_pages else total_pages
@@ -234,11 +232,10 @@ class Daft:
                               json=_payload)
             listings = listings + r.json()["listings"]
 
-
         expanded_listings = []
+        subUnit_keys = ['id', 'price', 'numBedrooms', 'numBathrooms', 'daftShortcode', 'seoFriendlyPath', 'category', 'media', 'ber']
         for l in listings:
             if 'prs' in l['listing'].keys():
-                subUnit_keys = ['id', 'price', 'numBedrooms', 'numBathrooms', 'daftShortcode', 'seoFriendlyPath', 'category', 'media', 'ber']
                 num_subUnits = len(l['listing']['prs']['subUnits'])
                 for i in range(num_subUnits):   
                     for key in subUnit_keys:     
@@ -246,6 +243,9 @@ class Daft:
                     expanded_listings.append(deepcopy(l))
             else:
                 expanded_listings.append(l)
+
+        expanded_results_count = len(expanded_listings) 
+        print(f"Got {expanded_results_count} results.")
 
         return [Listing(l) for l in expanded_listings]
 
