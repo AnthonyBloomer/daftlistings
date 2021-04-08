@@ -122,10 +122,6 @@ class Listing:
     def category(self):
         return self._result["category"]
 
-    @property
-    def featured_level(self):
-        return self._result["featuredLevel"]
-
     def as_dict(self):
         return self._result
     

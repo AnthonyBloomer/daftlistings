@@ -172,7 +172,6 @@ class DaftTest(unittest.TestCase):
         self.assertEqual(listing.agent_seller_type, "BRANDED_AGENT")
         self.assertEqual(listing.category, "Rent")
         self.assertEqual(listing.monthly_price, 2970)
-        self.assertEqual(listing.featured_level, "FEATURED")
 
         as_dict_for_mapping_example = {
             "monthly_price": 2970,
