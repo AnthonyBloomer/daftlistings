@@ -138,7 +138,7 @@ class DaftTest(unittest.TestCase):
         mock_post.assert_called_with(url, headers=headers, json=payload)
 
     def test_listing(self):
-        with open("tests/fixtures/response.json") as response_data:
+        with open("tests/fixtures/response.json", encoding='utf-8') as response_data:
             data = json.loads(response_data.read())
 
         listing = Listing(data["listings"][0])
