@@ -147,7 +147,6 @@ class DaftTest(unittest.TestCase):
         self.assertEqual(listing.title, "Capital Dock Residence, Grand Canal, Dublin 2")
         self.assertEqual(listing.agent_id, 9601)
         self.assertEqual(listing.bedrooms, "2 & 3 bed")
-        self.assertEqual(listing.abbreviated_price, "€2,970+")
         self.assertEqual(listing.has_brochure, False)
         self.assertEqual(
             listing.daft_link,
