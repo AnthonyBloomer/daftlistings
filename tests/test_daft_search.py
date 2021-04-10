@@ -207,7 +207,6 @@ class DaftTest(unittest.TestCase):
         listings = daft.search(max_pages=1)
         self.assertTrue(len(listings) > 0)
         self.assertTrue(listings[0].bedrooms == '1 bed')
-        self.assertTrue(listings[0].bathrooms == '1 bath')
 
     def test_distance(self):
         daft = Daft()
