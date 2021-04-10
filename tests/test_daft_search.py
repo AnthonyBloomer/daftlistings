@@ -207,6 +207,13 @@ class DaftTest(unittest.TestCase):
         self.assertTrue(len(listings) > 0)
         self.assertTrue(listings[0].bedrooms == '1 bed')
 
+    def test_new_homes(self):
+        daft = Daft()
+        daft.set_search_type(SearchType.NEW_HOMES)
+        daft.set_location(Location.DUBLIN)
+        listings = daft.search(max_pages=1)
+        self.assertTrue(len(listings) > 0)
+
     def test_distance(self):
         daft = Daft()
         daft.set_location("Dublin City")
