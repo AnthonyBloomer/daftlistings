@@ -60,7 +60,8 @@ class Listing:
 
     @property
     def bathrooms(self):
-        return self._result["numBathrooms"]
+        if "numBathrooms" in self._result:
+            return self._result["numBathrooms"]
 
     @property
     def bedrooms(self):
