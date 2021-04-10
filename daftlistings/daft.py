@@ -233,20 +233,32 @@ class Daft:
                               json=_payload)
             listings = listings + r.json()["listings"]
 
-        expanded_listings = []
-        subUnit_keys = ['id', 'price', 'numBedrooms', 'numBathrooms', 'daftShortcode', 'seoFriendlyPath', 'category', 'media', 'ber']
-        for l in listings:
-            if 'prs' in l['listing'].keys():
-                num_subUnits = len(l['listing']['prs']['subUnits'])
-                for i in range(num_subUnits):   
-                    for key in subUnit_keys:     
-                        l['listing'][key] = l['listing']['prs']['subUnits'][i][key]
-                    expanded_listings.append(deepcopy(l))
-            else:
-                expanded_listings.append(l)
+        # This block separates out grouped listings in the cases of residential searches
+        if self._section in ["residential-for-sale", "residential-to-rent"]:
+            expanded_listings = []
+            subUnit_keys = ['id', 'price', 'daftShortcode', 'seoFriendlyPath', 'category', 'media', 'ber', 'propertyType']
+            for l in listings:
+                if 'prs' in l['listing'].keys():
+                    num_subUnits = len(l['listing']['prs']['subUnits'])
+                    for i in range(num_subUnits):                 
+                        for key in subUnit_keys: 
+                            l['listing'][key] = l['listing']['prs']['subUnits'][i][key]  
+                        if l['listing']['propertyType'] != 'Studio':
+                            l['listing']['numBedrooms'] = l['listing']['prs']['subUnits'][i]['numBedrooms']
+                            l['listing']['numBathrooms'] = l['listing']['prs']['subUnits'][i]['numBathrooms']      
+                        else:
+                            l['listing']['numBedrooms'] = "1 bed"
+                            l['listing']['numBathrooms'] = "1 bath" 
+                        expanded_listings.append(deepcopy(l))
+                else:
+                    if l['listing']['propertyType'] == 'Studio':
+                        l['listing']['numBedrooms'] = "1 bed"
+                        l['listing']['numBathrooms'] = "1 bath"
+                    expanded_listings.append(l)
+            listings = expanded_listings
 
-        expanded_results_count = len(expanded_listings) 
-        print(f"Got {expanded_results_count} results.")
+        print(f"Got {len(listings)} results.")
 
-        return [Listing(l) for l in expanded_listings]
+        return [Listing(l) for l in listings]    
 
+                             
