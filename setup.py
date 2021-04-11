@@ -8,7 +8,7 @@ from setuptools import setup, Command
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-with open("README.rst", "rb") as f:
+with open("README.md", "rb") as f:
     long_descr = f.read().decode("utf-8")
 
 
@@ -46,32 +46,25 @@ class PublishCommand(Command):
 
 
 setup(name='daftlistings',
-      version='1.7.4',
+      version='2.0.0',
       description='A library that enables programmatic interaction with daft.ie. Daft.ie has nationwide coverage and contains about 80% of the total available properties in Ireland.',
       long_description=long_descr,
       url='https://github.com/AnthonyBloomer/daftlistings',
       author='Anthony Bloomer',
-      keywords=['daft', 'web scraping', 'real estate', 'web scraper', 'daft.ie'],
+      keywords=['daft', 'real estate', 'daft.ie'],
       author_email='ant0@protonmail.ch',
       license='MIT',
       packages=['daftlistings'],
       install_requires=[
-          'beautifulsoup4',
           'enum34',
           'requests',
-          'html2text'
       ],
       classifiers=[
           'Intended Audience :: Developers',
           'License :: OSI Approved :: MIT License',
           "Topic :: Software Development :: Libraries",
           'Programming Language :: Python',
-          'Programming Language :: Python :: 2.7',
-          'Programming Language :: Python :: 3',
-          'Programming Language :: Python :: 3.3',
-          'Programming Language :: Python :: 3.4',
-          'Programming Language :: Python :: 3.5',
-          'Programming Language :: Python :: 3.6',
+          'Programming Language :: Python :: 3.9',
       ],
       cmdclass={
           'publish': PublishCommand,

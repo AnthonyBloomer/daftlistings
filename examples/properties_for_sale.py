@@ -2,8 +2,10 @@ from daftlistings import Daft, Location, SearchType, PropertyType
 
 daft = Daft()
 daft.set_location(Location.DUBLIN)
-daft.set_search_type(SearchType.RESIDENTIAL_RENT)
-daft.set_property_type(PropertyType.APARTMENT)
+daft.set_search_type(SearchType.RESIDENTIAL_SALE)
+daft.set_property_type(PropertyType.HOUSE)
+daft.set_min_price(400000)
+daft.set_max_price(500000)
 
 listings = daft.search()
 

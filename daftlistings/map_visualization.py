@@ -1,4 +1,5 @@
 import folium
+from folium.plugins import MarkerCluster
 import branca.colormap as cm
 
 
@@ -33,7 +34,7 @@ class MapVisualization:
 
     def generate_color_bins(self):
         """Generate color bins based on the price at 1%, 4%, 14% ... percentiles"""
-        prices = self.df.price
+        prices = self.df.monthly_price
         percentiles = [0.01, 0.04, 0.14, 0.30, 0.56, 0.70, 0.84, 1.00]
         return [prices.quantile(p) for p in percentiles]
 
@@ -56,9 +57,10 @@ class MapVisualization:
         return folium.Icon(color=self.color_dispatcher(price))
 
     def add_markers(self):
+        markers_dict = {}
         for index, row in self.df.iterrows():
-            lat, lon, price = row["latitude"], row["longitude"], row["price"]
-            beds, baths = row["num_bedrooms"], row["num_bathrooms"]
+            lat, lon, price = row["latitude"], row["longitude"], row["monthly_price"]
+            beds, baths = row["bedrooms"], row["bathrooms"]
             popup_name = (
                 "<p>"
                 + "Bedrooms: "
@@ -76,11 +78,22 @@ class MapVisualization:
             marker = folium.Marker(
                 [lat, lon], popup=popup_name, tooltip=price, icon=icon
             )
-            marker.add_to(self.map)
+            if (lat,lon) in markers_dict.keys():
+                markers_dict[(lat,lon)].append(marker)
+            else:
+                markers_dict[(lat,lon)] = [marker]
+
+        for key, item in markers_dict.items():
+            if len(item) == 1:
+                item[0].add_to(self.map)
+            else:
+                marker_cluster = MarkerCluster().add_to(self.map)
+                for i in range(len(item)):
+                    item[i].add_to(marker_cluster)
 
     def add_colorbar(self):
         """add a colorbar at the top right corner of the map"""
-        vmin, vmax = self.df["price"].quantile(0.005), self.df["price"].max()
+        vmin, vmax = self.df["monthly_price"].quantile(0.005), self.df["monthly_price"].max()
         # set vmin to price.min() will screw the colorbar scale
         colormap = cm.StepColormap(
             self.color_codes, index=self.index, vmin=vmin, vmax=vmax
