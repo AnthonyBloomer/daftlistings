@@ -160,11 +160,17 @@ class DaftTest(unittest.TestCase):
 
         mock_post.assert_called_with(url, headers=headers, json=payload)
 
-    def test_search_location_throws_type_error(self):
+    def test_invalid_location_list_value_throws_type_error(self):
         with self.assertRaises(TypeError):
             daft = Daft()
             daft.set_search_type(SearchType.RESIDENTIAL_RENT)
             daft.set_location([1, 2, "Dublin"])
+
+    def test_invalid_location_value_throws_type_error(self):
+        with self.assertRaises(TypeError):
+            daft = Daft()
+            daft.set_search_type(SearchType.RESIDENTIAL_RENT)
+            daft.set_location(1)
 
     def test_listing(self):
         with open(
