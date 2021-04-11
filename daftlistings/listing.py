@@ -59,6 +59,10 @@ class Listing:
             return price_num
 
     @property
+    def price(self):
+         return self._result["price"]
+
+    @property
     def bathrooms(self):
         if "numBathrooms" in self._result:
             return self._result["numBathrooms"]

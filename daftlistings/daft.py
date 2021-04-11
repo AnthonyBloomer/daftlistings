@@ -234,32 +234,32 @@ class Daft:
             listings = listings + r.json()["listings"]
 
         # expand out grouped listings as individual listings, commercial searches do not give the necessary information to do this
-        if self._section not in [SearchType.COMMERCIAL_SALE.value, SearchType.COMMERCIAL_RENT.value]:
-            expanded_listings = []
-            for l in listings:
-                # the information contained in the key 'prs' for most searches is instead contained in 'newHome' for newHome type searches
-                if 'newHome' in l['listing'].keys():
-                    if 'subUnits' in l['listing']['newHome'].keys():
-                        l['listing']['prs'] = l['listing'].pop('newHome')
-                if 'prs' in l['listing'].keys():
-                    num_subUnits = len(l['listing']['prs']['subUnits'])
-                    for i in range(num_subUnits):
-                        copy = deepcopy(l)            
-                        for key in copy['listing']['prs']['subUnits'][i].keys(): 
-                            copy['listing'][key] = copy['listing']['prs']['subUnits'][i][key]
 
-                        # studios do not have a 'numBedrooms' so set it separately 
-                        if copy['listing']['propertyType'] == 'Studio':
-                            copy['listing']['numBedrooms'] = '1 bed'                         
-                        expanded_listings.append(copy)
-                else:    
-                    # above only sets studio 'numBedrooms' for grouped listings, do ungrouped here
-                    if 'propertyType' in l['listing'].keys():
-                        if l['listing']['propertyType'] == 'Studio':
-                                l['listing']['numBedrooms'] = '1 bed'            
-                    expanded_listings.append(l)         
+        expanded_listings = []
+        for l in listings:
+            # the information contained in the key 'prs' for most searches is instead contained in 'newHome' for newHome type searches
+            if 'newHome' in l['listing'].keys():
+                if 'subUnits' in l['listing']['newHome'].keys():
+                    l['listing']['prs'] = l['listing'].pop('newHome')
+            try:
+                num_subUnits = len(l['listing']['prs']['subUnits'])
+                for i in range(num_subUnits):
+                    copy = deepcopy(l)            
+                    for key in copy['listing']['prs']['subUnits'][i].keys(): 
+                        copy['listing'][key] = copy['listing']['prs']['subUnits'][i][key]
 
-            listings = expanded_listings
+                    # studios do not have a 'numBedrooms' so set it separately 
+                    if copy['listing']['propertyType'] == 'Studio':
+                        copy['listing']['numBedrooms'] = '1 bed'                         
+                    expanded_listings.append(copy)
+            except:    
+                # above only sets studio 'numBedrooms' for grouped listings, do ungrouped here
+                if 'propertyType' in l['listing'].keys():
+                    if l['listing']['propertyType'] == 'Studio':
+                            l['listing']['numBedrooms'] = '1 bed'            
+                expanded_listings.append(l)         
+
+        listings = expanded_listings
 
         print(f"Got {len(listings)} results.")
         

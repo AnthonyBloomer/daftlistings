@@ -7,7 +7,7 @@ listings = daft.search()
 
 for listing in listings:
     print(listing.title)
-    print(listing.abbreviated_price)
+    print(listing.price)
     print(listing.daft_link)
     print()
 

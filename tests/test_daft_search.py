@@ -146,6 +146,7 @@ class DaftTest(unittest.TestCase):
         self.assertEqual(listing.id, 1443907)
         self.assertEqual(listing.title, "Capital Dock Residence, Grand Canal, Dublin 2")
         self.assertEqual(listing.agent_id, 9601)
+        self.assertEqual(listing.price, "From €2,970 per month")
         self.assertEqual(listing.bedrooms, "2 & 3 bed")
         self.assertEqual(listing.has_brochure, False)
         self.assertEqual(
