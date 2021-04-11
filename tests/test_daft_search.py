@@ -146,8 +146,8 @@ class DaftTest(unittest.TestCase):
         self.assertEqual(listing.id, 1443907)
         self.assertEqual(listing.title, "Capital Dock Residence, Grand Canal, Dublin 2")
         self.assertEqual(listing.agent_id, 9601)
+        self.assertEqual(listing.price, "From €2,970 per month")
         self.assertEqual(listing.bedrooms, "2 & 3 bed")
-        self.assertEqual(listing.abbreviated_price, "€2,970+")
         self.assertEqual(listing.has_brochure, False)
         self.assertEqual(
             listing.daft_link,
@@ -206,6 +206,14 @@ class DaftTest(unittest.TestCase):
         daft.set_location(Location.DUBLIN)
         listings = daft.search(max_pages=1)
         self.assertTrue(len(listings) > 0)
+        self.assertTrue(listings[0].bedrooms == '1 bed')
+
+    def test_new_homes(self):
+        daft = Daft()
+        daft.set_search_type(SearchType.NEW_HOMES)
+        daft.set_location(Location.DUBLIN)
+        listings = daft.search(max_pages=1)
+        self.assertTrue(len(listings) > 0)
 
     def test_distance(self):
         daft = Daft()
@@ -214,7 +222,11 @@ class DaftTest(unittest.TestCase):
         daft.set_min_price(1)
         daft.set_max_price(100000)
         listings = daft.search(max_pages=1)
-        first, second = listings[0], listings[1]
+        first = listings[0]
+        for l in listings[1:]:
+            if (l.latitude, l.longitude) != (first.latitude, first.longitude):
+                second = l
+                break
         coord = [53.3429, -6.2674]
         self.assertGreater(first.distance_to(coord), 0)
         self.assertGreater(first.distance_to(second), 0)

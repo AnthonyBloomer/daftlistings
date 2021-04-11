@@ -16,6 +16,6 @@ listings.sort(key=lambda x: x.distance_to(dublin_castle_coords))
 for listing in listings:
     print(f'{listing.title}')
     print(f'{listing.daft_link}')
-    print(f'{listing.abbreviated_price}')
+    print(f'{listing.price}')
     print(f'{listing.distance_to(dublin_castle_coords):.3}km')
     print('')

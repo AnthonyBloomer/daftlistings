@@ -3,6 +3,7 @@ import requests
 from typing import Union, Optional, List, Dict
 from math import ceil
 from difflib import SequenceMatcher
+from copy import deepcopy
 
 from .enums import *
 from .listing import Listing
@@ -221,7 +222,6 @@ class Daft:
                           json=_payload)
         listings = r.json()["listings"]
         results_count = r.json()["paging"]["totalResults"]
-        print(f"Got {results_count} results.")
 
         total_pages = ceil(results_count / self._PAGE_SZ)
         limit = min(max_pages, total_pages) if max_pages else total_pages
@@ -232,5 +232,37 @@ class Daft:
                               headers=self._HEADER,
                               json=_payload)
             listings = listings + r.json()["listings"]
-        return [Listing(l) for l in listings]
 
+        # expand out grouped listings as individual listings, commercial searches do not give the necessary information to do this
+
+        expanded_listings = []
+        for l in listings:
+            # the information contained in the key 'prs' for most searches is instead contained in 'newHome' for newHome type searches
+            if 'newHome' in l['listing'].keys():
+                if 'subUnits' in l['listing']['newHome'].keys():
+                    l['listing']['prs'] = l['listing'].pop('newHome')
+            try:
+                num_subUnits = len(l['listing']['prs']['subUnits'])
+                for i in range(num_subUnits):
+                    copy = deepcopy(l)            
+                    for key in copy['listing']['prs']['subUnits'][i].keys(): 
+                        copy['listing'][key] = copy['listing']['prs']['subUnits'][i][key]
+
+                    # studios do not have a 'numBedrooms' so set it separately 
+                    if copy['listing']['propertyType'] == 'Studio':
+                        copy['listing']['numBedrooms'] = '1 bed'                         
+                    expanded_listings.append(copy)
+            except:    
+                # above only sets studio 'numBedrooms' for grouped listings, do ungrouped here
+                if 'propertyType' in l['listing'].keys():
+                    if l['listing']['propertyType'] == 'Studio':
+                            l['listing']['numBedrooms'] = '1 bed'            
+                expanded_listings.append(l)         
+
+        listings = expanded_listings
+
+        print(f"Got {len(listings)} results.")
+        
+        return [Listing(l) for l in listings]    
+
+                             
