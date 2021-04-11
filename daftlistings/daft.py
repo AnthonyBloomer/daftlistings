@@ -228,7 +228,6 @@ class Daft:
                           json=_payload)
         listings = r.json()["listings"]
         results_count = r.json()["paging"]["totalResults"]
-
         total_pages = ceil(results_count / self._PAGE_SZ)
         limit = min(max_pages, total_pages) if max_pages else total_pages
 
@@ -268,6 +267,7 @@ class Daft:
         listings = expanded_listings
 
         self._total_results = len(listings)
+        print(f"Search complete. Found {self.total_results} listings.")
         
         return [Listing(l) for l in listings]    
 
