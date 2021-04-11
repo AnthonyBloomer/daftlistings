@@ -1,4 +1,5 @@
 import folium
+from folium.plugins import MarkerCluster
 import branca.colormap as cm
 
 
@@ -56,6 +57,7 @@ class MapVisualization:
         return folium.Icon(color=self.color_dispatcher(price))
 
     def add_markers(self):
+        markers_dict = {}
         for index, row in self.df.iterrows():
             lat, lon, price = row["latitude"], row["longitude"], row["monthly_price"]
             beds, baths = row["bedrooms"], row["bathrooms"]
@@ -76,7 +78,18 @@ class MapVisualization:
             marker = folium.Marker(
                 [lat, lon], popup=popup_name, tooltip=price, icon=icon
             )
-            marker.add_to(self.map)
+            if (lat,lon) in markers_dict.keys():
+                markers_dict[(lat,lon)].append(marker)
+            else:
+                markers_dict[(lat,lon)] = [marker]
+
+        for key, item in markers_dict.items():
+            if len(item) == 1:
+                item[0].add_to(self.map)
+            else:
+                marker_cluster = MarkerCluster().add_to(self.map)
+                for i in range(len(item)):
+                    item[i].add_to(marker_cluster)
 
     def add_colorbar(self):
         """add a colorbar at the top right corner of the map"""
