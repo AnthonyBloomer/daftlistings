@@ -28,6 +28,11 @@ class Daft:
         self._geoFilter = dict()
         self._sort_filter = dict()
         self._paging = self._PAGE_0
+        self._total_results = 0
+
+    @property
+    def total_results(self):
+        return self._total_results
 
     def _set_range_to(self, name: str, to: str):
         if self._ranges:
@@ -216,13 +221,13 @@ class Daft:
         return payload
 
     def search(self, max_pages: Optional[int] = None) -> List[Listing]:
+        print("Searching...")
         _payload = self._make_payload()
         r = requests.post(self._ENDPOINT,
                           headers=self._HEADER,
                           json=_payload)
         listings = r.json()["listings"]
         results_count = r.json()["paging"]["totalResults"]
-
         total_pages = ceil(results_count / self._PAGE_SZ)
         limit = min(max_pages, total_pages) if max_pages else total_pages
 
@@ -261,7 +266,8 @@ class Daft:
 
         listings = expanded_listings
 
-        print(f"Got {len(listings)} results.")
+        self._total_results = len(listings)
+        print(f"Search complete. Found {self.total_results} listings.")
         
         return [Listing(l) for l in listings]    
 
