@@ -160,13 +160,13 @@ class Daft:
             raise TypeError("Argument must be enums.Ber.")
         self._set_range_to("ber", str(ber.value))
 
-    def set_location(self, location: Union[Location, str, list]):
+    def set_location(self, location: Union[Location, str, List[Union[Location, str]]]):
         if isinstance(location, Location):
             self._add_geo_filter(location.value["id"])
         elif isinstance(location, str):
             best_match = self._get_best_match(location)
             self._add_geo_filter(best_match.value["id"])
-        elif isinstance(location, list):
+        elif isinstance(location, List):
             for area in location:
                 if isinstance(area, Location):
                     self._add_geo_filter(area.value["id"])
