@@ -1,4 +1,5 @@
 import json
+import os
 from unittest.mock import patch
 import unittest
 from daftlistings import (
@@ -138,7 +139,10 @@ class DaftTest(unittest.TestCase):
         mock_post.assert_called_with(url, headers=headers, json=payload)
 
     def test_listing(self):
-        with open("tests/fixtures/response.json", encoding='utf-8') as response_data:
+        with open(
+            os.path.dirname(os.path.abspath(__file__)) + "/fixtures/response.json",
+            encoding="utf-8",
+        ) as response_data:
             data = json.loads(response_data.read())
 
         listing = Listing(data["listings"][0])
@@ -198,6 +202,7 @@ class DaftTest(unittest.TestCase):
         daft.set_location(Location.DUBLIN)
         listings = daft.search(max_pages=1)
         self.assertTrue(len(listings) > 0)
+        self.assertGreater(daft.total_results, 0)
 
     def test_studios_to_rent(self):
         daft = Daft()
@@ -206,7 +211,8 @@ class DaftTest(unittest.TestCase):
         daft.set_location(Location.DUBLIN)
         listings = daft.search(max_pages=1)
         self.assertTrue(len(listings) > 0)
-        self.assertTrue(listings[0].bedrooms == '1 bed')
+        self.assertTrue(listings[0].bedrooms == "1 bed")
+        self.assertGreater(daft.total_results, 0)
 
     def test_new_homes(self):
         daft = Daft()
@@ -214,6 +220,7 @@ class DaftTest(unittest.TestCase):
         daft.set_location(Location.DUBLIN)
         listings = daft.search(max_pages=1)
         self.assertTrue(len(listings) > 0)
+        self.assertGreater(daft.total_results, 0)
 
     def test_distance(self):
         daft = Daft()
