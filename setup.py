@@ -46,7 +46,7 @@ class PublishCommand(Command):
 
 
 setup(name='daftlistings',
-      version='2.0.0',
+      version='2.0.1',
       description='A library that enables programmatic interaction with daft.ie. Daft.ie has nationwide coverage and contains about 80% of the total available properties in Ireland.',
       long_description=long_descr,
       url='https://github.com/AnthonyBloomer/daftlistings',
@@ -58,6 +58,7 @@ setup(name='daftlistings',
       install_requires=[
           'enum34',
           'requests',
+          'folium'
       ],
       classifiers=[
           'Intended Audience :: Developers',
