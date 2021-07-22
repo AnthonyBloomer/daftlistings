@@ -175,6 +175,7 @@ class DaftTest(unittest.TestCase):
                 {"name": "suitableFor", "values": ["male"]},
                 {"name": "ownerOccupied", "values": [True]},
             ],
+            "ranges": [{"name": "numTenants", "from": "1", "to": "1"}],
             "paging": {"from": "0", "pagesize": "50"},
         }
         headers = {
@@ -186,6 +187,8 @@ class DaftTest(unittest.TestCase):
         daft = Daft()
         daft.set_search_type(SearchType.SHARING)
         daft.set_suitability(SuitableFor.MALE)
+        daft.set_min_tenants(1)
+        daft.set_max_tenants(1)
         daft.set_owner_occupied(True)
 
         daft.search()

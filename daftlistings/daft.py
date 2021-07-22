@@ -138,6 +138,12 @@ class Daft:
     def set_owner_occupied(self, owner_occupied: bool):
         self._add_filter("ownerOccupied", owner_occupied)
 
+    def set_min_tenants(self, num_tenants: int):
+        self._set_range_from("numTenants", str(num_tenants))
+
+    def set_max_tenants(self, num_tenants: int):
+        self._set_range_to("numTenants", str(num_tenants))
+
     def set_min_lease(self, min_lease: int):
         # Measured in months
         self._set_range_from("leaseLength", str(min_lease))
