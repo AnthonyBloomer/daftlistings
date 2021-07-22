@@ -12,6 +12,7 @@ from daftlistings import (
     AddedSince,
     PropertyType,
     Facility,
+    SuitableFor,
 )
 
 
@@ -143,7 +144,10 @@ class DaftTest(unittest.TestCase):
         url = "https://search-gateway.dsch.ie/v1/listings"
         payload = {
             "section": "residential-to-rent",
-            "geoFilter": {"storedShapeIds": ["2040", "2144", "2068"], "geoSearchType": "STORED_SHAPES"},
+            "geoFilter": {
+                "storedShapeIds": ["2040", "2144", "2068"],
+                "geoSearchType": "STORED_SHAPES",
+            },
             "paging": {"from": "0", "pagesize": "50"},
         }
         headers = {
@@ -155,7 +159,35 @@ class DaftTest(unittest.TestCase):
         daft = Daft()
 
         daft.set_search_type(SearchType.RESIDENTIAL_RENT)
-        daft.set_location([Location.ASHTOWN_DUBLIN, Location.IFSC_DUBLIN, "Blanchardstown"])
+        daft.set_location(
+            [Location.ASHTOWN_DUBLIN, Location.IFSC_DUBLIN, "Blanchardstown"]
+        )
+        daft.search()
+
+        mock_post.assert_called_with(url, headers=headers, json=payload)
+
+    @patch("requests.post")
+    def test_shared_listings(self, mock_post):
+        url = "https://search-gateway.dsch.ie/v1/listings"
+        payload = {
+            "section": "sharing",
+            "filters": [
+                {"name": "suitableFor", "values": ["male"]},
+                {"name": "ownerOccupied", "values": [True]},
+            ],
+            "paging": {"from": "0", "pagesize": "50"},
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "brand": "daft",
+            "platform": "web",
+        }
+
+        daft = Daft()
+        daft.set_search_type(SearchType.SHARING)
+        daft.set_suitability(SuitableFor.MALE)
+        daft.set_owner_occupied(True)
+
         daft.search()
 
         mock_post.assert_called_with(url, headers=headers, json=payload)

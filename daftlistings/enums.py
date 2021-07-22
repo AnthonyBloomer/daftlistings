@@ -1,5 +1,8 @@
 import enum
 
+class SuitableFor(enum.Enum):
+    MALE = "male"
+    FEMALE = "female"
 
 class SortType(enum.Enum):
     PUBLISH_DATE_DESC = "publishDateDesc"
