@@ -54,7 +54,7 @@ class Daft:
                              "from": _from,
                              "to": str(10e8)})
 
-    def _add_filter(self, name: str, value: str):
+    def _add_filter(self, name: str, value: Union[str, bool]):
         if self._filters:
             for f in self._filters:
                 if f["name"] == name:
@@ -129,6 +129,20 @@ class Daft:
             self._set_range_to("rentalPrice", str(max_price))
         else:
             self._set_range_to("salePrice", str(max_price))
+
+    def set_suitability(self, suitability: SuitableFor):
+        if not isinstance(suitability, SuitableFor):
+            raise TypeError("Argument must be enums.SuitableFor.")
+        self._add_filter("suitableFor", suitability.value)
+
+    def set_owner_occupied(self, owner_occupied: bool):
+        self._add_filter("ownerOccupied", owner_occupied)
+
+    def set_min_tenants(self, num_tenants: int):
+        self._set_range_from("numTenants", str(num_tenants))
+
+    def set_max_tenants(self, num_tenants: int):
+        self._set_range_to("numTenants", str(num_tenants))
 
     def set_min_lease(self, min_lease: int):
         # Measured in months
