@@ -126,6 +126,16 @@ class Listing:
     def featured_level(self):
         return self._result["featuredLevel"]
 
+    @property
+    def size_meters_squared(self):
+        try:
+            if self._result["floorArea"]["unit"] != "METRES_SQUARED":
+                return "N/A"
+            else:
+                return self._result["floorArea"]["value"]
+        except KeyError as e:
+            return "N/A"
+
     def as_dict(self):
         return self._result
     
