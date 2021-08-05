@@ -231,6 +231,7 @@ class DaftTest(unittest.TestCase):
         self.assertIsNotNone(listing.images)
         self.assertIsInstance(listing.images, list)
         self.assertEqual(listing.ber, "A2A3")
+        self.assertEqual(listing.size_meters_squared, 75)
         self.assertEqual(listing.has_video, True)
         self.assertEqual(listing.has_virtual_tour, False)
         self.assertEqual(listing.longitude, -6.231118982370589)
