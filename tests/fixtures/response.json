@@ -84,6 +84,10 @@
         "ber": {
           "rating": "A2A3"
         },
+        "floorArea": {
+          "unit": "METRES_SQUARED",
+          "value": 75
+        },
         "point": {
           "type": "Point",
           "coordinates": [
