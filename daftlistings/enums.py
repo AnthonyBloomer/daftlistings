@@ -124,3 +124,11 @@ class Ber(enum.Enum):
     E2 = 12
     F = 13
     G = 14
+
+class Distance(enum.Enum):
+    KM0 = ""
+    KM1 = "_1000"
+    KM3 = "_3000"
+    KM5 = "_5000"
+    KM10 = "_10000"
+    KM20 = "_20000"

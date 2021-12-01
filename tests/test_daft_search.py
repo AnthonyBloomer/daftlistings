@@ -14,6 +14,7 @@ from daftlistings import (
     Facility,
     SuitableFor,
 )
+from daftlistings.enums import Distance
 
 
 class DaftTest(unittest.TestCase):
@@ -307,3 +308,14 @@ class DaftTest(unittest.TestCase):
         coord = [53.3429, -6.2674]
         self.assertGreater(first.distance_to(coord), 0)
         self.assertGreater(first.distance_to(second), 0)
+
+    def test_search_within_distance_radius(self):
+        daft = Daft()
+        daft.set_location(Location.DUBLIN_CITY_CENTRE_DUBLIN)
+        daft.set_search_type(SearchType.RESIDENTIAL_RENT)
+        listings = daft.search(max_pages=1)
+
+        daft.set_location(Location.DUBLIN_CITY_CENTRE_DUBLIN, Distance.KM20)
+        listings_in_wider_area = daft.search(max_pages=1)
+
+        self.assertGreater(len(listings_in_wider_area), len(listings))

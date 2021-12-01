@@ -174,19 +174,19 @@ class Daft:
             raise TypeError("Argument must be enums.Ber.")
         self._set_range_to("ber", str(ber.value))
 
-    def set_location(self, location: Union[Location, str, List[Union[Location, str]]]):
+    def set_location(self, location: Union[Location, str, List[Union[Location, str]]], distance: Distance = Distance.KM0):
         if isinstance(location, Location):
-            self._add_geo_filter(location.value["id"])
+            self._add_geo_filter(location.value["id"] + distance.value)
         elif isinstance(location, str):
             best_match = self._get_best_match(location)
-            self._add_geo_filter(best_match.value["id"])
+            self._add_geo_filter(best_match.value["id"] + distance.value)
         elif isinstance(location, List):
             for area in location:
                 if isinstance(area, Location):
-                    self._add_geo_filter(area.value["id"])
+                    self._add_geo_filter(area.value["id"] + distance.value)
                 elif isinstance(area, str):
                     best_match = self._get_best_match(area)
-                    self._add_geo_filter(best_match.value["id"])
+                    self._add_geo_filter(best_match.value["id"] + distance.value)
                 else:
                     raise TypeError("List values must be of type location.Location or string.")
 
