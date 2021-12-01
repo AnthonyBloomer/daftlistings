@@ -143,6 +143,27 @@ for listing in listings:
     print('')
 
 ```
+
+Search properties within 10kms of Dublin city centre
+
+```python
+from daftlistings import Daft, SearchType
+
+daft = Daft()
+
+daft.set_location("Dublin City Centre", Distance.KM10)
+daft.set_search_type(SearchType.RESIDENTIAL_RENT)
+
+listings = daft.search(max_pages=1)
+
+for listing in listings:
+    print(f'{listing.title}')
+    print(f'{listing.daft_link}')
+    print(f'{listing.price}')
+    print('')
+
+```
+
 Search rental properties in Dublin with monthly rent lower than 1500 euros and visualize it on a map
 
 ```python
