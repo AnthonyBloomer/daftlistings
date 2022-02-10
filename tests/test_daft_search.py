@@ -316,6 +316,7 @@ class DaftTest(unittest.TestCase):
         listings = daft.search(max_pages=1)
 
         daft.set_location(Location.DUBLIN_CITY_CENTRE_DUBLIN, Distance.KM20)
+        
         listings_in_wider_area = daft.search(max_pages=1)
 
         self.assertGreater(len(listings_in_wider_area), len(listings))
