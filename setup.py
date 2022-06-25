@@ -57,7 +57,6 @@ setup(name='daftlistings',
       license='MIT',
       packages=['daftlistings'],
       install_requires=[
-          'enum34',
           'requests',
           'folium'
       ],
