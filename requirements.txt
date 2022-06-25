@@ -1,2 +1,2 @@
-folium==0.12.1
-requests==2.25.1
+folium
+requests
