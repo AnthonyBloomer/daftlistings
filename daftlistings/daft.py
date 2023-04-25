@@ -27,7 +27,6 @@ class Daft:
         self._ranges = list()
         self._geoFilter = dict()
         self._sort_filter = dict()
-        self._paging = self._PAGE_0
         self._total_results = 0
 
     @property
@@ -241,7 +240,7 @@ class Daft:
             payload["geoFilter"] = self._geoFilter
         if self._sort_filter:
             payload["sort"] = self._sort_filter
-        payload["paging"] = self._paging
+        payload["paging"] = deepcopy(self._PAGE_0)
         return payload
 
     def search(self, max_pages: Optional[int] = None) -> List[Listing]:
