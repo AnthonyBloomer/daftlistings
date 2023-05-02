@@ -2,6 +2,7 @@ from datetime import datetime
 from urllib.parse import urljoin
 from math import radians, sin, cos, asin, sqrt
 
+
 class Listing:
     _BASEURL = "http://www.daft.ie"
 
@@ -60,7 +61,7 @@ class Listing:
 
     @property
     def price(self):
-         return self._result["price"]
+        return self._result["price"]
 
     @property
     def bathrooms(self):
@@ -138,7 +139,7 @@ class Listing:
 
     def as_dict(self):
         return self._result
-    
+
     def as_dict_for_mapping(self):
         mapping_dict = dict()
         mapping_dict["monthly_price"] = self.monthly_price
@@ -178,11 +179,14 @@ class Listing:
             dλ = radians(float(self.longitude)) - radians(float(_longitude))
             φ1, φ2 = radians(float(self.latitude)), radians(float(_latitude))
         else:
-            raise TypeError("Argument should be Listing or a coordinate [latitude, longitude] pair.")
+            raise TypeError(
+                "Argument should be Listing or a coordinate [latitude, longitude] pair."
+            )
 
         dσ = 2 * asin(
             sqrt(
-                sin((φ1 - φ2) / 2) * sin((φ1 - φ2) / 2) + cos(φ1) * cos(φ2) * sin(dλ / 2) * sin(dλ / 2)
+                sin((φ1 - φ2) / 2) * sin((φ1 - φ2) / 2)
+                + cos(φ1) * cos(φ2) * sin(dλ / 2) * sin(dλ / 2)
             )
         )
         return _earth_radius_km * dσ

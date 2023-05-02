@@ -12,11 +12,7 @@ from .location import Location
 
 class Daft:
     _ENDPOINT = "https://search-gateway.dsch.ie/v1/listings"
-    _HEADER = {
-        "Content-Type": "application/json",
-        "brand": "daft",
-        "platform": "web"
-    }
+    _HEADER = {"Content-Type": "application/json", "brand": "daft", "platform": "web"}
     _PAGE_SZ = 50
     _PAGE_0 = {"from": "0", "pagesize": str(_PAGE_SZ)}
 
@@ -39,9 +35,7 @@ class Daft:
                 if r["name"] == name:
                     r["to"] = to
                     return
-        self._ranges.append({"name": name,
-                             "from": "0",
-                             "to": to})
+        self._ranges.append({"name": name, "from": "0", "to": to})
 
     def _set_range_from(self, name: str, _from: str):
         if self._ranges:
@@ -49,9 +43,7 @@ class Daft:
                 if r["name"] == name:
                     r["from"] = _from
                     return
-        self._ranges.append({"name": name,
-                             "from": _from,
-                             "to": str(10e8)})
+        self._ranges.append({"name": name, "from": _from, "to": str(10e8)})
 
     def _add_filter(self, name: str, value: Union[str, bool]):
         if self._filters:
@@ -60,8 +52,7 @@ class Daft:
                     if value not in f["values"]:
                         f["values"].append(value)
                     return
-        self._filters.append({"name": name,
-                              "values": [value]})
+        self._filters.append({"name": name, "values": [value]})
 
     def _add_and_filter(self, name: str, value: str):
         if self._andFilters:
@@ -70,8 +61,7 @@ class Daft:
                     if value not in f["values"]:
                         f["values"].append(value)
                     return
-        self._andFilters.append({"name": name,
-                              "values": [value]})
+        self._andFilters.append({"name": name, "values": [value]})
 
     def _add_sort_filter(self, sort_filter: str):
         self._sort_filter = sort_filter
@@ -82,8 +72,7 @@ class Daft:
             if id not in ids:
                 self._geoFilter["storedShapeIds"].append(id)
             return
-        self._geoFilter = {"storedShapeIds": [id],
-                           "geoSearchType": "STORED_SHAPES"}
+        self._geoFilter = {"storedShapeIds": [id], "geoSearchType": "STORED_SHAPES"}
 
     def set_search_type(self, search_type: SearchType):
         if not isinstance(search_type, SearchType):
@@ -110,10 +99,12 @@ class Daft:
     def set_min_price(self, min_price: int):
         if not self._section:
             raise ValueError("Must set search_type before price.")
-        if self._section in (SearchType.RESIDENTIAL_RENT.value,
-                             SearchType.COMMERCIAL_RENT.value,
-                             SearchType.SHARING.value,
-                             SearchType.STUDENT_ACCOMMODATION.value):
+        if self._section in (
+            SearchType.RESIDENTIAL_RENT.value,
+            SearchType.COMMERCIAL_RENT.value,
+            SearchType.SHARING.value,
+            SearchType.STUDENT_ACCOMMODATION.value,
+        ):
             self._set_range_from("rentalPrice", str(min_price))
         else:
             self._set_range_from("salePrice", str(min_price))
@@ -121,10 +112,12 @@ class Daft:
     def set_max_price(self, max_price: int):
         if not self._section:
             raise ValueError("Must set search_type before price.")
-        if self._section in (SearchType.RESIDENTIAL_RENT.value,
-                             SearchType.COMMERCIAL_RENT.value,
-                             SearchType.SHARING.value,
-                             SearchType.STUDENT_ACCOMMODATION.value):
+        if self._section in (
+            SearchType.RESIDENTIAL_RENT.value,
+            SearchType.COMMERCIAL_RENT.value,
+            SearchType.SHARING.value,
+            SearchType.STUDENT_ACCOMMODATION.value,
+        ):
             self._set_range_to("rentalPrice", str(max_price))
         else:
             self._set_range_to("salePrice", str(max_price))
@@ -173,7 +166,11 @@ class Daft:
             raise TypeError("Argument must be enums.Ber.")
         self._set_range_to("ber", str(ber.value))
 
-    def set_location(self, location: Union[Location, str, List[Union[Location, str]]], distance: Distance = Distance.KM0):
+    def set_location(
+        self,
+        location: Union[Location, str, List[Union[Location, str]]],
+        distance: Distance = Distance.KM0,
+    ):
         if isinstance(location, Location):
             self._add_geo_filter(location.value["id"] + distance.value)
         elif isinstance(location, str):
@@ -187,25 +184,34 @@ class Daft:
                     best_match = self._get_best_match(area)
                     self._add_geo_filter(best_match.value["id"] + distance.value)
                 else:
-                    raise TypeError("List values must be of type location.Location or string.")
+                    raise TypeError(
+                        "List values must be of type location.Location or string."
+                    )
 
         else:
             raise TypeError("Argument must be location.Location, list, or string.")
 
     def set_facility(self, facility: Facility):
         if self._section == None:
-            raise ValueError('SearchType must be set before Facility')
+            raise ValueError("SearchType must be set before Facility")
         else:
             if isinstance(facility, Facility):
                 if self._section in [s.value for s in facility.valid_types]:
-                    self._add_and_filter('facilities', facility.value)
+                    self._add_and_filter("facilities", facility.value)
                 else:
-                    search_type = [(name,member) for name, member in SearchType.__members__.items() if member.value == self._section][0]
-                    compatible_facilities = [f.name for f in Facility if search_type[1] in f.valid_types]
-                    raise ValueError(f"Facility {facility.name} incompatible with SearchType {search_type[0]}\nThe following facilities are compatible with this SearchType:\n{compatible_facilities}")
+                    search_type = [
+                        (name, member)
+                        for name, member in SearchType.__members__.items()
+                        if member.value == self._section
+                    ][0]
+                    compatible_facilities = [
+                        f.name for f in Facility if search_type[1] in f.valid_types
+                    ]
+                    raise ValueError(
+                        f"Facility {facility.name} incompatible with SearchType {search_type[0]}\nThe following facilities are compatible with this SearchType:\n{compatible_facilities}"
+                    )
             else:
                 raise TypeError("Argument must be of type Facility")
-           
 
     def set_sort_type(self, sort_type: SortType):
         if isinstance(sort_type, SortType):
@@ -219,9 +225,9 @@ class Daft:
         search_term = regex.sub(" ", location)
         best_score, best_match = 0, None
         for loc in Location:
-            sm = SequenceMatcher(None,
-                                 search_term,
-                                 regex.sub(" ", loc.value['displayValue']))
+            sm = SequenceMatcher(
+                None, search_term, regex.sub(" ", loc.value["displayValue"])
+            )
             if sm.ratio() > best_score:
                 best_score, best_match = sm.ratio(), loc
         return best_match
@@ -246,9 +252,7 @@ class Daft:
     def search(self, max_pages: Optional[int] = None) -> List[Listing]:
         print("Searching...")
         _payload = self._make_payload()
-        r = requests.post(self._ENDPOINT,
-                          headers=self._HEADER,
-                          json=_payload)
+        r = requests.post(self._ENDPOINT, headers=self._HEADER, json=_payload)
         listings = r.json()["listings"]
         results_count = r.json()["paging"]["totalResults"]
         total_pages = ceil(results_count / self._PAGE_SZ)
@@ -256,9 +260,7 @@ class Daft:
 
         for page in range(1, limit):
             _payload["paging"]["from"] = page * self._PAGE_SZ
-            r = requests.post(self._ENDPOINT,
-                              headers=self._HEADER,
-                              json=_payload)
+            r = requests.post(self._ENDPOINT, headers=self._HEADER, json=_payload)
             listings = listings + r.json()["listings"]
 
         # expand out grouped listings as individual listings, commercial searches do not give the necessary information to do this
@@ -266,32 +268,32 @@ class Daft:
         expanded_listings = []
         for l in listings:
             # the information contained in the key 'prs' for most searches is instead contained in 'newHome' for newHome type searches
-            if 'newHome' in l['listing'].keys():
-                if 'subUnits' in l['listing']['newHome'].keys():
-                    l['listing']['prs'] = l['listing'].pop('newHome')
+            if "newHome" in l["listing"].keys():
+                if "subUnits" in l["listing"]["newHome"].keys():
+                    l["listing"]["prs"] = l["listing"].pop("newHome")
             try:
-                num_subUnits = len(l['listing']['prs']['subUnits'])
+                num_subUnits = len(l["listing"]["prs"]["subUnits"])
                 for i in range(num_subUnits):
-                    copy = deepcopy(l)            
-                    for key in copy['listing']['prs']['subUnits'][i].keys(): 
-                        copy['listing'][key] = copy['listing']['prs']['subUnits'][i][key]
+                    copy = deepcopy(l)
+                    for key in copy["listing"]["prs"]["subUnits"][i].keys():
+                        copy["listing"][key] = copy["listing"]["prs"]["subUnits"][i][
+                            key
+                        ]
 
-                    # studios do not have a 'numBedrooms' so set it separately 
-                    if copy['listing']['propertyType'] == 'Studio':
-                        copy['listing']['numBedrooms'] = '1 bed'                         
+                    # studios do not have a 'numBedrooms' so set it separately
+                    if copy["listing"]["propertyType"] == "Studio":
+                        copy["listing"]["numBedrooms"] = "1 bed"
                     expanded_listings.append(copy)
-            except:    
+            except:
                 # above only sets studio 'numBedrooms' for grouped listings, do ungrouped here
-                if 'propertyType' in l['listing'].keys():
-                    if l['listing']['propertyType'] == 'Studio':
-                            l['listing']['numBedrooms'] = '1 bed'            
-                expanded_listings.append(l)         
+                if "propertyType" in l["listing"].keys():
+                    if l["listing"]["propertyType"] == "Studio":
+                        l["listing"]["numBedrooms"] = "1 bed"
+                expanded_listings.append(l)
 
         listings = expanded_listings
 
         self._total_results = len(listings)
         print(f"Search complete. Found {self.total_results} listings.")
-        
-        return [Listing(l) for l in listings]    
 
-                             
+        return [Listing(l) for l in listings]

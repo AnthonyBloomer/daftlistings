@@ -238,3 +238,4 @@ python -m unittest discover tests/
   - Push to your origin repository.
   - Create a new pull request in GitHub.
 
+Note: We use (Black)[https://github.com/psf/black] for code formatting. After making any changes to the code, it is important for you to ensure that it passes Black's lint check. 

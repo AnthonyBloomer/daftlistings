@@ -10,5 +10,3 @@ for listing in listings:
     print(listing.price)
     print(listing.daft_link)
     print()
-
-

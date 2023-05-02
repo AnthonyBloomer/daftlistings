@@ -5,7 +5,7 @@ import branca.colormap as cm
 
 class MapVisualization:
     """
-    This class takes a crawled daft dataset which consists of 
+    This class takes a crawled daft dataset which consists of
     price, longitute, latitude, number of bedrooms, number of bathrooms
     with price in asending order then generate a folium map object"""
 
@@ -78,10 +78,10 @@ class MapVisualization:
             marker = folium.Marker(
                 [lat, lon], popup=popup_name, tooltip=price, icon=icon
             )
-            if (lat,lon) in markers_dict.keys():
-                markers_dict[(lat,lon)].append(marker)
+            if (lat, lon) in markers_dict.keys():
+                markers_dict[(lat, lon)].append(marker)
             else:
-                markers_dict[(lat,lon)] = [marker]
+                markers_dict[(lat, lon)] = [marker]
 
         for key, item in markers_dict.items():
             if len(item) == 1:
@@ -93,7 +93,10 @@ class MapVisualization:
 
     def add_colorbar(self):
         """add a colorbar at the top right corner of the map"""
-        vmin, vmax = self.df["monthly_price"].quantile(0.005), self.df["monthly_price"].max()
+        vmin, vmax = (
+            self.df["monthly_price"].quantile(0.005),
+            self.df["monthly_price"].max(),
+        )
         # set vmin to price.min() will screw the colorbar scale
         colormap = cm.StepColormap(
             self.color_codes, index=self.index, vmin=vmin, vmax=vmax

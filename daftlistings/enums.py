@@ -1,8 +1,10 @@
 import enum
 
+
 class SuitableFor(enum.Enum):
     MALE = "male"
     FEMALE = "female"
+
 
 class SortType(enum.Enum):
     PUBLISH_DATE_DESC = "publishDateDesc"
@@ -74,30 +76,153 @@ class Facility(enum.Enum):
     def __init__(self, _, valid_types):
         self.valid_types = valid_types
 
-    ALARM = ("alarm", [SearchType.RESIDENTIAL_SALE, SearchType.RESIDENTIAL_RENT, SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
+    ALARM = (
+        "alarm",
+        [
+            SearchType.RESIDENTIAL_SALE,
+            SearchType.RESIDENTIAL_RENT,
+            SearchType.COMMERCIAL_SALE,
+            SearchType.COMMERCIAL_RENT,
+            SearchType.SHARING,
+            SearchType.STUDENT_ACCOMMODATION,
+        ],
+    )
     CENTRAL_HEATING_GAS = ("gas-fired-central-heating", [SearchType.RESIDENTIAL_SALE])
     CENTRAL_HEATING_OIL = ("oil-fired-central-heating", [SearchType.RESIDENTIAL_SALE])
-    PARKING = ("parking", [SearchType.RESIDENTIAL_SALE, SearchType.RESIDENTIAL_RENT, SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
-    WHEELCHAIR_ACCESS = ("wheelchair-access", [SearchType.RESIDENTIAL_SALE, SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
-    WIRED_FOR_CABLE_TELEVISION = ("wired-for-cable-television", [SearchType.RESIDENTIAL_SALE])
-    CABLE_TELEVISION = ("cable-television", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])    
-    DISHWASHER = ("dishwasher", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
-    GARDEN_PATIO_BALCONY = ("garden-patio-balcony", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
-    CENTRAL_HEATING = ("central-heating", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
-    INTERNET = ("internet", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
-    MICROWAVE = ("microwave", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
-    PETS_ALLOWED = ("pets-allowed", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
-    SMOKING = ("smoking", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
-    SERVICED_PROPERTY = ("serviced-property", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
-    DRYER = ("dryer", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
-    WASHING_MACHINE = ("washing-machine", [SearchType.RESIDENTIAL_RENT, SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
+    PARKING = (
+        "parking",
+        [
+            SearchType.RESIDENTIAL_SALE,
+            SearchType.RESIDENTIAL_RENT,
+            SearchType.COMMERCIAL_SALE,
+            SearchType.COMMERCIAL_RENT,
+            SearchType.SHARING,
+            SearchType.STUDENT_ACCOMMODATION,
+        ],
+    )
+    WHEELCHAIR_ACCESS = (
+        "wheelchair-access",
+        [
+            SearchType.RESIDENTIAL_SALE,
+            SearchType.RESIDENTIAL_RENT,
+            SearchType.SHARING,
+            SearchType.STUDENT_ACCOMMODATION,
+        ],
+    )
+    WIRED_FOR_CABLE_TELEVISION = (
+        "wired-for-cable-television",
+        [SearchType.RESIDENTIAL_SALE],
+    )
+    CABLE_TELEVISION = (
+        "cable-television",
+        [
+            SearchType.RESIDENTIAL_RENT,
+            SearchType.SHARING,
+            SearchType.STUDENT_ACCOMMODATION,
+        ],
+    )
+    DISHWASHER = (
+        "dishwasher",
+        [
+            SearchType.RESIDENTIAL_RENT,
+            SearchType.SHARING,
+            SearchType.STUDENT_ACCOMMODATION,
+        ],
+    )
+    GARDEN_PATIO_BALCONY = (
+        "garden-patio-balcony",
+        [
+            SearchType.RESIDENTIAL_RENT,
+            SearchType.SHARING,
+            SearchType.STUDENT_ACCOMMODATION,
+        ],
+    )
+    CENTRAL_HEATING = (
+        "central-heating",
+        [
+            SearchType.RESIDENTIAL_RENT,
+            SearchType.SHARING,
+            SearchType.STUDENT_ACCOMMODATION,
+        ],
+    )
+    INTERNET = (
+        "internet",
+        [
+            SearchType.RESIDENTIAL_RENT,
+            SearchType.SHARING,
+            SearchType.STUDENT_ACCOMMODATION,
+        ],
+    )
+    MICROWAVE = (
+        "microwave",
+        [
+            SearchType.RESIDENTIAL_RENT,
+            SearchType.SHARING,
+            SearchType.STUDENT_ACCOMMODATION,
+        ],
+    )
+    PETS_ALLOWED = (
+        "pets-allowed",
+        [
+            SearchType.RESIDENTIAL_RENT,
+            SearchType.SHARING,
+            SearchType.STUDENT_ACCOMMODATION,
+        ],
+    )
+    SMOKING = (
+        "smoking",
+        [
+            SearchType.RESIDENTIAL_RENT,
+            SearchType.SHARING,
+            SearchType.STUDENT_ACCOMMODATION,
+        ],
+    )
+    SERVICED_PROPERTY = (
+        "serviced-property",
+        [
+            SearchType.RESIDENTIAL_RENT,
+            SearchType.SHARING,
+            SearchType.STUDENT_ACCOMMODATION,
+        ],
+    )
+    DRYER = (
+        "dryer",
+        [
+            SearchType.RESIDENTIAL_RENT,
+            SearchType.SHARING,
+            SearchType.STUDENT_ACCOMMODATION,
+        ],
+    )
+    WASHING_MACHINE = (
+        "washing-machine",
+        [
+            SearchType.RESIDENTIAL_RENT,
+            SearchType.SHARING,
+            SearchType.STUDENT_ACCOMMODATION,
+        ],
+    )
     ENSUITE = ("ensuite", [SearchType.SHARING, SearchType.STUDENT_ACCOMMODATION])
-    CAT_5_CABLING = ("cat-5-cabling", [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT])
-    CAT_6_CABLING = ("cat-6-data-cabling", [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT])
-    KITCHEN_AREA = ("kitchen-area", [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT])
-    MEETING_ROOMS = ("meeting-rooms", [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT])
+    CAT_5_CABLING = (
+        "cat-5-cabling",
+        [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT],
+    )
+    CAT_6_CABLING = (
+        "cat-6-data-cabling",
+        [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT],
+    )
+    KITCHEN_AREA = (
+        "kitchen-area",
+        [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT],
+    )
+    MEETING_ROOMS = (
+        "meeting-rooms",
+        [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT],
+    )
     RECEPTION = ("reception", [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT])
-    PHONE_LINES = ("phone-lines", [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT])
+    PHONE_LINES = (
+        "phone-lines",
+        [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT],
+    )
     TOILETS = ("toilets", [SearchType.COMMERCIAL_SALE, SearchType.COMMERCIAL_RENT])
 
 
@@ -124,6 +249,7 @@ class Ber(enum.Enum):
     E2 = 12
     F = 13
     G = 14
+
 
 class Distance(enum.Enum):
     KM0 = ""
