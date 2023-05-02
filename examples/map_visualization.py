@@ -1,7 +1,14 @@
 import pandas as pd
-from daftlistings import Daft, Location, SearchType, PropertyType, SortType, MapVisualization
+from daftlistings import (
+    Daft,
+    Location,
+    SearchType,
+    PropertyType,
+    SortType,
+    MapVisualization,
+)
 
- 
+
 daft = Daft()
 daft.set_location(Location.DUBLIN)
 daft.set_search_type(SearchType.RESIDENTIAL_RENT)
@@ -16,11 +23,11 @@ with open("result.txt", "w") as fp:
 
 # read from the local file
 with open("result.txt") as fp:
-  lines = fp.readlines()
+    lines = fp.readlines()
 
 properties = []
 for line in lines:
-  properties.append(eval(line))
+    properties.append(eval(line))
 
 df = pd.DataFrame(properties)
 print(df)
