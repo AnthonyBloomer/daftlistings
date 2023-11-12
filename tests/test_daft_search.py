@@ -20,11 +20,12 @@ from daftlistings.enums import Distance
 class DaftTest(unittest.TestCase):
     @patch("requests.post")
     def test_search_basic(self, mock_post):
-        url = "https://search-gateway.dsch.ie/v1/listings"
+        url = "https://gateway.daft.ie/old/v1/listings"
         payload = {
             "paging": {"from": "0", "pagesize": "50"},
         }
         headers = {
+            "User-Agent": "",
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
@@ -36,7 +37,7 @@ class DaftTest(unittest.TestCase):
 
     @patch("requests.post")
     def test_search_properties_for_sale(self, mock_post):
-        url = "https://search-gateway.dsch.ie/v1/listings"
+        url = "https://gateway.daft.ie/old/v1/listings"
         payload = {
             "section": "residential-for-sale",
             "andFilters": [
@@ -62,6 +63,7 @@ class DaftTest(unittest.TestCase):
             "paging": {"from": "0", "pagesize": "50"},
         }
         headers = {
+            "User-Agent": "",
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
@@ -92,7 +94,7 @@ class DaftTest(unittest.TestCase):
 
     @patch("requests.post")
     def test_search_properties_for_rent(self, mock_post):
-        url = "https://search-gateway.dsch.ie/v1/listings"
+        url = "https://gateway.daft.ie/old/v1/listings"
         payload = {
             "section": "residential-to-rent",
             "andFilters": [
@@ -113,6 +115,7 @@ class DaftTest(unittest.TestCase):
             "paging": {"from": "0", "pagesize": "50"},
         }
         headers = {
+            "User-Agent": "",
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
@@ -142,7 +145,7 @@ class DaftTest(unittest.TestCase):
 
     @patch("requests.post")
     def test_search_multiple_areas(self, mock_post):
-        url = "https://search-gateway.dsch.ie/v1/listings"
+        url = "https://gateway.daft.ie/old/v1/listings"
         payload = {
             "section": "residential-to-rent",
             "geoFilter": {
@@ -152,6 +155,7 @@ class DaftTest(unittest.TestCase):
             "paging": {"from": "0", "pagesize": "50"},
         }
         headers = {
+            "User-Agent": "",
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
@@ -169,7 +173,7 @@ class DaftTest(unittest.TestCase):
 
     @patch("requests.post")
     def test_shared_listings(self, mock_post):
-        url = "https://search-gateway.dsch.ie/v1/listings"
+        url = "https://gateway.daft.ie/old/v1/listings"
         payload = {
             "section": "sharing",
             "filters": [
@@ -180,6 +184,7 @@ class DaftTest(unittest.TestCase):
             "paging": {"from": "0", "pagesize": "50"},
         }
         headers = {
+            "User-Agent": "",
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
