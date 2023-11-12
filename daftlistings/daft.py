@@ -12,7 +12,12 @@ from .location import Location
 
 class Daft:
     _ENDPOINT = "https://gateway.daft.ie/old/v1/listings"
-    _HEADER = {"User-Agent": "", "Content-Type": "application/json", "brand": "daft", "platform": "web"}
+    _HEADER = {
+        "User-Agent": "",
+        "Content-Type": "application/json",
+        "brand": "daft",
+        "platform": "web",
+    }
     _PAGE_SZ = 50
     _PAGE_0 = {"from": "0", "pagesize": str(_PAGE_SZ)}
 
