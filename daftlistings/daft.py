@@ -11,7 +11,7 @@ from .location import Location
 
 
 class Daft:
-    _ENDPOINT = "https://gateway.daft.ie/old/v1/listings"
+    _ENDPOINT = "https://gateway.daft.ie/api/v2/ads/listings"
     _HEADER = {
         "User-Agent": "",
         "Content-Type": "application/json",

@@ -20,7 +20,7 @@ from daftlistings.enums import Distance
 class DaftTest(unittest.TestCase):
     @patch("requests.post")
     def test_search_basic(self, mock_post):
-        url = "https://gateway.daft.ie/old/v1/listings"
+        url = "https://gateway.daft.ie/api/v2/ads/listings"
         payload = {
             "paging": {"from": "0", "pagesize": "50"},
         }
@@ -37,7 +37,7 @@ class DaftTest(unittest.TestCase):
 
     @patch("requests.post")
     def test_search_properties_for_sale(self, mock_post):
-        url = "https://gateway.daft.ie/old/v1/listings"
+        url = "https://gateway.daft.ie/api/v2/ads/listings"
         payload = {
             "section": "residential-for-sale",
             "andFilters": [
@@ -94,7 +94,7 @@ class DaftTest(unittest.TestCase):
 
     @patch("requests.post")
     def test_search_properties_for_rent(self, mock_post):
-        url = "https://gateway.daft.ie/old/v1/listings"
+        url = "https://gateway.daft.ie/api/v2/ads/listings"
         payload = {
             "section": "residential-to-rent",
             "andFilters": [
@@ -145,7 +145,7 @@ class DaftTest(unittest.TestCase):
 
     @patch("requests.post")
     def test_search_multiple_areas(self, mock_post):
-        url = "https://gateway.daft.ie/old/v1/listings"
+        url = "https://gateway.daft.ie/api/v2/ads/listings"
         payload = {
             "section": "residential-to-rent",
             "geoFilter": {
@@ -173,7 +173,7 @@ class DaftTest(unittest.TestCase):
 
     @patch("requests.post")
     def test_shared_listings(self, mock_post):
-        url = "https://gateway.daft.ie/old/v1/listings"
+        url = "https://gateway.daft.ie/api/v2/ads/listings"
         payload = {
             "section": "sharing",
             "filters": [
