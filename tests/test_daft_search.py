@@ -51,6 +51,23 @@ class DaftTest(unittest.TestCase):
         mock_post.assert_called_with(url, headers=headers, json=payload)
 
     @patch("requests.post")
+    def test_custom_user_agent(self, mock_post):
+        url = "https://gateway.daft.ie/api/v2/ads/listings"
+        payload = {"paging": {"from": "0", "pagesize": "50"}}
+        headers = {
+            "User-Agent": "Example/1.0",
+            "Content-Type": "application/json",
+            "brand": "daft",
+            "platform": "web",
+        }
+
+        daft = Daft()
+        daft.set_headers({"User-Agent": "Example/1.0"})
+        daft.search()
+
+        mock_post.assert_called_with(url, headers=headers, json=payload)
+
+    @patch("requests.post")
     def test_search_properties_for_sale(self, mock_post):
         url = "https://gateway.daft.ie/api/v2/ads/listings"
         payload = {
