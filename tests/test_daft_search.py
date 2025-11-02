@@ -40,7 +40,7 @@ class DaftTest(unittest.TestCase):
             "paging": {"from": "0", "pagesize": "50"},
         }
         headers = {
-            "User-Agent": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
@@ -95,7 +95,7 @@ class DaftTest(unittest.TestCase):
             "paging": {"from": "0", "pagesize": "50"},
         }
         headers = {
-            "User-Agent": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
@@ -147,7 +147,7 @@ class DaftTest(unittest.TestCase):
             "paging": {"from": "0", "pagesize": "50"},
         }
         headers = {
-            "User-Agent": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
@@ -187,7 +187,7 @@ class DaftTest(unittest.TestCase):
             "paging": {"from": "0", "pagesize": "50"},
         }
         headers = {
-            "User-Agent": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
@@ -216,7 +216,7 @@ class DaftTest(unittest.TestCase):
             "paging": {"from": "0", "pagesize": "50"},
         }
         headers = {
-            "User-Agent": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",

@@ -24,7 +24,7 @@ class Daft:
         self._sort_filter = dict()
         self._total_results = 0
         self._headers = {
-            "User-Agent": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
