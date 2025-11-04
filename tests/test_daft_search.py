@@ -16,6 +16,21 @@ from daftlistings import (
 )
 from daftlistings.enums import Distance
 
+STANDARD_FIXTURE_PATH = os.path.join(
+    os.path.dirname(__file__), "fixtures/response.json"
+)
+STUDIOS_FIXTURE_PATH = os.path.join(
+    os.path.dirname(__file__), "fixtures/studios_response.json"
+)
+
+
+def load_fixture(fixture=STANDARD_FIXTURE_PATH):
+    with open(
+        fixture,
+        encoding="utf-8",
+    ) as response_data:
+        return json.loads(response_data.read())
+
 
 class DaftTest(unittest.TestCase):
     @patch("requests.post")
@@ -25,7 +40,7 @@ class DaftTest(unittest.TestCase):
             "paging": {"from": "0", "pagesize": "50"},
         }
         headers = {
-            "User-Agent": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
@@ -33,6 +48,23 @@ class DaftTest(unittest.TestCase):
 
         daft = Daft()
         daft.search()
+        mock_post.assert_called_with(url, headers=headers, json=payload)
+
+    @patch("requests.post")
+    def test_custom_user_agent(self, mock_post):
+        url = "https://gateway.daft.ie/api/v2/ads/listings"
+        payload = {"paging": {"from": "0", "pagesize": "50"}}
+        headers = {
+            "User-Agent": "Example/1.0",
+            "Content-Type": "application/json",
+            "brand": "daft",
+            "platform": "web",
+        }
+
+        daft = Daft()
+        daft.set_headers({"User-Agent": "Example/1.0"})
+        daft.search()
+
         mock_post.assert_called_with(url, headers=headers, json=payload)
 
     @patch("requests.post")
@@ -63,7 +95,7 @@ class DaftTest(unittest.TestCase):
             "paging": {"from": "0", "pagesize": "50"},
         }
         headers = {
-            "User-Agent": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
@@ -115,7 +147,7 @@ class DaftTest(unittest.TestCase):
             "paging": {"from": "0", "pagesize": "50"},
         }
         headers = {
-            "User-Agent": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
@@ -155,7 +187,7 @@ class DaftTest(unittest.TestCase):
             "paging": {"from": "0", "pagesize": "50"},
         }
         headers = {
-            "User-Agent": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
@@ -184,7 +216,7 @@ class DaftTest(unittest.TestCase):
             "paging": {"from": "0", "pagesize": "50"},
         }
         headers = {
-            "User-Agent": "",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
@@ -214,11 +246,7 @@ class DaftTest(unittest.TestCase):
             daft.set_location(1)
 
     def test_listing(self):
-        with open(
-            os.path.dirname(os.path.abspath(__file__)) + "/fixtures/response.json",
-            encoding="utf-8",
-        ) as response_data:
-            data = json.loads(response_data.read())
+        data = load_fixture()
 
         listing = Listing(data["listings"][0])
 
@@ -264,47 +292,73 @@ class DaftTest(unittest.TestCase):
         }
         self.assertEqual(listing.as_dict_for_mapping(), as_dict_for_mapping_example)
 
-    def test_any_to_rent(self):
+    @patch("requests.post")
+    def test_any_to_rent(self, mock_post):
+        data = load_fixture()
+        mock_post.return_value.json.return_value = data
+
         daft = Daft()
         daft.set_search_type(SearchType.RESIDENTIAL_RENT)
         daft.set_location(Location.DUBLIN)
         listings = daft.search(max_pages=1)
-        self.assertTrue(len(listings) > 0)
 
-    def test_apartments_to_rent(self):
+        self.assertTrue(len(listings) > 0)
+        self.assertEqual(listings[0].id, data["listings"][0]["listing"]["id"])
+
+    @patch("requests.post")
+    def test_apartments_to_rent(self, mock_post):
+        data = load_fixture()
+        mock_post.return_value.json.return_value = data
+
         daft = Daft()
         daft.set_search_type(SearchType.RESIDENTIAL_RENT)
         daft.set_property_type(PropertyType.APARTMENT)
         daft.set_location(Location.DUBLIN)
         listings = daft.search(max_pages=1)
+
         self.assertTrue(len(listings) > 0)
         self.assertGreater(daft.total_results, 0)
 
-    def test_studios_to_rent(self):
+    @patch("requests.post")
+    def test_studios_to_rent(self, mock_post):
+        data = load_fixture(STUDIOS_FIXTURE_PATH)
+        mock_post.return_value.json.return_value = data
+
         daft = Daft()
         daft.set_search_type(SearchType.RESIDENTIAL_RENT)
         daft.set_property_type(PropertyType.STUDIO_APARTMENT)
         daft.set_location(Location.DUBLIN)
         listings = daft.search(max_pages=1)
+
         self.assertTrue(len(listings) > 0)
         self.assertTrue(listings[0].bedrooms == "1 bed")
         self.assertGreater(daft.total_results, 0)
 
-    def test_new_homes(self):
+    @patch("requests.post")
+    def test_new_homes(self, mock_post):
+        data = load_fixture()
+        mock_post.return_value.json.return_value = data
+
         daft = Daft()
         daft.set_search_type(SearchType.NEW_HOMES)
         daft.set_location(Location.DUBLIN)
         listings = daft.search(max_pages=1)
+
         self.assertTrue(len(listings) > 0)
         self.assertGreater(daft.total_results, 0)
 
-    def test_distance(self):
+    @patch("requests.post")
+    def test_distance(self, mock_post):
+        data = load_fixture(STUDIOS_FIXTURE_PATH)
+        mock_post.return_value.json.return_value = data
+
         daft = Daft()
         daft.set_location("Dublin City")
         daft.set_search_type(SearchType.RESIDENTIAL_RENT)
         daft.set_min_price(1)
         daft.set_max_price(100000)
         listings = daft.search(max_pages=1)
+
         first = listings[0]
         for l in listings[1:]:
             if (l.latitude, l.longitude) != (first.latitude, first.longitude):
@@ -314,11 +368,16 @@ class DaftTest(unittest.TestCase):
         self.assertGreater(first.distance_to(coord), 0)
         self.assertGreater(first.distance_to(second), 0)
 
-    def test_search_within_distance_radius(self):
+    @patch("requests.post")
+    def test_search_within_distance_radius(self, mock_post):
+        mock_post.return_value.json.return_value = load_fixture(STANDARD_FIXTURE_PATH)
+
         daft = Daft()
         daft.set_location(Location.DUBLIN_CITY_CENTRE_DUBLIN)
         daft.set_search_type(SearchType.RESIDENTIAL_RENT)
         listings = daft.search(max_pages=1)
+
+        mock_post.return_value.json.return_value = load_fixture(STUDIOS_FIXTURE_PATH)
 
         daft.set_location(Location.DUBLIN_CITY_CENTRE_DUBLIN, Distance.KM20)
         listings_in_wider_area = daft.search(max_pages=1)

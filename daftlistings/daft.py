@@ -12,12 +12,6 @@ from .location import Location
 
 class Daft:
     _ENDPOINT = "https://gateway.daft.ie/api/v2/ads/listings"
-    _HEADER = {
-        "User-Agent": "",
-        "Content-Type": "application/json",
-        "brand": "daft",
-        "platform": "web",
-    }
     _PAGE_SZ = 50
     _PAGE_0 = {"from": "0", "pagesize": str(_PAGE_SZ)}
 
@@ -29,6 +23,19 @@ class Daft:
         self._geoFilter = dict()
         self._sort_filter = dict()
         self._total_results = 0
+        self._headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+            "Content-Type": "application/json",
+            "brand": "daft",
+            "platform": "web",
+        }
+
+    def set_headers(self, headers: Dict[str, str]):
+        """
+        Merge or replace headers.
+        Example: d.set_headers({"User-Agent": "UserAgent/1.0", "X-Example": "Example"})
+        """
+        self._headers.update(headers)
 
     @property
     def total_results(self):
@@ -257,7 +264,7 @@ class Daft:
     def search(self, max_pages: Optional[int] = None) -> List[Listing]:
         print("Searching...")
         _payload = self._make_payload()
-        r = requests.post(self._ENDPOINT, headers=self._HEADER, json=_payload)
+        r = requests.post(self._ENDPOINT, headers=self._headers, json=_payload)
         listings = r.json()["listings"]
         results_count = r.json()["paging"]["totalResults"]
         total_pages = ceil(results_count / self._PAGE_SZ)
@@ -265,7 +272,7 @@ class Daft:
 
         for page in range(1, limit):
             _payload["paging"]["from"] = page * self._PAGE_SZ
-            r = requests.post(self._ENDPOINT, headers=self._HEADER, json=_payload)
+            r = requests.post(self._ENDPOINT, headers=self._headers, json=_payload)
             listings = listings + r.json()["listings"]
 
         # expand out grouped listings as individual listings, commercial searches do not give the necessary information to do this

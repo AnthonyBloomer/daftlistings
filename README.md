@@ -222,6 +222,26 @@ for listing in listings:
     print()
 ```
 
+Search for apartments for rent in Dublin with a custom User Agent.
+
+```python
+from daftlistings import Daft, Location, SearchType, PropertyType
+
+daft = Daft()
+daft.set_headers({"User-Agent": "CustomUserAgent/1.0"})
+daft.set_location(Location.DUBLIN)
+daft.set_search_type(SearchType.RESIDENTIAL_RENT)
+daft.set_property_type(PropertyType.APARTMENT)
+
+listings = daft.search()
+
+for listing in listings:
+    print(listing.title)
+    print(listing.price)
+    print(listing.daft_link)
+    print()
+```
+
 ## Running Tests
 
 The Python unittest module contains its own test discovery function, which you can run from the command line:
