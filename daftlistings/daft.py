@@ -28,6 +28,8 @@ class Daft:
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
+            "Origin": "https://www.daft.ie",
+            "Referer": "https://www.daft.ie/",
         }
 
     def set_headers(self, headers: Dict[str, str]):

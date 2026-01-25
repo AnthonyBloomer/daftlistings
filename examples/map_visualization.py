@@ -8,7 +8,6 @@ from daftlistings import (
     MapVisualization,
 )
 
-
 daft = Daft()
 daft.set_location(Location.DUBLIN)
 daft.set_search_type(SearchType.RESIDENTIAL_RENT)
