@@ -44,6 +44,8 @@ class DaftTest(unittest.TestCase):
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
+            "Referer": "https://www.daft.ie/",
+            "Origin": "https://www.daft.ie",
         }
 
         daft = Daft()
@@ -59,6 +61,8 @@ class DaftTest(unittest.TestCase):
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
+            "Referer": "https://www.daft.ie/",
+            "Origin": "https://www.daft.ie",
         }
 
         daft = Daft()
@@ -99,6 +103,8 @@ class DaftTest(unittest.TestCase):
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
+            "Referer": "https://www.daft.ie/",
+            "Origin": "https://www.daft.ie",
         }
 
         daft = Daft()
@@ -151,6 +157,8 @@ class DaftTest(unittest.TestCase):
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
+            "Referer": "https://www.daft.ie/",
+            "Origin": "https://www.daft.ie",
         }
 
         daft = Daft()
@@ -191,6 +199,8 @@ class DaftTest(unittest.TestCase):
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
+            "Referer": "https://www.daft.ie/",
+            "Origin": "https://www.daft.ie",
         }
 
         daft = Daft()
@@ -220,6 +230,8 @@ class DaftTest(unittest.TestCase):
             "Content-Type": "application/json",
             "brand": "daft",
             "platform": "web",
+            "Referer": "https://www.daft.ie/",
+            "Origin": "https://www.daft.ie",
         }
 
         daft = Daft()
