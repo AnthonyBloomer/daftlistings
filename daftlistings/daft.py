@@ -267,14 +267,17 @@ class Daft:
         print("Searching...")
         _payload = self._make_payload()
         r = requests.post(self._ENDPOINT, headers=self._headers, json=_payload)
-        listings = r.json()["listings"]
-        results_count = r.json()["paging"]["totalResults"]
+        r.raise_for_status()
+        body = r.json()
+        listings = body["listings"]
+        results_count = body["paging"]["totalResults"]
         total_pages = ceil(results_count / self._PAGE_SZ)
         limit = min(max_pages, total_pages) if max_pages else total_pages
 
         for page in range(1, limit):
             _payload["paging"]["from"] = page * self._PAGE_SZ
             r = requests.post(self._ENDPOINT, headers=self._headers, json=_payload)
+            r.raise_for_status()
             listings = listings + r.json()["listings"]
 
         # expand out grouped listings as individual listings, commercial searches do not give the necessary information to do this
@@ -298,7 +301,7 @@ class Daft:
                     if copy["listing"]["propertyType"] == "Studio":
                         copy["listing"]["numBedrooms"] = "1 bed"
                     expanded_listings.append(copy)
-            except:
+            except (KeyError, TypeError):
                 # above only sets studio 'numBedrooms' for grouped listings, do ungrouped here
                 if "propertyType" in l["listing"].keys():
                     if l["listing"]["propertyType"] == "Studio":
